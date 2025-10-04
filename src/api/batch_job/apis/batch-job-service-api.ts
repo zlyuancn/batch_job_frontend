@@ -66,6 +66,69 @@ export const BatchJobServiceApiAxiosParamCreator = function (
   return {
     /**
      *
+     * @summary 修改业务
+     * @param {BatchJobAdminRegistryBizReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    batchJobServiceAdminChangeBiz: async (
+      body: BatchJobAdminRegistryBizReq,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'body' is not null or undefined
+      if (body === null || body === undefined) {
+        throw new RequiredError(
+          "body",
+          "Required parameter body was null or undefined when calling batchJobServiceAdminChangeBiz."
+        );
+      }
+      const localVarPath = `/BatchJob/AdminChangeBiz`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, "https://example.com");
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+      const localVarRequestOptions: AxiosRequestConfig = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      const query = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        query.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.params) {
+        query.set(key, options.params[key]);
+      }
+      localVarUrlObj.search = new URLSearchParams(query).toString();
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      const needsSerialization =
+        typeof body !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(body !== undefined ? body : {})
+        : body || "";
+
+      return {
+        url:
+          localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     *
      * @summary 创建任务
      * @param {BatchJobAdminCreateJobReq} body
      * @param {*} [options] Override http request option.
@@ -957,6 +1020,36 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @summary 修改业务
+     * @param {BatchJobAdminRegistryBizReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceAdminChangeBiz(
+      body: BatchJobAdminRegistryBizReq,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => Promise<AxiosResponse<BatchJobAdminRegistryBizRsp>>
+    > {
+      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
+        configuration
+      ).batchJobServiceAdminChangeBiz(body, options);
+      return (
+        axios: AxiosInstance = globalAxios,
+        basePath: string = BASE_PATH
+      ) => {
+        const axiosRequestArgs: AxiosRequestConfig = {
+          ...localVarAxiosArgs.options,
+          url: basePath + localVarAxiosArgs.url
+        };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     *
      * @summary 创建任务
      * @param {BatchJobAdminCreateJobReq} body
      * @param {*} [options] Override http request option.
@@ -1390,6 +1483,21 @@ export const BatchJobServiceApiFactory = function (
   return {
     /**
      *
+     * @summary 修改业务
+     * @param {BatchJobAdminRegistryBizReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceAdminChangeBiz(
+      body: BatchJobAdminRegistryBizReq,
+      options?: AxiosRequestConfig
+    ): Promise<AxiosResponse<BatchJobAdminRegistryBizRsp>> {
+      return BatchJobServiceApiFp(configuration)
+        .batchJobServiceAdminChangeBiz(body, options)
+        .then(request => request(axios, basePath));
+    },
+    /**
+     *
      * @summary 创建任务
      * @param {BatchJobAdminCreateJobReq} body
      * @param {*} [options] Override http request option.
@@ -1608,6 +1716,22 @@ export const BatchJobServiceApiFactory = function (
  * @extends {BaseAPI}
  */
 export class BatchJobServiceApi extends BaseAPI {
+  /**
+   *
+   * @summary 修改业务
+   * @param {BatchJobAdminRegistryBizReq} body
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BatchJobServiceApi
+   */
+  public async batchJobServiceAdminChangeBiz(
+    body: BatchJobAdminRegistryBizReq,
+    options?: AxiosRequestConfig
+  ): Promise<AxiosResponse<BatchJobAdminRegistryBizRsp>> {
+    return BatchJobServiceApiFp(this.configuration)
+      .batchJobServiceAdminChangeBiz(body, options)
+      .then(request => request(this.axios, this.basePath));
+  }
   /**
    *
    * @summary 创建任务

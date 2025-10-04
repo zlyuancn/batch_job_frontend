@@ -10,8 +10,15 @@ export default {
       name: "RegistryBiz",
       component: () => import("@/views/batch_job/registry_biz/index.vue"),
       meta: {
-        title: "注册业务",
-        showParent: true
+        title: "注册业务"
+      }
+    },
+    {
+      path: "/batch_job/change_biz",
+      name: "ChangeBiz",
+      component: () => import("@/views/batch_job/registry_biz/index.vue"),
+      meta: {
+        title: "修改业务"
       }
     }
   ]
