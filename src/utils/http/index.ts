@@ -190,6 +190,10 @@ class PureHttp {
   ): Promise<T> {
     return this.request<T>("get", url, params, config);
   }
+
+  public getAxiosInstance(): AxiosInstance {
+    return PureHttp.axiosInstance;
+  }
 }
 
 export const http = new PureHttp();

@@ -2,6 +2,13 @@
 import { execTypeOptions, formData, rateTypeOptions } from "./data";
 import { rules, ruleFormRef } from "./rule";
 import { ref } from "vue";
+import {
+  type BatchJobAdminRegistryBizReq,
+  batchJobClient,
+  BatchJobExecType,
+  BatchJobRateType
+} from "@/api/batch_job_client";
+import { message } from "@/utils/message";
 
 defineOptions({
   name: "RegistryBiz"
@@ -12,17 +19,55 @@ const loading = ref(false);
 const onSubmit = async () => {
   if (!ruleFormRef.value) return;
   loading.value = true;
-  await ruleFormRef.value
-    .validate((valid, fields) => {
-      if (valid) {
-        console.log("submit!", formData);
-      } else {
-        console.log("error submit!", fields);
-      }
-    })
-    .finally(() => {
-      loading.value = false;
-    });
+  try {
+    await ruleFormRef.value.validate();
+    console.log("submit!", formData);
+
+    const req = <BatchJobAdminRegistryBizReq>{
+      bizType: formData.biz_type,
+      bizName: formData.biz_name,
+      remark: formData.remark,
+
+      cbBeforeCreate: formData.cb_before_create,
+      cbBeforeRun: formData.cb_before_run,
+      cbProcess: formData.cb_process,
+      cbProcessStop: formData.cb_process_stop,
+      cbBeforeCreateTimeout: formData.cb_before_create_timeout,
+      cbBeforeRunTimeout: formData.cb_before_run_timeout,
+      cbProcessTimeout: formData.cb_process_timeout,
+      cbProcessStopTimeout: formData.cb_process_stop_timeout,
+
+      rateSec: formData.rate_sec
+    };
+    switch (formData.exec_type) {
+      case 1:
+        req.execType = BatchJobExecType.HttpCallback;
+        break;
+    }
+    switch (formData.rate_type) {
+      case 0:
+        req.rateType = BatchJobRateType.RateSec;
+        break;
+      case 1:
+        req.rateType = BatchJobRateType.Serialization;
+        break;
+    }
+
+    await batchJobClient
+      .batchJobServiceAdminRegistryBiz(req)
+      .then(result => {
+        console.log(result);
+        message("创建成功", { type: "success" });
+      })
+      .catch(err => {
+        console.log(err);
+        const errmsg = err?.response?.data?.message ?? err;
+        message("创建失败\n" + errmsg, { type: "error" });
+      });
+  } catch (error) {
+    console.log("error submit!", error);
+  }
+  loading.value = false;
 };
 </script>
 
