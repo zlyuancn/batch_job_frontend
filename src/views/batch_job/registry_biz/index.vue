@@ -1,20 +1,28 @@
 <script setup lang="ts">
 import { execTypeOptions, formData, rateTypeOptions } from "./data";
 import { rules, ruleFormRef } from "./rule";
+import { ref } from "vue";
 
 defineOptions({
   name: "RegistryBiz"
 });
 
+const loading = ref(false);
+
 const onSubmit = async () => {
   if (!ruleFormRef.value) return;
-  await ruleFormRef.value.validate((valid, fields) => {
-    if (valid) {
-      console.log("submit!");
-    } else {
-      console.log("error submit!", fields);
-    }
-  });
+  loading.value = true;
+  await ruleFormRef.value
+    .validate((valid, fields) => {
+      if (valid) {
+        console.log("submit!", formData);
+      } else {
+        console.log("error submit!", fields);
+      }
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 </script>
 
@@ -35,7 +43,7 @@ const onSubmit = async () => {
       </el-space>
     </el-form-item>
     <el-form-item label="业务名" prop="biz_name">
-      <el-input v-model="formData.biz_name" />
+      <el-input maxlength="32" show-word-limit v-model="formData.biz_name" />
       <el-text style="color: var(--el-text-color-secondary)"
         >用于展示, 让使用者大概知道这个业务是什么</el-text
       >
@@ -44,6 +52,8 @@ const onSubmit = async () => {
       <el-input
         type="textarea"
         :autosize="{ minRows: 2 }"
+        :maxlength="1000"
+        show-word-limit
         v-model="formData.remark"
       />
     </el-form-item>
@@ -65,34 +75,86 @@ const onSubmit = async () => {
 
     <el-space direction="horizontal" size="small">
       <el-form-item label="创建任务回调url" prop="cb_before_create">
-        <el-input v-model="formData.cb_before_create" style="width: 400px" />
+        <el-input
+          maxlength="128"
+          show-word-limit
+          v-model="formData.cb_before_create"
+          style="width: 400px"
+        />
       </el-form-item>
-      <el-form-item label="超时秒数" prop="cb_before_create_timeout">
-        <el-input-number :min="0" v-model="formData.cb_before_create_timeout" />
+      <el-form-item
+        v-if="formData.cb_before_create.length > 0"
+        label="超时秒数"
+        prop="cb_before_create_timeout"
+      >
+        <el-input-number
+          :min="0"
+          :max="60"
+          v-model="formData.cb_before_create_timeout"
+        />
       </el-form-item>
     </el-space>
     <el-space direction="horizontal" size="small">
       <el-form-item label="启动前回调" prop="cb_before_run">
-        <el-input v-model="formData.cb_before_run" style="width: 400px" />
+        <el-input
+          maxlength="128"
+          show-word-limit
+          v-model="formData.cb_before_run"
+          style="width: 400px"
+        />
       </el-form-item>
-      <el-form-item label="超时秒数" prop="cb_before_run_timeout">
-        <el-input-number :min="0" v-model="formData.cb_before_run_timeout" />
+      <el-form-item
+        v-if="formData.cb_before_run.length > 0"
+        label="超时秒数"
+        prop="cb_before_run_timeout"
+      >
+        <el-input-number
+          :min="0"
+          :max="3600"
+          v-model="formData.cb_before_run_timeout"
+        />
       </el-form-item>
     </el-space>
     <el-space direction="horizontal" size="small">
       <el-form-item label="处理任务回调" prop="cb_process">
-        <el-input v-model="formData.cb_process" style="width: 400px" />
+        <el-input
+          maxlength="128"
+          show-word-limit
+          v-model="formData.cb_process"
+          style="width: 400px"
+        />
       </el-form-item>
-      <el-form-item label="超时秒数" prop="cb_process_timeout">
-        <el-input-number :min="0" v-model="formData.cb_process_timeout" />
+      <el-form-item
+        v-if="formData.cb_process.length > 0"
+        label="超时秒数"
+        prop="cb_process_timeout"
+      >
+        <el-input-number
+          :min="0"
+          :max="3600"
+          v-model="formData.cb_process_timeout"
+        />
       </el-form-item>
     </el-space>
     <el-space direction="horizontal" size="small">
       <el-form-item label="任务停止回调" prop="cb_process_stop">
-        <el-input v-model="formData.cb_process_stop" style="width: 400px" />
+        <el-input
+          maxlength="128"
+          show-word-limit
+          v-model="formData.cb_process_stop"
+          style="width: 400px"
+        />
       </el-form-item>
-      <el-form-item label="超时秒数" prop="cb_process_stop_timeout">
-        <el-input-number :min="0" v-model="formData.cb_process_stop_timeout" />
+      <el-form-item
+        v-if="formData.cb_process_stop.length > 0"
+        label="超时秒数"
+        prop="cb_process_stop_timeout"
+      >
+        <el-input-number
+          :min="0"
+          :max="3600"
+          v-model="formData.cb_process_stop_timeout"
+        />
       </el-form-item>
     </el-space>
 
@@ -130,8 +192,13 @@ const onSubmit = async () => {
       >
     </el-form-item>
     <el-form-item label="每秒速率" prop="rate_sec">
-      <el-space direction="horizontal">
-        <el-input-number :min="0" v-model="formData.rate_sec" />
+      <el-space direction="horizontal" size="large">
+        <el-input-number
+          :min="0"
+          :max="10000"
+          :step="10"
+          v-model="formData.rate_sec"
+        />
         <el-text style="color: var(--el-text-color-secondary)"
           >数据每秒处理速度, 0表示不限速</el-text
         >
@@ -139,7 +206,13 @@ const onSubmit = async () => {
     </el-form-item>
 
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">注册</el-button>
+      <el-button
+        type="primary"
+        :loading="loading"
+        :disabled="loading"
+        @click="onSubmit"
+        >注册</el-button
+      >
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
