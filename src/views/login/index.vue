@@ -66,16 +66,11 @@ const onLogin = async (formEl: FormInstance | undefined) => {
         })
         .then(res => {
           if (res.success) {
-            // 获取后端路由
-            return initRouter().then(() => {
-              disabled.value = true;
-              router
-                .push(getTopMenu(true).path)
-                .then(() => {
-                  message("登录成功", { type: "success" });
-                })
-                .finally(() => (disabled.value = false));
-            });
+            // 全部采取静态路由模式
+            usePermissionStoreHook().handleWholeMenus([]);
+            addPathMatch();
+            router.push(getTopMenu(true).path);
+            message("登录成功", { type: "success" });
           } else {
             message("登录失败", { type: "error" });
           }
