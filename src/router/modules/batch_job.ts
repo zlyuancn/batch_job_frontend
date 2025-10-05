@@ -1,12 +1,20 @@
 export default {
-  path: "/batch_job",
-  redirect: "/batch_job/registry_biz",
+  path: "/BatchJob",
+  redirect: "/BatchJob/RegistryBiz",
   meta: {
     title: "批量工具"
   },
   children: [
     {
-      path: "/batch_job/registry_biz",
+      path: "/BatchJob/BizList",
+      name: "BizList",
+      component: () => import("@/views/batch_job/biz_list/index.vue"),
+      meta: {
+        title: "业务列表"
+      }
+    },
+    {
+      path: "/BatchJob/RegistryBiz",
       name: "RegistryBiz",
       component: () => import("@/views/batch_job/registry_biz/index.vue"),
       meta: {
@@ -14,7 +22,7 @@ export default {
       }
     },
     {
-      path: "/batch_job/change_biz",
+      path: "/BatchJob/ChangeBiz",
       name: "ChangeBiz",
       component: () => import("@/views/batch_job/registry_biz/index.vue"),
       meta: {

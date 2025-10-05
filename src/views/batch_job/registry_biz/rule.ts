@@ -1,5 +1,5 @@
 import { reactive, ref } from "vue";
-import type { FormData } from "./data";
+import type { FormData } from "./types";
 import type { FormInstance, FormRules } from "element-plus";
 export const ruleFormRef = ref<FormInstance>();
 export const rules = reactive<FormRules<FormData>>({

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { execTypeOptions, formData, rateTypeOptions } from "./data";
+import { formData } from "./data";
 import { rules, ruleFormRef } from "./rule";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import {
   type BatchJobAdminRegistryBizReq,
   batchJobClient,
@@ -11,7 +11,9 @@ import {
 import { message } from "@/utils/message";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import { execTypeOptions, rateTypeOptions } from "./types";
 
+// 注册业务/修改业务
 defineOptions({
   name: "RegistryBiz"
 });
@@ -90,10 +92,10 @@ const onSubmit = async () => {
   loading.value = false;
 };
 
-// router.push({ name: 'ChangeBiz', query: { biz_type: 22 } })
 const isChange: boolean = route.name == "ChangeBiz";
 if (isChange) {
-  formData.biz_type = Number(route.query["biz_type"]);
+  // formData.biz_type = Number(route.query["biz_type"]);
+  // todo 查询业务信息
 }
 </script>
 
