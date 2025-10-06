@@ -13,11 +13,11 @@
  */
 
 /**
- * - RateSec: 标准限速  - Serialization: 串行化限速
+ * - RateType_RateSec: 标准限速  - RateType_Serialization: 串行化限速
  * @export
  * @enum {string}
  */
 export enum BatchJobRateType {
-  RateSec = "RateSec",
-  Serialization = "Serialization"
+  RateSec = "RateType_RateSec",
+  Serialization = "RateType_Serialization"
 }

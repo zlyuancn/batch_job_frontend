@@ -1,7 +1,4 @@
-import { reactive } from "vue";
-import { FormData } from "./types";
-
-export const initData = {
+export const bizFormInitData = {
   bizType: 0,
   bizName: "",
   remark: "",
@@ -19,6 +16,6 @@ export const initData = {
   rateType: 0,
   rateSec: 1000,
 
+  status: 0,
   opRemark: ""
 };
-export const formData = reactive<FormData>(Object.assign({}, initData));

@@ -8,8 +8,7 @@ import {
   batchJobClient,
   BatchJobExecType,
   BatchJobQueryBizInfoReq,
-  BatchJobRateType,
-  BatchJobBizStatus
+  BatchJobRateType
 } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
 import router from "@/router";
@@ -17,8 +16,7 @@ import { useRoute } from "vue-router";
 import {
   execTypeOptions,
   BizFormData,
-  rateTypeOptions,
-  statusOptions
+  rateTypeOptions
 } from "@/views/batch_job/utils/types";
 import { OpSource } from "@/views/batch_job/utils/types";
 import { getToken } from "@/utils/auth";
@@ -26,7 +24,7 @@ import { Loading } from "@element-plus/icons-vue";
 
 // 注册业务/修改业务
 defineOptions({
-  name: "RegistryBiz"
+  name: "JobList"
 });
 
 const user = getToken();
@@ -85,15 +83,6 @@ const onSubmit = async () => {
       req.rateType = BatchJobRateType.Serialization;
       break;
   }
-  switch (formData.status) {
-    case 0:
-      req.status = BatchJobBizStatus.None;
-      break;
-    case 1:
-      req.status = BatchJobBizStatus.Hidden;
-      break;
-  }
-  if (!isChange) req.status = BatchJobBizStatus.None;
 
   if (isChange) {
     await batchJobClient
@@ -125,6 +114,9 @@ const onSubmit = async () => {
   isLoading.value = false;
 };
 
+// 重置数据
+// Object.assign(formData, initData);
+
 // 对于修改数据, 使用服务端的数据填充
 const isChange: boolean = route.name == "ChangeBiz";
 if (isChange) {
@@ -153,15 +145,14 @@ if (isChange) {
           cbBeforeRun: line.cbBeforeRun,
           cbProcess: line.cbProcess,
           cbProcessStop: line.cbProcessStop,
-          cbBeforeCreateTimeout: line.cbBeforeCreateTimeout ?? 0,
-          cbBeforeRunTimeout: line.cbBeforeRunTimeout ?? 0,
-          cbProcessTimeout: line.cbProcessTimeout ?? 0,
-          cbProcessStopTimeout: line.cbProcessStopTimeout ?? 0,
+          cbBeforeCreateTimeout: line.cbBeforeCreateTimeout,
+          cbBeforeRunTimeout: line.cbBeforeRunTimeout,
+          cbProcessTimeout: line.cbProcessTimeout,
+          cbProcessStopTimeout: line.cbProcessStopTimeout,
 
           rateType: Number(line.rateType ?? 0),
-          rateSec: line.rateSec ?? 0,
+          rateSec: line.rateSec,
 
-          status: Number(line.status ?? 0),
           opRemark: line?.op?.opRemark
         });
         console.info("query biz update formData", formData);
@@ -357,40 +348,6 @@ if (isChange) {
             >数据每秒处理速度, 0表示不限速</el-text
           >
         </el-space>
-      </el-form-item>
-
-      <el-form-item label="状态" prop="status" v-if="isChange">
-        <el-select
-          v-model="formData.status"
-          placeholder="Select"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-            <el-space direction="horizontal" :size="50">
-              <span style="float: left">{{ item.label }}</span>
-              <span
-                style="
-                  float: right;
-                  font-size: 13px;
-                  color: var(--el-text-color-secondary);
-                "
-              >
-                {{ item.desc }}</span
-              >
-            </el-space>
-          </el-option>
-        </el-select>
-        <el-text
-          v-if="formData.status == 1"
-          style="color: var(--el-text-color-secondary)"
-        >
-          {{ statusOptions[1]?.desc }}</el-text
-        >
       </el-form-item>
 
       <el-form-item label="操作描述" prop="opRemark">

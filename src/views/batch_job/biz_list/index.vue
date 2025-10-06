@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // 业务列表
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import {
   type BatchJobQueryBizListReq,
   BatchJobQueryBizListRsp
@@ -21,13 +21,18 @@ const pageSize = ref(20);
 const dataTotal = ref(1);
 const isLoading = ref(false);
 
+const queryData = reactive({
+  opUser: ""
+});
+
 const router = useRouter();
 
 const pageChange = () => {
   console.log(`PageChange page: ${page.value} pageSize: ${pageSize.value}`);
   const req: BatchJobQueryBizListReq = {
     page: page.value,
-    pageSize: pageSize.value
+    pageSize: pageSize.value,
+    status: 0
   };
 
   isLoading.value = true;
@@ -55,7 +60,7 @@ function processApiData(r: BatchJobQueryBizListRsp) {
 }
 
 // 使用mock数据填充
-processApiData(mockData);
+// processApiData(mockData);
 
 // 立即刷新
 pageChange();

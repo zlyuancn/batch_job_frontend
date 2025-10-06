@@ -14,3 +14,57 @@ export const raceType2CnName = {
 export enum OpSource {
   Web = "Web"
 }
+
+// 业务表单类型
+export interface BizFormData {
+  bizType: number;
+  bizName: string;
+  remark: string;
+
+  execType: number;
+  cbBeforeCreate: string;
+  cbBeforeRun: string;
+  cbProcess: string;
+  cbProcessStop: string;
+  cbBeforeCreateTimeout: number;
+  cbBeforeRunTimeout: number;
+  cbProcessTimeout: number;
+  cbProcessStopTimeout: number;
+
+  rateType: number;
+  rateSec: number;
+
+  status: number;
+  opRemark?: string;
+}
+
+export const execTypeOptions = [
+  {
+    value: 1,
+    label: "http回调"
+  }
+];
+
+export const rateTypeOptions = [
+  {
+    value: 0,
+    label: "标准限速"
+  },
+  {
+    value: 1,
+    label: "串行化限速",
+    desc: "使用串行化限速时, 只有1个线程处理数据, 数据按顺序有序处理"
+  }
+];
+
+export const statusOptions = [
+  {
+    value: 0,
+    label: "正常"
+  },
+  {
+    value: 1,
+    label: "隐藏",
+    desc: "业务一旦创建后就不应该被删除. 长期不用的业务可以将其隐藏"
+  }
+];

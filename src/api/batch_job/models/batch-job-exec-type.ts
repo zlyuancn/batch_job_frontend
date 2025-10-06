@@ -13,11 +13,11 @@
  */
 
 /**
- * - HttpCallback: http回调
+ * - ExecType_HttpCallback: http回调
  * @export
  * @enum {string}
  */
 export enum BatchJobExecType {
-  None = "None",
-  HttpCallback = "HttpCallback"
+  None = "ExecType_None",
+  HttpCallback = "ExecType_HttpCallback"
 }

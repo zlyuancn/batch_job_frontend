@@ -12,17 +12,12 @@
  * Do not edit the class manually.
  */
 
-import { BatchJobJobBaseInfoA } from "./batch-job-job-base-info-a";
 /**
- *
- *
+ * - BizStatus_None: 正常  - BizStatus_Hidden: 隐藏
  * @export
- * @interface BatchJobQueryJobBaseInfoRsp
+ * @enum {string}
  */
-export interface BatchJobQueryJobBaseInfoRsp {
-  /**
-   * @type {BatchJobJobBaseInfoA}
-   * @memberof BatchJobQueryJobBaseInfoRsp
-   */
-  baseInfo?: BatchJobJobBaseInfoA;
+export enum BatchJobBizStatus {
+  None = "BizStatus_None",
+  Hidden = "BizStatus_Hidden"
 }

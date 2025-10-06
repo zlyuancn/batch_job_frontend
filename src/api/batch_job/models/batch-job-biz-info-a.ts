@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobBizStatus } from "./batch-job-biz-status";
 import { BatchJobExecType } from "./batch-job-exec-type";
 import { BatchJobOpInfoA } from "./batch-job-op-info-a";
 import { BatchJobRateType } from "./batch-job-rate-type";
@@ -111,4 +112,10 @@ export interface BatchJobBizInfoA {
    * @memberof BatchJobBizInfoA
    */
   op?: BatchJobOpInfoA;
+
+  /**
+   * @type {BatchJobBizStatus}
+   * @memberof BatchJobBizInfoA
+   */
+  status?: BatchJobBizStatus;
 }

@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobBizStatus } from "./batch-job-biz-status";
 /**
  *
  *
@@ -19,24 +20,6 @@
  * @interface BatchJobQueryBizListReq
  */
 export interface BatchJobQueryBizListReq {
-  /**
-   * @type {string}
-   * @memberof BatchJobQueryBizListReq
-   */
-  startTime?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobQueryBizListReq
-   */
-  endTime?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobQueryBizListReq
-   */
-  opUser?: string;
-
   /**
    * @type {number}
    * @memberof BatchJobQueryBizListReq
@@ -48,4 +31,16 @@ export interface BatchJobQueryBizListReq {
    * @memberof BatchJobQueryBizListReq
    */
   pageSize?: number;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobQueryBizListReq
+   */
+  opUser?: string;
+
+  /**
+   * @type {BatchJobBizStatus}
+   * @memberof BatchJobQueryBizListReq
+   */
+  status?: BatchJobBizStatus;
 }

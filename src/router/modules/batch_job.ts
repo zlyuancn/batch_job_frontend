@@ -30,6 +30,14 @@ export default {
         title: "修改业务",
         showLink: false
       }
+    },
+    {
+      path: "/BatchJob/JobList",
+      name: "JobList",
+      component: () => import("@/views/batch_job/job_list/index.vue"),
+      meta: {
+        title: "任务列表"
+      }
     }
   ]
 } as RouteConfigsTable;
