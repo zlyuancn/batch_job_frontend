@@ -41,5 +41,11 @@ export interface BatchJobOpInfoA {
    * @type {string}
    * @memberof BatchJobOpInfoA
    */
+  opRemark?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobOpInfoA
+   */
   opTime?: string;
 }

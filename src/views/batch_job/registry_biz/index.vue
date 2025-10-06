@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import { formData } from "./data";
+import { formData, initData } from "./data";
 import { rules, ruleFormRef } from "./rule";
 import { ref } from "vue";
 import {
   type BatchJobAdminRegistryBizReq,
+  type BatchJobOpInfoQ,
   batchJobClient,
   BatchJobExecType,
+  BatchJobQueryBizInfoReq,
   BatchJobRateType
 } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
 import router from "@/router";
 import { useRoute } from "vue-router";
-import { execTypeOptions, rateTypeOptions } from "./types";
+import { execTypeOptions, FormData, rateTypeOptions } from "./types";
+import { OpSource } from "@/views/batch_job/utils/types";
+import { getToken } from "@/utils/auth";
 
 // 注册业务/修改业务
 defineOptions({
   name: "RegistryBiz"
 });
+
+const user = getToken();
 
 const route = useRoute();
 
@@ -29,28 +35,35 @@ const onSubmit = async () => {
     await ruleFormRef.value.validate();
     console.log("submit!", formData);
 
-    const req = <BatchJobAdminRegistryBizReq>{
-      bizType: formData.biz_type,
-      bizName: formData.biz_name,
+    const req: BatchJobAdminRegistryBizReq = {
+      bizType: formData.bizType,
+      bizName: formData.bizName,
       remark: formData.remark,
 
-      cbBeforeCreate: formData.cb_before_create,
-      cbBeforeRun: formData.cb_before_run,
-      cbProcess: formData.cb_process,
-      cbProcessStop: formData.cb_process_stop,
-      cbBeforeCreateTimeout: formData.cb_before_create_timeout,
-      cbBeforeRunTimeout: formData.cb_before_run_timeout,
-      cbProcessTimeout: formData.cb_process_timeout,
-      cbProcessStopTimeout: formData.cb_process_stop_timeout,
+      cbBeforeCreate: formData.cbBeforeCreate,
+      cbBeforeRun: formData.cbBeforeRun,
+      cbProcess: formData.cbProcess,
+      cbProcessStop: formData.cbProcessStop,
+      cbBeforeCreateTimeout: formData.cbBeforeCreateTimeout,
+      cbBeforeRunTimeout: formData.cbBeforeRunTimeout,
+      cbProcessTimeout: formData.cbProcessTimeout,
+      cbProcessStopTimeout: formData.cbProcessStopTimeout,
 
-      rateSec: formData.rate_sec
+      rateSec: formData.rateSec,
+
+      op: {
+        opSource: OpSource.Web,
+        opUserid: user.username,
+        opUserName: user.nickname,
+        opRemark: formData.opRemark
+      }
     };
-    switch (formData.exec_type) {
+    switch (formData.execType) {
       case 1:
         req.execType = BatchJobExecType.HttpCallback;
         break;
     }
-    switch (formData.rate_type) {
+    switch (formData.rateType) {
       case 0:
         req.rateType = BatchJobRateType.RateSec;
         break;
@@ -60,7 +73,7 @@ const onSubmit = async () => {
     }
 
     if (isChange) {
-      await batchJobClient
+      batchJobClient
         .batchJobServiceAdminChangeBiz(req)
         .then(result => {
           console.log(result);
@@ -73,7 +86,7 @@ const onSubmit = async () => {
           message("修改失败\n" + errMsg, { type: "error" });
         });
     } else {
-      await batchJobClient
+      batchJobClient
         .batchJobServiceAdminRegistryBiz(req)
         .then(result => {
           console.log(result);
@@ -92,10 +105,57 @@ const onSubmit = async () => {
   loading.value = false;
 };
 
+// 重置数据
+Object.assign(formData, initData);
+
+// 对于修改数据, 使用服务端的数据填充
 const isChange: boolean = route.name == "ChangeBiz";
 if (isChange) {
-  // formData.biz_type = Number(route.query["biz_type"]);
-  // todo 查询业务信息
+  formData.bizType = Number(route.query["bizType"]);
+  // 查询业务信息
+  const req: BatchJobQueryBizInfoReq = {
+    bizType: Number(route.query["bizType"])
+  };
+  loading.value = true;
+  batchJobClient
+    .batchJobServiceQueryBizInfo(req)
+    .then(result => {
+      console.log("query biz result", result);
+      const line = result?.data?.line;
+      if (!line) {
+        message("查询数据失败\n无法获取到 line", { type: "error" });
+      } else {
+        console.log("query biz line result", line);
+        Object.assign(formData, <FormData>{
+          bizType: line.bizType,
+          bizName: line.bizName,
+          remark: line.remark,
+
+          execType: Number(line.execType ?? 0),
+          cbBeforeCreate: line.cbBeforeCreate,
+          cbBeforeRun: line.cbBeforeRun,
+          cbProcess: line.cbProcess,
+          cbProcessStop: line.cbProcessStop,
+          cbBeforeCreateTimeout: line.cbBeforeCreateTimeout,
+          cbBeforeRunTimeout: line.cbBeforeRunTimeout,
+          cbProcessTimeout: line.cbProcessTimeout,
+          cbProcessStopTimeout: line.cbProcessStopTimeout,
+
+          rateType: Number(line.rateType ?? 0),
+          rateSec: line.rateSec,
+
+          opRemark: line?.op?.opRemark
+        });
+        console.info("query biz update formData", formData);
+      }
+    })
+    .catch(err => {
+      const errMsg = err?.response?.data?.message ?? err;
+      message("查询数据失败\n" + errMsg, { type: "error" });
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 }
 </script>
 
@@ -108,11 +168,11 @@ if (isChange) {
       label-width="auto"
       style="max-width: 800px"
     >
-      <el-form-item label="业务类型" prop="biz_type">
+      <el-form-item label="业务类型" prop="bizType">
         <el-space direction="horizontal">
           <el-input-number
             :min="1"
-            v-model="formData.biz_type"
+            v-model="formData.bizType"
             :disabled="isChange"
           />
           <el-text style="color: var(--el-text-color-secondary)"
@@ -120,8 +180,8 @@ if (isChange) {
           >
         </el-space>
       </el-form-item>
-      <el-form-item label="业务名" prop="biz_name">
-        <el-input maxlength="32" show-word-limit v-model="formData.biz_name" />
+      <el-form-item label="业务名" prop="bizName">
+        <el-input maxlength="32" show-word-limit v-model="formData.bizName" />
         <el-text style="color: var(--el-text-color-secondary)"
           >用于展示, 让使用者大概知道这个业务是什么</el-text
         >
@@ -136,9 +196,9 @@ if (isChange) {
         />
       </el-form-item>
 
-      <el-form-item label="执行类型" prop="exec_type">
+      <el-form-item label="执行类型" prop="execType">
         <el-select
-          v-model="formData.exec_type"
+          v-model="formData.execType"
           placeholder="Select"
           style="width: 240px"
         >
@@ -152,93 +212,93 @@ if (isChange) {
       </el-form-item>
 
       <el-space direction="horizontal" size="small">
-        <el-form-item label="创建任务回调url" prop="cb_before_create">
+        <el-form-item label="创建任务回调url" prop="cbBeforeCreate">
           <el-input
             maxlength="128"
             show-word-limit
-            v-model="formData.cb_before_create"
+            v-model="formData.cbBeforeCreate"
             style="width: 400px"
           />
         </el-form-item>
         <el-form-item
-          v-if="formData.cb_before_create.length > 0"
+          v-if="formData.cbBeforeCreate?.length > 0"
           label="超时秒数"
-          prop="cb_before_create_timeout"
+          prop="cbBeforeCreateTimeout"
         >
           <el-input-number
             :min="0"
             :max="60"
-            v-model="formData.cb_before_create_timeout"
+            v-model="formData.cbBeforeCreateTimeout"
           />
         </el-form-item>
       </el-space>
       <el-space direction="horizontal" size="small">
-        <el-form-item label="启动前回调" prop="cb_before_run">
+        <el-form-item label="启动前回调" prop="cbBeforeRun">
           <el-input
             maxlength="128"
             show-word-limit
-            v-model="formData.cb_before_run"
+            v-model="formData.cbBeforeRun"
             style="width: 400px"
           />
         </el-form-item>
         <el-form-item
-          v-if="formData.cb_before_run.length > 0"
+          v-if="formData.cbBeforeRun?.length > 0"
           label="超时秒数"
-          prop="cb_before_run_timeout"
+          prop="cbBeforeRunTimeout"
         >
           <el-input-number
             :min="0"
             :max="3600"
-            v-model="formData.cb_before_run_timeout"
+            v-model="formData.cbBeforeRunTimeout"
           />
         </el-form-item>
       </el-space>
       <el-space direction="horizontal" size="small">
-        <el-form-item label="处理任务回调" prop="cb_process">
+        <el-form-item label="处理任务回调" prop="cbProcess">
           <el-input
             maxlength="128"
             show-word-limit
-            v-model="formData.cb_process"
+            v-model="formData.cbProcess"
             style="width: 400px"
           />
         </el-form-item>
         <el-form-item
-          v-if="formData.cb_process.length > 0"
+          v-if="formData.cbProcess?.length > 0"
           label="超时秒数"
-          prop="cb_process_timeout"
+          prop="cbProcessTimeout"
         >
           <el-input-number
             :min="0"
             :max="3600"
-            v-model="formData.cb_process_timeout"
+            v-model="formData.cbProcessTimeout"
           />
         </el-form-item>
       </el-space>
       <el-space direction="horizontal" size="small">
-        <el-form-item label="任务停止回调" prop="cb_process_stop">
+        <el-form-item label="任务停止回调" prop="cbProcessStop">
           <el-input
             maxlength="128"
             show-word-limit
-            v-model="formData.cb_process_stop"
+            v-model="formData.cbProcessStop"
             style="width: 400px"
           />
         </el-form-item>
         <el-form-item
-          v-if="formData.cb_process_stop.length > 0"
+          v-if="formData.cbProcessStop?.length > 0"
           label="超时秒数"
-          prop="cb_process_stop_timeout"
+          prop="cbProcessStopTimeout"
         >
           <el-input-number
             :min="0"
             :max="3600"
-            v-model="formData.cb_process_stop_timeout"
+            v-model="formData.cbProcessStopTimeout"
           />
         </el-form-item>
       </el-space>
 
-      <el-form-item label="限速类型" prop="rate_type">
+      <el-form-item label="限速类型" prop="rateType">
         <el-select
-          v-model="formData.rate_type"
+          v-model="formData.rateType"
           placeholder="Select"
           style="width: 240px"
         >
@@ -263,7 +323,7 @@ if (isChange) {
           </el-option>
         </el-select>
         <el-text
-          v-if="formData.rate_type == 1"
+          v-if="formData.rateType == 1"
           style="color: var(--el-text-color-secondary)"
         >
           {{ rateTypeOptions[1]?.desc }}</el-text
@@ -275,12 +335,22 @@ if (isChange) {
             :min="0"
             :max="10000"
             :step="10"
-            v-model="formData.rate_sec"
+            v-model="formData.rateSec"
           />
           <el-text style="color: var(--el-text-color-secondary)"
             >数据每秒处理速度, 0表示不限速</el-text
           >
         </el-space>
+      </el-form-item>
+
+      <el-form-item label="操作描述" prop="opRemark">
+        <el-input
+          type="textarea"
+          :autosize="{ minRows: 2 }"
+          :maxlength="1000"
+          show-word-limit
+          v-model="formData.opRemark"
+        />
       </el-form-item>
 
       <el-form-item>

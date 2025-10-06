@@ -10,12 +10,17 @@ export const mockData: BatchJobQueryBizListRsp = {
   pageSize: 1,
   line: [
     {
-      bizType: 1,
+      bizType: 23,
       bizName: "测试名",
       remark: "备注数据",
       execType: BatchJobExecType.HttpCallback,
-      rateType: BatchJobRateType.RateSec,
-      rateSec: 300
+      rateType: BatchJobRateType.Serialization,
+      rateSec: 300,
+      op: {
+        opUserid: "123",
+        opUserName: "我是谁",
+        opTime: "1759724919"
+      }
     }
   ]
 };

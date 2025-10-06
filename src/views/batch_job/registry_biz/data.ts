@@ -1,21 +1,24 @@
 import { reactive } from "vue";
 import { FormData } from "./types";
 
-export const formData = reactive<FormData>({
-  biz_type: 0,
-  biz_name: "",
+export const initData = {
+  bizType: 0,
+  bizName: "",
   remark: "",
 
-  exec_type: 1,
-  cb_before_create: "",
-  cb_before_run: "",
-  cb_process: "",
-  cb_process_stop: "",
-  cb_before_create_timeout: 5,
-  cb_before_run_timeout: 60,
-  cb_process_timeout: 60,
-  cb_process_stop_timeout: 60,
+  execType: 1,
+  cbBeforeCreate: "",
+  cbBeforeRun: "",
+  cbProcess: "",
+  cbProcessStop: "",
+  cbBeforeCreateTimeout: 5,
+  cbBeforeRunTimeout: 60,
+  cbProcessTimeout: 60,
+  cbProcessStopTimeout: 60,
 
-  rate_type: 0,
-  rate_sec: 1000
-});
+  rateType: 0,
+  rateSec: 1000,
+
+  opRemark: ""
+};
+export const formData = reactive<FormData>(Object.assign({}, initData));

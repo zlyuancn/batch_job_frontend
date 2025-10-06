@@ -5,6 +5,7 @@ import { BatchJobQueryBizListRsp } from "@/api/batch_job_client";
 import { columnsRule } from "./rule";
 import { mockData } from "./data";
 import { Loading } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 
 defineOptions({
   name: "BizList"
@@ -14,6 +15,8 @@ const page = ref(1);
 const pageSize = ref(20);
 const dataTotal = ref(1);
 const isLoading = ref(false);
+
+const router = useRouter();
 
 const pageChange = () => {
   console.log(`PageChange page: ${page.value} pageSize: ${pageSize.value}`);
@@ -43,10 +46,11 @@ pageChange();
       <!-- 让布局容器充满可用空间 -->
       <el-container class="flex-1 flex flex-col">
         <el-header>
-          <el-button size="large" type="primary">新增业务</el-button>
-          <el-button size="large" type="primary">新增业务</el-button>
-          <el-button size="large" type="primary">新增业务</el-button>
-          <el-button size="large" type="primary">新增业务</el-button>
+          <el-button
+            type="primary"
+            @click="router.push({ name: 'RegistryBiz' })"
+            >新增业务</el-button
+          >
         </el-header>
         <!-- 容器使用flex布局 -->
         <el-main class="flex-1 overflow-hidden p-0">

@@ -13,6 +13,7 @@
  */
 
 import { BatchJobExecType } from "./batch-job-exec-type";
+import { BatchJobOpInfoQ } from "./batch-job-op-info-q";
 import { BatchJobRateType } from "./batch-job-rate-type";
 /**
  *
@@ -104,4 +105,10 @@ export interface BatchJobAdminRegistryBizReq {
    * @memberof BatchJobAdminRegistryBizReq
    */
   rateSec?: number;
+
+  /**
+   * @type {BatchJobOpInfoQ}
+   * @memberof BatchJobAdminRegistryBizReq
+   */
+  op?: BatchJobOpInfoQ;
 }

@@ -1,20 +1,22 @@
 export interface FormData {
-  biz_type: number;
-  biz_name: string;
+  bizType: number;
+  bizName: string;
   remark: string;
 
-  exec_type: number;
-  cb_before_create: string;
-  cb_before_run: string;
-  cb_process: string;
-  cb_process_stop: string;
-  cb_before_create_timeout: number;
-  cb_before_run_timeout: number;
-  cb_process_timeout: number;
-  cb_process_stop_timeout: number;
+  execType: number;
+  cbBeforeCreate: string;
+  cbBeforeRun: string;
+  cbProcess: string;
+  cbProcessStop: string;
+  cbBeforeCreateTimeout: number;
+  cbBeforeRunTimeout: number;
+  cbProcessTimeout: number;
+  cbProcessStopTimeout: number;
 
-  rate_type: number;
-  rate_sec: number;
+  rateType: number;
+  rateSec: number;
+
+  opRemark?: string;
 }
 
 export const execTypeOptions = [

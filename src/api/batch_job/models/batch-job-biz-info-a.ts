@@ -13,6 +13,7 @@
  */
 
 import { BatchJobExecType } from "./batch-job-exec-type";
+import { BatchJobOpInfoA } from "./batch-job-op-info-a";
 import { BatchJobRateType } from "./batch-job-rate-type";
 /**
  *
@@ -38,6 +39,12 @@ export interface BatchJobBizInfoA {
    * @memberof BatchJobBizInfoA
    */
   remark?: string;
+
+  /**
+   * @type {BatchJobExecType}
+   * @memberof BatchJobBizInfoA
+   */
+  execType?: BatchJobExecType;
 
   /**
    * @type {string}
@@ -88,20 +95,20 @@ export interface BatchJobBizInfoA {
   cbProcessStopTimeout?: number;
 
   /**
-   * @type {number}
-   * @memberof BatchJobBizInfoA
-   */
-  rateSec?: number;
-
-  /**
    * @type {BatchJobRateType}
    * @memberof BatchJobBizInfoA
    */
   rateType?: BatchJobRateType;
 
   /**
-   * @type {BatchJobExecType}
+   * @type {number}
    * @memberof BatchJobBizInfoA
    */
-  execType?: BatchJobExecType;
+  rateSec?: number;
+
+  /**
+   * @type {BatchJobOpInfoA}
+   * @memberof BatchJobBizInfoA
+   */
+  op?: BatchJobOpInfoA;
 }

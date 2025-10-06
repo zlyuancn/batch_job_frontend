@@ -1,6 +1,7 @@
 import { Columns } from "element-plus";
 import { execType2CnName, raceType2CnName } from "../utils/types";
 import { useRouter } from "vue-router";
+import { formatTimestamp } from "@/views/batch_job/utils/time";
 
 export const columnsRule: Columns<any> = [
   { key: "bizType", dataKey: "bizType", title: "业务类型", width: 100 },
@@ -9,47 +10,63 @@ export const columnsRule: Columns<any> = [
     key: "execType",
     dataKey: "execType",
     title: "执行类型",
-    width: 200,
+    width: 100,
     cellRenderer: ({ cellData: v }) => <span> {execType2CnName[v]} </span>
   },
   {
     key: "rateType",
     dataKey: "rateType",
     title: "限速类型",
-    width: 200,
+    width: 100,
     cellRenderer: ({ cellData: v }) => <span> {raceType2CnName[v]} </span>
   },
   {
     key: "rateSec",
     dataKey: "rateSec",
     title: "每秒限速",
-    width: 200,
+    width: 100,
     cellRenderer: ({ cellData: v }) => <span> {v} /s</span>
   },
   {
+    key: "opUser",
+    title: "操作用户",
+    width: 150,
+    cellRenderer: v => (
+      <span>
+        {v?.rowData?.op?.opUserid} ({v?.rowData?.op?.opUserName})
+      </span>
+    )
+  },
+  {
+    key: "opTime",
+    title: "更新时间",
+    width: 150,
+    cellRenderer: v => <span>{formatTimestamp(v?.rowData?.op?.opTime)}</span>
+  },
+  {
     key: "operations",
-    title: "Operations",
-    cellRenderer: record => {
+    title: "",
+    cellRenderer: v => {
       const router = useRouter();
       const handleEdit = () => {
         router.push({
           name: "ChangeBiz",
-          query: { biz_type: record.rowData.bizType }
+          query: { bizType: v.rowData.bizType }
         });
       };
 
       const handleDelete = () => {
-        console.info("删除", record.rowData.bizType);
+        console.info("删除", v.rowData.bizType);
       };
 
       return (
         <>
-          <ElButton size="small" onClick={handleEdit}>
+          <el-button size="small" onClick={handleEdit}>
             编辑
-          </ElButton>
-          <ElButton size="small" onClick={handleDelete} type="danger">
+          </el-button>
+          <el-button size="small" onClick={handleDelete} type="danger">
             删除
-          </ElButton>
+          </el-button>
         </>
       );
     },

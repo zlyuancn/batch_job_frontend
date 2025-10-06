@@ -1,6 +1,6 @@
 export default {
   path: "/BatchJob",
-  redirect: "/BatchJob/RegistryBiz",
+  redirect: "/BatchJob/BizList",
   meta: {
     title: "批量工具"
   },
@@ -18,7 +18,8 @@ export default {
       name: "RegistryBiz",
       component: () => import("@/views/batch_job/registry_biz/index.vue"),
       meta: {
-        title: "注册业务"
+        title: "注册业务",
+        showLink: false
       }
     },
     {
@@ -26,7 +27,8 @@ export default {
       name: "ChangeBiz",
       component: () => import("@/views/batch_job/registry_biz/index.vue"),
       meta: {
-        title: "修改业务"
+        title: "修改业务",
+        showLink: false
       }
     }
   ]

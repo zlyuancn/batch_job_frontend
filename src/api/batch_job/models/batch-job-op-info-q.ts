@@ -36,4 +36,10 @@ export interface BatchJobOpInfoQ {
    * @memberof BatchJobOpInfoQ
    */
   opUserName?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobOpInfoQ
+   */
+  opRemark?: string;
 }

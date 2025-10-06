@@ -26,7 +26,7 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 import { addPathMatch } from "@/router/utils";
 
 onBeforeMount(() => {
-  setToken({ username: "admin" });
+  setToken({ username: "admin", nickname: "管理员", roles: ["admin"] });
   // 全部采取静态路由模式
   usePermissionStoreHook().handleWholeMenus([]);
   addPathMatch();

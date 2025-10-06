@@ -202,7 +202,7 @@ router.beforeEach((to: ToRouteType, _from, next) => {
         next({ path: "/login" });
       }
     } else {
-      setToken({ username: "admin" });
+      setToken({ username: "admin", nickname: "管理员", roles: ["admin"] });
       // 全部采取静态路由模式
       usePermissionStoreHook().handleWholeMenus([]);
       addPathMatch();
