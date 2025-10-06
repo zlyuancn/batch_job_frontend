@@ -7,7 +7,7 @@ import {
 // 样例数据
 export const mockData: BatchJobQueryBizListRsp = {
   total: 250,
-  pageSize: 1,
+  pageSize: 20,
   line: [
     {
       bizType: 23,

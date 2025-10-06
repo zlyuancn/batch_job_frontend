@@ -106,7 +106,7 @@ const onSubmit = async () => {
 };
 
 // 重置数据
-Object.assign(formData, initData);
+// Object.assign(formData, initData);
 
 // 对于修改数据, 使用服务端的数据填充
 const isChange: boolean = route.name == "ChangeBiz";

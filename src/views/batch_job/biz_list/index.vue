@@ -1,11 +1,16 @@
 <script setup lang="ts">
 // 业务列表
 import { ref } from "vue";
-import { BatchJobQueryBizListRsp } from "@/api/batch_job_client";
+import {
+  type BatchJobQueryBizListReq,
+  BatchJobQueryBizListRsp
+} from "@/api/batch_job_client";
 import { columnsRule } from "./rule";
 import { mockData } from "./data";
 import { Loading } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
+import { batchJobClient } from "@/api/batch_job_client";
+import { message } from "@/utils/message";
 
 defineOptions({
   name: "BizList"
@@ -20,6 +25,24 @@ const router = useRouter();
 
 const pageChange = () => {
   console.log(`PageChange page: ${page.value} pageSize: ${pageSize.value}`);
+  const req: BatchJobQueryBizListReq = {
+    page: page.value,
+    pageSize: pageSize.value
+  };
+
+  isLoading.value = true;
+  batchJobClient
+    .batchJobServiceQueryBizList(req)
+    .then(res => {
+      processApiData(res.data);
+    })
+    .catch(err => {
+      const errMsg = err?.response?.data?.message ?? err;
+      message("数据获取失败\n" + errMsg, { type: "error" });
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const data = ref<Array<any>>([]);
@@ -27,6 +50,7 @@ const data = ref<Array<any>>([]);
 // 数据处理
 function processApiData(r: BatchJobQueryBizListRsp) {
   data.value = r.line;
+  pageSize.value = r.pageSize;
   dataTotal.value = r.total;
 }
 
