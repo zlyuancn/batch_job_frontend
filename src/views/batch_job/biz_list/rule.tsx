@@ -51,7 +51,7 @@ export const columnsRule: Columns<any> = [
       const router = useRouter();
       const handleView = () => {
         router.push({
-          name: "JobList",
+          name: "BizInfo",
           query: { bizType: v.rowData.bizType }
         });
       };

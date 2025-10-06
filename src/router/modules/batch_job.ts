@@ -14,6 +14,15 @@ export default {
       }
     },
     {
+      path: "/BatchJob/BizInfo",
+      name: "BizInfo",
+      component: () => import("@/views/batch_job/biz_info/index.vue"),
+      meta: {
+        title: "业务详情",
+        showLink: false
+      }
+    },
+    {
       path: "/BatchJob/RegistryBiz",
       name: "RegistryBiz",
       component: () => import("@/views/batch_job/registry_biz/index.vue"),
