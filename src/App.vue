@@ -11,6 +11,9 @@ import { ElConfigProvider } from "element-plus";
 import { ReDialog } from "@/components/ReDialog";
 import zhCn from "element-plus/es/locale/lang/zh-cn";
 
+import { dayjs } from "element-plus";
+dayjs.en.weekStart = 1;
+
 export default defineComponent({
   name: "app",
   components: {

@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobJobStatusQ } from "./batch-job-job-status-q";
 /**
  *
  *
@@ -19,6 +20,30 @@
  * @interface BatchJobQueryJobListReq
  */
 export interface BatchJobQueryJobListReq {
+  /**
+   * @type {number}
+   * @memberof BatchJobQueryJobListReq
+   */
+  page?: number;
+
+  /**
+   * @type {number}
+   * @memberof BatchJobQueryJobListReq
+   */
+  pageSize?: number;
+
+  /**
+   * @type {number}
+   * @memberof BatchJobQueryJobListReq
+   */
+  bizType?: number;
+
+  /**
+   * @type {BatchJobJobStatusQ}
+   * @memberof BatchJobQueryJobListReq
+   */
+  status?: BatchJobJobStatusQ;
+
   /**
    * @type {string}
    * @memberof BatchJobQueryJobListReq
@@ -36,22 +61,4 @@ export interface BatchJobQueryJobListReq {
    * @memberof BatchJobQueryJobListReq
    */
   opUser?: string;
-
-  /**
-   * @type {Array<number>}
-   * @memberof BatchJobQueryJobListReq
-   */
-  bizType?: Array<number>;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobQueryJobListReq
-   */
-  page?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobQueryJobListReq
-   */
-  pageSize?: number;
 }

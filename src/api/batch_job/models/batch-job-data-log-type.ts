@@ -13,13 +13,13 @@
  */
 
 /**
- * - Debug: 调试  - Info: 信息  - Warn: 警告  - Err: 错误
+ * - DataLogType_Debug: 调试  - DataLogType_Info: 信息  - DataLogType_Warn: 警告  - DataLogType_Err: 错误
  * @export
  * @enum {string}
  */
 export enum BatchJobDataLogType {
-  Debug = "Debug",
-  Info = "Info",
-  Warn = "Warn",
-  Err = "Err"
+  Debug = "DataLogType_Debug",
+  Info = "DataLogType_Info",
+  Warn = "DataLogType_Warn",
+  Err = "DataLogType_Err"
 }

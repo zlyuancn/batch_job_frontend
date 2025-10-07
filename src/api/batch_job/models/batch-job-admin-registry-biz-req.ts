@@ -15,7 +15,6 @@
 import { BatchJobBizStatus } from "./batch-job-biz-status";
 import { BatchJobExecType } from "./batch-job-exec-type";
 import { BatchJobOpInfoQ } from "./batch-job-op-info-q";
-import { BatchJobRateType } from "./batch-job-rate-type";
 /**
  *
  *
@@ -94,18 +93,6 @@ export interface BatchJobAdminRegistryBizReq {
    * @memberof BatchJobAdminRegistryBizReq
    */
   cbProcessStopTimeout?: number;
-
-  /**
-   * @type {BatchJobRateType}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  rateType?: BatchJobRateType;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  rateSec?: number;
 
   /**
    * @type {BatchJobOpInfoQ}

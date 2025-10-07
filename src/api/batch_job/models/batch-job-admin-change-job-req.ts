@@ -18,48 +18,60 @@ import { BatchJobRateType } from "./batch-job-rate-type";
  *
  *
  * @export
- * @interface BatchJobAdminCreateJobReq
+ * @interface BatchJobAdminChangeJobReq
  */
-export interface BatchJobAdminCreateJobReq {
+export interface BatchJobAdminChangeJobReq {
   /**
    * @type {number}
-   * @memberof BatchJobAdminCreateJobReq
+   * @memberof BatchJobAdminChangeJobReq
    */
   bizType?: number;
 
   /**
    * @type {string}
-   * @memberof BatchJobAdminCreateJobReq
+   * @memberof BatchJobAdminChangeJobReq
    */
   bizData?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobAdminCreateJobReq
+   * @memberof BatchJobAdminChangeJobReq
+   */
+  bizProcessData?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobAdminChangeJobReq
    */
   processDataTotal?: string;
 
   /**
+   * @type {boolean}
+   * @memberof BatchJobAdminChangeJobReq
+   */
+  startNow?: boolean;
+
+  /**
    * @type {BatchJobRateType}
-   * @memberof BatchJobAdminCreateJobReq
+   * @memberof BatchJobAdminChangeJobReq
    */
   rateType?: BatchJobRateType;
 
   /**
    * @type {number}
-   * @memberof BatchJobAdminCreateJobReq
+   * @memberof BatchJobAdminChangeJobReq
    */
   rateSec?: number;
 
   /**
    * @type {BatchJobOpInfoQ}
-   * @memberof BatchJobAdminCreateJobReq
+   * @memberof BatchJobAdminChangeJobReq
    */
   op?: BatchJobOpInfoQ;
 
   /**
-   * @type {boolean}
-   * @memberof BatchJobAdminCreateJobReq
+   * @type {string}
+   * @memberof BatchJobAdminChangeJobReq
    */
-  startNow?: boolean;
+  jobId?: string;
 }

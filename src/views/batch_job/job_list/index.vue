@@ -1,275 +1,199 @@
 <script setup lang="ts">
-import { BatchJobBizInfoA2BizFormData, bizFormInitData } from "../utils/data";
-import { reactive, ref } from "vue";
+// 业务列表
+import { reactive, ref, watch } from "vue";
 import {
-  batchJobClient,
-  BatchJobQueryBizInfoReq
+  BatchJobJobStatusQ,
+  BatchJobQueryJobListReq,
+  BatchJobQueryJobListRsp
 } from "@/api/batch_job_client";
+import { columnsRule } from "./rule";
+import { mockData } from "./data";
+import { Loading } from "@element-plus/icons-vue";
+import { useRoute, useRouter } from "vue-router";
+import { batchJobClient } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
-import router from "@/router";
-import { useRoute } from "vue-router";
-import {
-  execTypeOptions,
-  BizFormData,
-  rateTypeOptions,
-  statusOptions
-} from "../utils/types";
+import { jobListQueryArgs } from "../utils/data";
+import { date2Timestamp } from "@/views/batch_job/utils/time";
 
-// 注册业务/修改业务
 defineOptions({
   name: "JobList"
 });
 
+const isLoading = ref(false);
+const defaultTime = ref<[Date, Date]>([
+  new Date(2000, 1, 1, 0, 0, 0),
+  new Date(2000, 2, 1, 23, 59, 59)
+]);
+
+const queryDataIsChange = ref(false);
+watch(jobListQueryArgs, newV => {
+  queryDataIsChange.value = true;
+});
+
+const router = useRouter();
 const route = useRoute();
 
-const isLoading = ref(false);
-
-const formData = reactive<BizFormData>(Object.assign({}, bizFormInitData));
-
-// 使用服务端的数据填充
-function initData() {
-  formData.bizType = Number(route.query["bizType"]);
-  // 查询业务信息
-  const req: BatchJobQueryBizInfoReq = {
-    bizType: Number(route.query["bizType"])
-  };
+jobListQueryArgs.bizType = Number(route.query["bizType"]);
+const pageChange = () => {
   isLoading.value = true;
+  console.log("jobListQueryArgs", jobListQueryArgs);
+  const req: BatchJobQueryJobListReq = {
+    page: jobListQueryArgs.page,
+    pageSize: jobListQueryArgs.pageSize,
+    bizType: jobListQueryArgs.bizType,
+    opUser: jobListQueryArgs.opUser
+  };
+  switch (jobListQueryArgs.status) {
+    case "0":
+      req.status = BatchJobJobStatusQ.Created;
+      break;
+    case "2":
+      req.status = BatchJobJobStatusQ.Running;
+      break;
+    case "3":
+      req.status = BatchJobJobStatusQ.Finished;
+      break;
+  }
+  if (jobListQueryArgs?.rangeTime.length == 2) {
+    console.log(
+      "jobListQueryArgs rangeTime",
+      date2Timestamp(jobListQueryArgs.rangeTime[0]),
+      date2Timestamp(jobListQueryArgs.rangeTime[1])
+    );
+  }
+
   batchJobClient
-    .batchJobServiceQueryBizInfo(req)
-    .then(result => {
-      console.log("query biz result", result);
-      const line = result?.data?.line;
-      if (!line) {
-        message("查询数据失败\n无法获取到 line", { type: "error" });
-      } else {
-        console.log("query biz line result", line);
-        BatchJobBizInfoA2BizFormData(formData, line);
-        console.info("query biz update formData", formData);
-      }
-      isLoading.value = false;
+    .batchJobServiceQueryJobList(req)
+    .then(res => {
+      processApiData(res.data);
     })
     .catch(err => {
       const errMsg = err?.response?.data?.message ?? err;
-      message("查询数据失败\n" + errMsg, { type: "error" });
+      message("数据获取失败\n" + errMsg, { type: "error" });
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
+};
+
+const data = ref<Array<any>>([]);
+
+// 数据处理
+function processApiData(r: BatchJobQueryJobListRsp) {
+  data.value = r.line ?? [];
+  jobListQueryArgs.pageSize = r.pageSize ?? 20;
+  jobListQueryArgs.dataTotal = r.total ?? 0;
 }
-initData();
+
+// 查询变更
+function queryChange() {
+  if (queryDataIsChange.value) {
+    queryDataIsChange.value = false;
+    pageChange();
+  }
+}
+
+// 状态变更
+function statusChange() {
+  jobListQueryArgs.page = 1;
+  pageChange();
+}
+
+// 使用mock数据填充
+processApiData(mockData);
+
+// 立即刷新
+pageChange();
 </script>
 
 <template>
   <div>
-    <el-form
-      :model="formData"
-      ref="ruleFormRef"
-      label-width="auto"
-      style="max-width: 800px"
-      disabled
+    <div
+      class="common-layout flex-1 flex flex-col"
+      style="height: calc(100vh - 100px)"
     >
-      <el-form-item label="业务类型">
-        <el-space direction="horizontal">
-          <el-input-number :min="1" v-model="formData.bizType" />
-          <el-text style="color: var(--el-text-color-secondary)"
-            >全局唯一的值, 表示一个业务的id</el-text
+      <div
+        v-if="isLoading"
+        class="el-loading-mask"
+        style="display: flex; align-items: center; justify-content: center"
+      >
+        <el-icon class="is-loading" color="var(--el-color-primary)" :size="26">
+          <Loading />
+        </el-icon>
+      </div>
+      <!-- 让布局容器充满可用空间 -->
+      <el-container class="flex-1 flex flex-col">
+        <el-header>
+          <el-button
+            type="primary"
+            @click="router.push({ name: 'RegistryBiz' })"
+            >新增业务</el-button
           >
-        </el-space>
-      </el-form-item>
-      <el-form-item label="业务名">
-        <el-input maxlength="32" show-word-limit v-model="formData.bizName" />
-        <el-text style="color: var(--el-text-color-secondary)"
-          >用于展示, 让使用者大概知道这个业务是什么</el-text
-        >
-      </el-form-item>
-      <el-form-item label="备注">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2 }"
-          :maxlength="1000"
-          show-word-limit
-          v-model="formData.remark"
-        />
-      </el-form-item>
+        </el-header>
+        <el-header>
+          <el-space direction="horizontal" size="large">
+            <el-radio-group
+              v-model="jobListQueryArgs.status"
+              @click="statusChange"
+              size="large"
+            >
+              <el-radio-button label="待启动" value="0" />
+              <el-radio-button label="运行中" value="2" />
+              <el-radio-button label="已完成" value="3" />
+            </el-radio-group>
 
-      <el-form-item label="执行类型">
-        <el-select
-          v-model="formData.execType"
-          placeholder="Select"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="item in execTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            <el-input
+              v-model="jobListQueryArgs.opUser"
+              style="max-width: 250px"
+              @blur="queryChange"
+            >
+              <template #prepend>操作用户</template>
+            </el-input>
+            <el-date-picker
+              v-model="jobListQueryArgs.rangeTime"
+              type="daterange"
+              unlink-panels
+              range-separator="To"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :default-time="defaultTime"
+            />
+          </el-space>
+        </el-header>
+        <!-- 容器使用flex布局 -->
+        <el-main class="flex-1 overflow-hidden p-0">
+          <!-- 主内容区占据剩余空间，去除默认padding -->
+          <div class="h-full w-full">
+            <!-- 内部容器充满父元素 -->
+            <el-auto-resizer class="h-full">
+              <!-- 自动调整大小组件充满高度 -->
+              <template #default="{ height, width }">
+                <el-table-v2
+                  :columns="columnsRule"
+                  :data="data"
+                  :width="width"
+                  :height="height"
+                  fixed
+                />
+              </template>
+            </el-auto-resizer>
+          </div>
+        </el-main>
+        <el-footer class="py-3">
+          <!-- 底部区域保持固定高度 -->
+          <el-pagination
+            v-model:current-page="jobListQueryArgs.page"
+            v-model:page-size="jobListQueryArgs.pageSize"
+            background
+            layout="total, prev, pager, next, sizes, jumper"
+            :page-sizes="[20, 50, 100]"
+            @size-change="pageChange"
+            @current-change="pageChange"
+            :total="jobListQueryArgs.dataTotal"
+            :disabled="isLoading"
           />
-        </el-select>
-      </el-form-item>
-
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="创建任务回调url">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbBeforeCreate"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbBeforeCreate?.length > 0"
-          label="超时秒数"
-        >
-          <el-input-number
-            :min="0"
-            :max="60"
-            v-model="formData.cbBeforeCreateTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="启动前回调">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbBeforeRun"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item v-if="formData.cbBeforeRun?.length > 0" label="超时秒数">
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbBeforeRunTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="处理任务回调">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbProcess"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item v-if="formData.cbProcess?.length > 0" label="超时秒数">
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbProcessTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="任务停止回调">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbProcessStop"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbProcessStop?.length > 0"
-          label="超时秒数"
-        >
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbProcessStopTimeout"
-          />
-        </el-form-item>
-      </el-space>
-
-      <el-form-item label="限速类型">
-        <el-select
-          v-model="formData.rateType"
-          placeholder="Select"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="item in rateTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-            <el-space direction="horizontal" :size="50">
-              <span style="float: left">{{ item.label }}</span>
-              <span
-                style="
-                  float: right;
-                  font-size: 13px;
-                  color: var(--el-text-color-secondary);
-                "
-              >
-                {{ item.desc }}</span
-              >
-            </el-space>
-          </el-option>
-        </el-select>
-        <el-text
-          v-if="formData.rateType == 1"
-          style="color: var(--el-text-color-secondary)"
-        >
-          {{ rateTypeOptions[1]?.desc }}</el-text
-        >
-      </el-form-item>
-      <el-form-item label="每秒速率">
-        <el-space direction="horizontal" size="large">
-          <el-input-number
-            :min="0"
-            :max="10000"
-            :step="10"
-            v-model="formData.rateSec"
-          />
-          <el-text style="color: var(--el-text-color-secondary)"
-            >数据每秒处理速度, 0表示不限速</el-text
-          >
-        </el-space>
-      </el-form-item>
-
-      <el-form-item label="状态">
-        <el-select
-          v-model="formData.status"
-          placeholder="Select"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="item in statusOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-            <el-space direction="horizontal" :size="50">
-              <span style="float: left">{{ item.label }}</span>
-              <span
-                style="
-                  float: right;
-                  font-size: 13px;
-                  color: var(--el-text-color-secondary);
-                "
-              >
-                {{ item.desc }}</span
-              >
-            </el-space>
-          </el-option>
-        </el-select>
-        <el-text
-          v-if="formData.status == 1"
-          style="color: var(--el-text-color-secondary)"
-        >
-          {{ statusOptions[1]?.desc }}</el-text
-        >
-      </el-form-item>
-
-      <el-form-item label="操作描述">
-        <el-input
-          type="textarea"
-          :autosize="{ minRows: 2 }"
-          :maxlength="1000"
-          show-word-limit
-          v-model="formData.opRemark"
-        />
-      </el-form-item>
-    </el-form>
-    <el-button @click="router.back()">返回</el-button>
+        </el-footer>
+      </el-container>
+    </div>
   </div>
 </template>

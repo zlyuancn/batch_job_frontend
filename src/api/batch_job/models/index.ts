@@ -1,3 +1,5 @@
+export * from "./batch-job-admin-change-job-req";
+export * from "./batch-job-admin-change-job-rsp";
 export * from "./batch-job-admin-create-job-req";
 export * from "./batch-job-admin-create-job-rsp";
 export * from "./batch-job-admin-registry-biz-req";
@@ -24,6 +26,7 @@ export * from "./batch-job-data-log-type";
 export * from "./batch-job-exec-type";
 export * from "./batch-job-job-base-info-a";
 export * from "./batch-job-job-status";
+export * from "./batch-job-job-status-q";
 export * from "./batch-job-op-info-a";
 export * from "./batch-job-op-info-q";
 export * from "./batch-job-query-biz-info-req";

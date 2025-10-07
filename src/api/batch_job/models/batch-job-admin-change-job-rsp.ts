@@ -16,18 +16,6 @@
  *
  *
  * @export
- * @interface BatchJobQueryBizInfoReq
+ * @interface BatchJobAdminChangeJobRsp
  */
-export interface BatchJobQueryBizInfoReq {
-  /**
-   * @type {number}
-   * @memberof BatchJobQueryBizInfoReq
-   */
-  bizType?: number;
-
-  /**
-   * @type {boolean}
-   * @memberof BatchJobQueryBizInfoReq
-   */
-  needOpHistory?: boolean;
-}
+export interface BatchJobAdminChangeJobRsp {}

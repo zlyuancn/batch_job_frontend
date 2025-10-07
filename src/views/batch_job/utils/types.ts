@@ -10,6 +10,16 @@ export const raceType2CnName = {
   1: "串行化限速"
 };
 
+// 任务状态类型转中文名
+export const JobStatus2CnName = {
+  0: "已创建",
+  1: "等待业务主动启动",
+  2: "运行中",
+  3: "已完成",
+  4: "正在停止",
+  5: "已停止"
+};
+
 // 操作来源
 export enum OpSource {
   Web = "Web"

@@ -13,9 +13,7 @@ export const mockData: BatchJobQueryBizListRsp = {
       bizType: 23,
       bizName: "测试名",
       remark: "备注数据",
-      execType: BatchJobExecType.HttpCallback,
-      rateType: BatchJobRateType.Serialization,
-      rateSec: 300,
+      execType: 1,
       op: {
         opUserid: "123",
         opUserName: "我是谁",

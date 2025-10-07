@@ -28,6 +28,7 @@ watch(bizListQueryArgs, newV => {
 const router = useRouter();
 
 const pageChange = () => {
+  isLoading.value = true;
   console.log(
     `PageChange page: ${bizListQueryArgs.page} pageSize: ${bizListQueryArgs.pageSize}`
   );
@@ -45,7 +46,6 @@ const pageChange = () => {
       break;
   }
 
-  isLoading.value = true;
   batchJobClient
     .batchJobServiceQueryBizList(req)
     .then(res => {

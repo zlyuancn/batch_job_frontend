@@ -34,6 +34,17 @@ export const bizListQueryArgs = reactive({
   showHidden: false
 });
 
+// 任务列表查询参数
+export const jobListQueryArgs = reactive({
+  page: 1,
+  pageSize: 20,
+  dataTotal: 1,
+  opUser: "",
+  bizType: 0,
+  status: "0",
+  rangeTime: []
+});
+
 // 将服务端返回的业务信息转为表单数据
 export const BatchJobBizInfoA2BizFormData = (
   formData: BizFormData,

@@ -13,15 +13,15 @@
  */
 
 /**
- * - Created: 已创建  - WaitBizRun: 等待业务主动启动  - Running: 运行中  - Finished: 已完成  - Stopping: 正在停止  - Stopped: 已停止
+ * - JobStatus_Created: 已创建  - JobStatus_WaitBizRun: 等待业务主动启动  - JobStatus_Running: 运行中  - JobStatus_Finished: 已完成  - JobStatus_Stopping: 正在停止  - JobStatus_Stopped: 已停止
  * @export
  * @enum {string}
  */
 export enum BatchJobJobStatus {
-  Created = "Created",
-  WaitBizRun = "WaitBizRun",
-  Running = "Running",
-  Finished = "Finished",
-  Stopping = "Stopping",
-  Stopped = "Stopped"
+  Created = "JobStatus_Created",
+  WaitBizRun = "JobStatus_WaitBizRun",
+  Running = "JobStatus_Running",
+  Finished = "JobStatus_Finished",
+  Stopping = "JobStatus_Stopping",
+  Stopped = "JobStatus_Stopped"
 }
