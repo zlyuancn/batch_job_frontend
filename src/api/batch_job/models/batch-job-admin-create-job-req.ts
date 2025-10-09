@@ -31,6 +31,12 @@ export interface BatchJobAdminCreateJobReq {
    * @type {string}
    * @memberof BatchJobAdminCreateJobReq
    */
+  jobName?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobAdminCreateJobReq
+   */
   bizData?: string;
 
   /**
@@ -38,6 +44,12 @@ export interface BatchJobAdminCreateJobReq {
    * @memberof BatchJobAdminCreateJobReq
    */
   processDataTotal?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobAdminCreateJobReq
+   */
+  processedCount?: string;
 
   /**
    * @type {BatchJobRateType}

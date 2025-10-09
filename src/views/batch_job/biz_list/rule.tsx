@@ -2,6 +2,7 @@ import { Columns } from "element-plus";
 import { execType2CnName } from "../utils/types";
 import { useRouter } from "vue-router";
 import { formatTimestamp } from "@/views/batch_job/utils/time";
+import { jobListQueryArgs } from "../utils/data";
 
 export const columnsRule: Columns<any> = [
   { key: "bizType", dataKey: "bizType", title: "业务类型", width: 100 },
@@ -36,9 +37,9 @@ export const columnsRule: Columns<any> = [
     cellRenderer: v => {
       const router = useRouter();
       const handleJobList = () => {
+        jobListQueryArgs.bizType = v.rowData.bizType;
         router.push({
-          name: "JobList",
-          query: { bizType: v.rowData.bizType }
+          name: "JobList"
         });
       };
 

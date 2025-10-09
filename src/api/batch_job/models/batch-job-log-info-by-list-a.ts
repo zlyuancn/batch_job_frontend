@@ -12,40 +12,41 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobDataLogType } from "./batch-job-data-log-type";
 /**
  *
  *
  * @export
- * @interface BatchJobBizUpdateBizDataReq
+ * @interface BatchJobLogInfoByListA
  */
-export interface BatchJobBizUpdateBizDataReq {
+export interface BatchJobLogInfoByListA {
   /**
    * @type {string}
-   * @memberof BatchJobBizUpdateBizDataReq
+   * @memberof BatchJobLogInfoByListA
    */
-  jobId?: string;
+  dataId?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizUpdateBizDataReq
+   * @memberof BatchJobLogInfoByListA
    */
-  bizData?: string;
+  remark?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizUpdateBizDataReq
+   * @memberof BatchJobLogInfoByListA
    */
-  bizProcessData?: string;
+  extend?: string;
+
+  /**
+   * @type {BatchJobDataLogType}
+   * @memberof BatchJobLogInfoByListA
+   */
+  logType?: BatchJobDataLogType;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizUpdateBizDataReq
+   * @memberof BatchJobLogInfoByListA
    */
-  processDataTotal?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizUpdateBizDataReq
-   */
-  processedCount?: string;
+  createTime?: string;
 }

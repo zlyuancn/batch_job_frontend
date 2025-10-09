@@ -12,7 +12,7 @@
  * Do not edit the class manually.
  */
 
-import { BatchJobJobBaseInfoA } from "./batch-job-job-base-info-a";
+import { BatchJobJobInfoByListA } from "./batch-job-job-info-by-list-a";
 /**
  *
  *
@@ -33,8 +33,8 @@ export interface BatchJobQueryJobListRsp {
   pageSize?: number;
 
   /**
-   * @type {Array<BatchJobJobBaseInfoA>}
+   * @type {Array<BatchJobJobInfoByListA>}
    * @memberof BatchJobQueryJobListRsp
    */
-  line?: Array<BatchJobJobBaseInfoA>;
+  line?: Array<BatchJobJobInfoByListA>;
 }

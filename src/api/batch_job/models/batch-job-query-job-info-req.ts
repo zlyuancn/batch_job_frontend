@@ -12,29 +12,22 @@
  * Do not edit the class manually.
  */
 
-import { BatchJobLogInfoByListA } from "./batch-job-log-info-by-list-a";
 /**
  *
  *
  * @export
- * @interface BatchJobQueryJobDataLogRsp
+ * @interface BatchJobQueryJobInfoReq
  */
-export interface BatchJobQueryJobDataLogRsp {
+export interface BatchJobQueryJobInfoReq {
   /**
    * @type {string}
-   * @memberof BatchJobQueryJobDataLogRsp
+   * @memberof BatchJobQueryJobInfoReq
    */
-  nextCursor?: string;
+  jobId?: string;
 
   /**
-   * @type {number}
-   * @memberof BatchJobQueryJobDataLogRsp
+   * @type {boolean}
+   * @memberof BatchJobQueryJobInfoReq
    */
-  pageSize?: number;
-
-  /**
-   * @type {Array<BatchJobLogInfoByListA>}
-   * @memberof BatchJobQueryJobDataLogRsp
-   */
-  line?: Array<BatchJobLogInfoByListA>;
+  needOpHistory?: boolean;
 }

@@ -31,13 +31,13 @@ export interface BatchJobAdminChangeJobReq {
    * @type {string}
    * @memberof BatchJobAdminChangeJobReq
    */
-  bizData?: string;
+  jobName?: string;
 
   /**
    * @type {string}
    * @memberof BatchJobAdminChangeJobReq
    */
-  bizProcessData?: string;
+  bizData?: string;
 
   /**
    * @type {string}
@@ -46,10 +46,10 @@ export interface BatchJobAdminChangeJobReq {
   processDataTotal?: string;
 
   /**
-   * @type {boolean}
+   * @type {string}
    * @memberof BatchJobAdminChangeJobReq
    */
-  startNow?: boolean;
+  processedCount?: string;
 
   /**
    * @type {BatchJobRateType}

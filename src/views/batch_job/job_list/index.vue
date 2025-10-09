@@ -12,7 +12,7 @@ import { Loading } from "@element-plus/icons-vue";
 import { useRoute, useRouter } from "vue-router";
 import { batchJobClient } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
-import { jobListQueryArgs } from "../utils/data";
+import { jobListQueryArgs, resetJobListQueryArgs } from "../utils/data";
 import { date2Timestamp } from "@/views/batch_job/utils/time";
 
 defineOptions({
@@ -25,18 +25,35 @@ const defaultTime = ref<[Date, Date]>([
   new Date(2000, 2, 1, 23, 59, 59)
 ]);
 
-const queryDataIsChange = ref(false);
+const queryDataIsChange = ref(true);
 watch(jobListQueryArgs, newV => {
   queryDataIsChange.value = true;
 });
+watch(
+  () => jobListQueryArgs.rangeTime,
+  newV => {
+    queryDataIsChange.value = true;
+    submitQuery();
+  }
+);
 
 const router = useRouter();
-const route = useRoute();
 
-jobListQueryArgs.bizType = Number(route.query["bizType"]);
-const pageChange = () => {
+function resetQuery(): void {
+  resetJobListQueryArgs();
+  submitQuery();
+}
+function forceQuery(): void {
+  queryDataIsChange.value = true;
+  submitQuery();
+}
+const submitQuery = () => {
+  if (!queryDataIsChange.value) {
+    return;
+  }
+  queryDataIsChange.value = false;
+
   isLoading.value = true;
-  console.log("jobListQueryArgs", jobListQueryArgs);
   const req: BatchJobQueryJobListReq = {
     page: jobListQueryArgs.page,
     pageSize: jobListQueryArgs.pageSize,
@@ -55,11 +72,8 @@ const pageChange = () => {
       break;
   }
   if (jobListQueryArgs?.rangeTime.length == 2) {
-    console.log(
-      "jobListQueryArgs rangeTime",
-      date2Timestamp(jobListQueryArgs.rangeTime[0]),
-      date2Timestamp(jobListQueryArgs.rangeTime[1])
-    );
+    req.startTime = String(date2Timestamp(jobListQueryArgs.rangeTime[0]));
+    req.endTime = String(date2Timestamp(jobListQueryArgs.rangeTime[1]));
   }
 
   batchJobClient
@@ -85,25 +99,17 @@ function processApiData(r: BatchJobQueryJobListRsp) {
   jobListQueryArgs.dataTotal = r.total ?? 0;
 }
 
-// 查询变更
-function queryChange() {
-  if (queryDataIsChange.value) {
-    queryDataIsChange.value = false;
-    pageChange();
-  }
-}
-
 // 状态变更
 function statusChange() {
   jobListQueryArgs.page = 1;
-  pageChange();
+  submitQuery();
 }
 
 // 使用mock数据填充
-processApiData(mockData);
+// processApiData(mockData);
 
 // 立即刷新
-pageChange();
+submitQuery();
 </script>
 
 <template>
@@ -121,15 +127,14 @@ pageChange();
           <Loading />
         </el-icon>
       </div>
+      <div>
+        <el-button type="primary" @click="router.push({ name: 'RegistryBiz' })"
+          >新增任务</el-button
+        >
+      </div>
+      <el-divider />
       <!-- 让布局容器充满可用空间 -->
       <el-container class="flex-1 flex flex-col">
-        <el-header>
-          <el-button
-            type="primary"
-            @click="router.push({ name: 'RegistryBiz' })"
-            >新增业务</el-button
-          >
-        </el-header>
         <el-header>
           <el-space direction="horizontal" size="large">
             <el-radio-group
@@ -143,9 +148,16 @@ pageChange();
             </el-radio-group>
 
             <el-input
+              v-model="jobListQueryArgs.bizType"
+              style="max-width: 200px"
+              @blur="submitQuery"
+            >
+              <template #prepend>业务类型</template>
+            </el-input>
+            <el-input
               v-model="jobListQueryArgs.opUser"
               style="max-width: 250px"
-              @blur="queryChange"
+              @blur="submitQuery"
             >
               <template #prepend>操作用户</template>
             </el-input>
@@ -159,6 +171,8 @@ pageChange();
               :default-time="defaultTime"
             />
           </el-space>
+          <el-button type="primary" @click="forceQuery">搜索</el-button>
+          <el-button type="default" @click="resetQuery">重置</el-button>
         </el-header>
         <!-- 容器使用flex布局 -->
         <el-main class="flex-1 overflow-hidden p-0">
@@ -187,8 +201,8 @@ pageChange();
             background
             layout="total, prev, pager, next, sizes, jumper"
             :page-sizes="[20, 50, 100]"
-            @size-change="pageChange"
-            @current-change="pageChange"
+            @size-change="submitQuery"
+            @current-change="submitQuery"
             :total="jobListQueryArgs.dataTotal"
             :disabled="isLoading"
           />

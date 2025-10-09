@@ -105,4 +105,10 @@ export interface BatchJobBizInfoA {
    * @memberof BatchJobBizInfoA
    */
   status?: BatchJobBizStatus;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobBizInfoA
+   */
+  createTime?: string;
 }

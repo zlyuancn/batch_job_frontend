@@ -25,17 +25,21 @@ export const bizFormInitData: BizFormData = {
   opRemark: ""
 };
 
-// 业务列表查询参数
-export const bizListQueryArgs = reactive({
+const initBizListQueryArgs = {
   page: 1,
   pageSize: 20,
   dataTotal: 1,
   opUser: "",
   showHidden: false
-});
+};
+// 业务列表查询参数
+export const bizListQueryArgs = reactive(
+  Object.assign({}, initBizListQueryArgs)
+);
+export const resetBizListQueryArgs = () =>
+  Object.assign(bizListQueryArgs, initBizListQueryArgs);
 
-// 任务列表查询参数
-export const jobListQueryArgs = reactive({
+const initJobListQueryArgs = {
   page: 1,
   pageSize: 20,
   dataTotal: 1,
@@ -43,7 +47,14 @@ export const jobListQueryArgs = reactive({
   bizType: 0,
   status: "0",
   rangeTime: []
-});
+};
+// 任务列表查询参数
+export const jobListQueryArgs = reactive(
+  Object.assign({}, initJobListQueryArgs)
+);
+// 重置查询参数
+export const resetJobListQueryArgs = () =>
+  Object.assign(jobListQueryArgs, initJobListQueryArgs);
 
 // 将服务端返回的业务信息转为表单数据
 export const BatchJobBizInfoA2BizFormData = (

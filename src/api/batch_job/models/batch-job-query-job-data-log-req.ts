@@ -27,10 +27,10 @@ export interface BatchJobQueryJobDataLogReq {
   jobId?: string;
 
   /**
-   * @type {number}
+   * @type {string}
    * @memberof BatchJobQueryJobDataLogReq
    */
-  page?: number;
+  nextCursor?: string;
 
   /**
    * @type {number}
@@ -39,8 +39,20 @@ export interface BatchJobQueryJobDataLogReq {
   pageSize?: number;
 
   /**
-   * @type {BatchJobDataLogType}
+   * @type {string}
    * @memberof BatchJobQueryJobDataLogReq
    */
-  logType?: BatchJobDataLogType;
+  startTime?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobQueryJobDataLogReq
+   */
+  endTime?: string;
+
+  /**
+   * @type {Array<BatchJobDataLogType>}
+   * @memberof BatchJobQueryJobDataLogReq
+   */
+  logType?: Array<BatchJobDataLogType>;
 }

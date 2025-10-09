@@ -12,7 +12,10 @@ import { Loading } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { batchJobClient } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
-import { bizListQueryArgs } from "@/views/batch_job/utils/data";
+import {
+  bizListQueryArgs,
+  resetBizListQueryArgs
+} from "@/views/batch_job/utils/data";
 
 defineOptions({
   name: "BizList"
@@ -20,14 +23,27 @@ defineOptions({
 
 const isLoading = ref(false);
 
-const queryDataIsChange = ref(false);
+const queryDataIsChange = ref(true);
 watch(bizListQueryArgs, newV => {
   queryDataIsChange.value = true;
 });
 
 const router = useRouter();
 
-const pageChange = () => {
+function resetQuery(): void {
+  resetBizListQueryArgs();
+  submitQuery();
+}
+function forceQuery(): void {
+  queryDataIsChange.value = true;
+  submitQuery();
+}
+const submitQuery = () => {
+  if (!queryDataIsChange.value) {
+    return;
+  }
+  queryDataIsChange.value = false;
+
   isLoading.value = true;
   console.log(
     `PageChange page: ${bizListQueryArgs.page} pageSize: ${bizListQueryArgs.pageSize}`
@@ -69,25 +85,17 @@ function processApiData(r: BatchJobQueryBizListRsp) {
   bizListQueryArgs.dataTotal = r.total ?? 0;
 }
 
-// 查询变更
-function queryChange() {
-  if (queryDataIsChange.value) {
-    queryDataIsChange.value = false;
-    pageChange();
-  }
-}
-
 // 隐藏变更
 function hiddenChange() {
   bizListQueryArgs.page = 1;
-  pageChange();
+  submitQuery();
 }
 
 // 使用mock数据填充
 // processApiData(mockData);
 
 // 立即刷新
-pageChange();
+submitQuery();
 </script>
 
 <template>
@@ -105,21 +113,20 @@ pageChange();
           <Loading />
         </el-icon>
       </div>
+      <div>
+        <el-button type="primary" @click="router.push({ name: 'RegistryBiz' })"
+          >新增业务</el-button
+        >
+      </div>
+      <el-divider />
       <!-- 让布局容器充满可用空间 -->
       <el-container class="flex-1 flex flex-col">
-        <el-header>
-          <el-button
-            type="primary"
-            @click="router.push({ name: 'RegistryBiz' })"
-            >新增业务</el-button
-          >
-        </el-header>
         <el-header>
           <el-space direction="horizontal" size="large">
             <el-input
               v-model="bizListQueryArgs.opUser"
               style="max-width: 250px"
-              @blur="queryChange"
+              @blur="submitQuery"
             >
               <template #prepend>操作用户</template>
             </el-input>
@@ -130,6 +137,8 @@ pageChange();
               inactive-text="正常的业务"
               @change="hiddenChange"
             />
+            <el-button type="primary" @click="forceQuery">搜索</el-button>
+            <el-button type="default" @click="resetQuery">重置</el-button>
           </el-space>
         </el-header>
         <!-- 容器使用flex布局 -->
@@ -159,8 +168,8 @@ pageChange();
             background
             layout="total, prev, pager, next, sizes, jumper"
             :page-sizes="[20, 50, 100]"
-            @size-change="pageChange"
-            @current-change="pageChange"
+            @size-change="submitQuery"
+            @current-change="submitQuery"
             :total="bizListQueryArgs.dataTotal"
             :disabled="isLoading"
           />

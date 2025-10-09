@@ -51,10 +51,10 @@ import { BatchJobQueryBizInfoReq } from "../models";
 import { BatchJobQueryBizInfoRsp } from "../models";
 import { BatchJobQueryBizListReq } from "../models";
 import { BatchJobQueryBizListRsp } from "../models";
-import { BatchJobQueryJobBaseInfoReq } from "../models";
-import { BatchJobQueryJobBaseInfoRsp } from "../models";
 import { BatchJobQueryJobDataLogReq } from "../models";
 import { BatchJobQueryJobDataLogRsp } from "../models";
+import { BatchJobQueryJobInfoReq } from "../models";
+import { BatchJobQueryJobInfoRsp } from "../models";
 import { BatchJobQueryJobListReq } from "../models";
 import { BatchJobQueryJobListRsp } from "../models";
 import { RpcStatus } from "../models";
@@ -887,23 +887,23 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary 查询任务基本信息
-     * @param {BatchJobQueryJobBaseInfoReq} body
+     * @summary 查询任务的数据日志
+     * @param {BatchJobQueryJobDataLogReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    batchJobServiceQueryJobBaseInfo: async (
-      body: BatchJobQueryJobBaseInfoReq,
+    batchJobServiceQueryJobDataLog: async (
+      body: BatchJobQueryJobDataLogReq,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
           "body",
-          "Required parameter body was null or undefined when calling batchJobServiceQueryJobBaseInfo."
+          "Required parameter body was null or undefined when calling batchJobServiceQueryJobDataLog."
         );
       }
-      const localVarPath = `/BatchJob/QueryJobBaseInfo`;
+      const localVarPath = `/BatchJob/QueryJobDataLog`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, "https://example.com");
       let baseOptions;
@@ -950,23 +950,23 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary 查询任务的数据日志
-     * @param {BatchJobQueryJobDataLogReq} body
+     * @summary 查询任务基本信息
+     * @param {BatchJobQueryJobInfoReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    batchJobServiceQueryJobDataLog: async (
-      body: BatchJobQueryJobDataLogReq,
+    batchJobServiceQueryJobInfo: async (
+      body: BatchJobQueryJobInfoReq,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'body' is not null or undefined
       if (body === null || body === undefined) {
         throw new RequiredError(
           "body",
-          "Required parameter body was null or undefined when calling batchJobServiceQueryJobDataLog."
+          "Required parameter body was null or undefined when calling batchJobServiceQueryJobInfo."
         );
       }
-      const localVarPath = `/BatchJob/QueryJobDataLog`;
+      const localVarPath = `/BatchJob/QueryJobBaseInfo`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, "https://example.com");
       let baseOptions;
@@ -1475,36 +1475,6 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary 查询任务基本信息
-     * @param {BatchJobQueryJobBaseInfoReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async batchJobServiceQueryJobBaseInfo(
-      body: BatchJobQueryJobBaseInfoReq,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => Promise<AxiosResponse<BatchJobQueryJobBaseInfoRsp>>
-    > {
-      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
-        configuration
-      ).batchJobServiceQueryJobBaseInfo(body, options);
-      return (
-        axios: AxiosInstance = globalAxios,
-        basePath: string = BASE_PATH
-      ) => {
-        const axiosRequestArgs: AxiosRequestConfig = {
-          ...localVarAxiosArgs.options,
-          url: basePath + localVarAxiosArgs.url
-        };
-        return axios.request(axiosRequestArgs);
-      };
-    },
-    /**
-     *
      * @summary 查询任务的数据日志
      * @param {BatchJobQueryJobDataLogReq} body
      * @param {*} [options] Override http request option.
@@ -1522,6 +1492,36 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
         configuration
       ).batchJobServiceQueryJobDataLog(body, options);
+      return (
+        axios: AxiosInstance = globalAxios,
+        basePath: string = BASE_PATH
+      ) => {
+        const axiosRequestArgs: AxiosRequestConfig = {
+          ...localVarAxiosArgs.options,
+          url: basePath + localVarAxiosArgs.url
+        };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     *
+     * @summary 查询任务基本信息
+     * @param {BatchJobQueryJobInfoReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceQueryJobInfo(
+      body: BatchJobQueryJobInfoReq,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => Promise<AxiosResponse<BatchJobQueryJobInfoRsp>>
+    > {
+      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
+        configuration
+      ).batchJobServiceQueryJobInfo(body, options);
       return (
         axios: AxiosInstance = globalAxios,
         basePath: string = BASE_PATH
@@ -1773,21 +1773,6 @@ export const BatchJobServiceApiFactory = function (
     },
     /**
      *
-     * @summary 查询任务基本信息
-     * @param {BatchJobQueryJobBaseInfoReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async batchJobServiceQueryJobBaseInfo(
-      body: BatchJobQueryJobBaseInfoReq,
-      options?: AxiosRequestConfig
-    ): Promise<AxiosResponse<BatchJobQueryJobBaseInfoRsp>> {
-      return BatchJobServiceApiFp(configuration)
-        .batchJobServiceQueryJobBaseInfo(body, options)
-        .then(request => request(axios, basePath));
-    },
-    /**
-     *
      * @summary 查询任务的数据日志
      * @param {BatchJobQueryJobDataLogReq} body
      * @param {*} [options] Override http request option.
@@ -1799,6 +1784,21 @@ export const BatchJobServiceApiFactory = function (
     ): Promise<AxiosResponse<BatchJobQueryJobDataLogRsp>> {
       return BatchJobServiceApiFp(configuration)
         .batchJobServiceQueryJobDataLog(body, options)
+        .then(request => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary 查询任务基本信息
+     * @param {BatchJobQueryJobInfoReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceQueryJobInfo(
+      body: BatchJobQueryJobInfoReq,
+      options?: AxiosRequestConfig
+    ): Promise<AxiosResponse<BatchJobQueryJobInfoRsp>> {
+      return BatchJobServiceApiFp(configuration)
+        .batchJobServiceQueryJobInfo(body, options)
         .then(request => request(axios, basePath));
     },
     /**
@@ -2036,22 +2036,6 @@ export class BatchJobServiceApi extends BaseAPI {
   }
   /**
    *
-   * @summary 查询任务基本信息
-   * @param {BatchJobQueryJobBaseInfoReq} body
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof BatchJobServiceApi
-   */
-  public async batchJobServiceQueryJobBaseInfo(
-    body: BatchJobQueryJobBaseInfoReq,
-    options?: AxiosRequestConfig
-  ): Promise<AxiosResponse<BatchJobQueryJobBaseInfoRsp>> {
-    return BatchJobServiceApiFp(this.configuration)
-      .batchJobServiceQueryJobBaseInfo(body, options)
-      .then(request => request(this.axios, this.basePath));
-  }
-  /**
-   *
    * @summary 查询任务的数据日志
    * @param {BatchJobQueryJobDataLogReq} body
    * @param {*} [options] Override http request option.
@@ -2064,6 +2048,22 @@ export class BatchJobServiceApi extends BaseAPI {
   ): Promise<AxiosResponse<BatchJobQueryJobDataLogRsp>> {
     return BatchJobServiceApiFp(this.configuration)
       .batchJobServiceQueryJobDataLog(body, options)
+      .then(request => request(this.axios, this.basePath));
+  }
+  /**
+   *
+   * @summary 查询任务基本信息
+   * @param {BatchJobQueryJobInfoReq} body
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BatchJobServiceApi
+   */
+  public async batchJobServiceQueryJobInfo(
+    body: BatchJobQueryJobInfoReq,
+    options?: AxiosRequestConfig
+  ): Promise<AxiosResponse<BatchJobQueryJobInfoRsp>> {
+    return BatchJobServiceApiFp(this.configuration)
+      .batchJobServiceQueryJobInfo(body, options)
       .then(request => request(this.axios, this.basePath));
   }
   /**
