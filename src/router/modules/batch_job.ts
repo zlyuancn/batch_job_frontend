@@ -47,6 +47,24 @@ export default {
       meta: {
         title: "任务列表"
       }
+    },
+    {
+      path: "/BatchJob/CreateJob",
+      name: "CreateJob",
+      component: () => import("@/views/batch_job/create_job/index.vue"),
+      meta: {
+        title: "创建任务",
+        showLink: false
+      }
+    },
+    {
+      path: "/BatchJob/ChangeJob",
+      name: "ChangeJob",
+      component: () => import("@/views/batch_job/create_job/index.vue"),
+      meta: {
+        title: "修改任务",
+        showLink: false
+      }
     }
   ]
 } as RouteConfigsTable;

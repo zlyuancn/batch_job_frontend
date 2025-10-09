@@ -1,24 +1,21 @@
 <script setup lang="ts">
-import { BatchJobBizInfoA2BizFormData, bizFormInitData } from "../utils/data";
+import {
+  BatchJobBizInfoA2BizFormData,
+  bizFormInitData,
+  jobListQueryArgs
+} from "../utils/data";
 import { rules, ruleFormRef } from "./rule";
 import { reactive, ref } from "vue";
 import {
   type BatchJobAdminRegistryBizReq,
   batchJobClient,
-  BatchJobExecType,
   BatchJobQueryBizInfoReq,
-  BatchJobRateType,
   BatchJobBizStatus
 } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
 import router from "@/router";
 import { useRoute } from "vue-router";
-import {
-  execTypeOptions,
-  BizFormData,
-  rateTypeOptions,
-  statusOptions
-} from "../utils/types";
+import { execTypeOptions, BizFormData, bizStatusOptions } from "../utils/types";
 import { OpSource } from "../utils/types";
 import { getToken } from "@/utils/auth";
 
@@ -61,8 +58,6 @@ const onSubmit = async () => {
     cbProcessTimeout: formData.cbProcessTimeout,
     cbProcessStopTimeout: formData.cbProcessStopTimeout,
 
-    rateSec: formData.rateSec,
-
     op: {
       opSource: OpSource.Web,
       opUserid: user.username,
@@ -70,19 +65,6 @@ const onSubmit = async () => {
       opRemark: formData.opRemark
     }
   };
-  switch (formData.execType) {
-    case 1:
-      req.execType = BatchJobExecType.HttpCallback;
-      break;
-  }
-  switch (formData.rateType) {
-    case 0:
-      req.rateType = BatchJobRateType.RateSec;
-      break;
-    case 1:
-      req.rateType = BatchJobRateType.Serialization;
-      break;
-  }
   switch (formData.status) {
     case 0:
       req.status = BatchJobBizStatus.None;
@@ -293,53 +275,6 @@ if (isChange) changePageInit();
         </el-form-item>
       </el-space>
 
-      <el-form-item label="限速类型" prop="rateType">
-        <el-select
-          v-model="formData.rateType"
-          placeholder="Select"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="item in rateTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-            <el-space direction="horizontal" :size="50">
-              <span style="float: left">{{ item.label }}</span>
-              <span
-                style="
-                  float: right;
-                  font-size: 13px;
-                  color: var(--el-text-color-secondary);
-                "
-              >
-                {{ item.desc }}</span
-              >
-            </el-space>
-          </el-option>
-        </el-select>
-        <el-text
-          v-if="formData.rateType == 1"
-          style="color: var(--el-text-color-secondary)"
-        >
-          {{ rateTypeOptions[1]?.desc }}</el-text
-        >
-      </el-form-item>
-      <el-form-item label="每秒速率" prop="rate_sec">
-        <el-space direction="horizontal" size="large">
-          <el-input-number
-            :min="0"
-            :max="10000"
-            :step="10"
-            v-model="formData.rateSec"
-          />
-          <el-text style="color: var(--el-text-color-secondary)"
-            >数据每秒处理速度, 0表示不限速</el-text
-          >
-        </el-space>
-      </el-form-item>
-
       <el-form-item label="状态" prop="status" v-if="isChange">
         <el-select
           v-model="formData.status"
@@ -347,7 +282,7 @@ if (isChange) changePageInit();
           style="width: 240px"
         >
           <el-option
-            v-for="item in statusOptions"
+            v-for="item in bizStatusOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -370,7 +305,7 @@ if (isChange) changePageInit();
           v-if="formData.status == 1"
           style="color: var(--el-text-color-secondary)"
         >
-          {{ statusOptions[1]?.desc }}</el-text
+          {{ bizStatusOptions[1]?.desc }}</el-text
         >
       </el-form-item>
 

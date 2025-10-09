@@ -4,7 +4,8 @@ import { reactive, ref, watch } from "vue";
 import {
   BatchJobJobStatusQ,
   BatchJobQueryJobListReq,
-  BatchJobQueryJobListRsp
+  BatchJobQueryJobListRsp,
+  QueryAllBizNameRspLineA
 } from "@/api/batch_job_client";
 import { columnsRule } from "./rule";
 import { mockData } from "./data";
@@ -15,6 +16,7 @@ import { message } from "@/utils/message";
 import { jobListQueryArgs, resetJobListQueryArgs } from "../utils/data";
 import { date2Timestamp } from "@/views/batch_job/utils/time";
 
+// 任务列表
 defineOptions({
   name: "JobList"
 });
@@ -105,11 +107,37 @@ function statusChange() {
   submitQuery();
 }
 
+const bizNameList = ref<Array<QueryAllBizNameRspLineA>>([]);
+function getBizNameList() {
+  batchJobClient
+    .batchJobServiceQueryAllBizName({})
+    .then(res => {
+      bizNameList.value = res?.data?.line;
+    })
+    .catch(err => {
+      const errMsg = err?.response?.data?.message ?? err;
+      message("数据业务名列表获取失败\n" + errMsg, { type: "error" });
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+}
+
+// 立即获取业务名数据
+getBizNameList();
+
 // 使用mock数据填充
 // processApiData(mockData);
 
 // 立即刷新
 submitQuery();
+
+function createJob() {
+  router.push({
+    name: "CreateJob",
+    query: { bizType: jobListQueryArgs.bizType }
+  });
+}
 </script>
 
 <template>
@@ -128,9 +156,7 @@ submitQuery();
         </el-icon>
       </div>
       <div>
-        <el-button type="primary" @click="router.push({ name: 'RegistryBiz' })"
-          >新增任务</el-button
-        >
+        <el-button type="primary" @click="createJob">新增任务</el-button>
       </div>
       <el-divider />
       <!-- 让布局容器充满可用空间 -->
@@ -147,13 +173,23 @@ submitQuery();
               <el-radio-button label="已完成" value="3" />
             </el-radio-group>
 
-            <el-input
+            <el-select
               v-model="jobListQueryArgs.bizType"
-              style="max-width: 200px"
-              @blur="submitQuery"
+              filterable
+              clearable
+              placeholder="业务类型"
+              style="width: 240px"
+              @change="submitQuery"
             >
-              <template #prepend>业务类型</template>
-            </el-input>
+              <div v-for="item in bizNameList">
+                <el-option
+                  v-if="Number(item.status ?? 0) == 0"
+                  :key="item.bizType"
+                  :label="'(' + String(item.bizType) + ') ' + item.bizName"
+                  :value="item.bizType"
+                />
+              </div>
+            </el-select>
             <el-input
               v-model="jobListQueryArgs.opUser"
               style="max-width: 250px"

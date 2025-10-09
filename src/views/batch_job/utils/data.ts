@@ -1,5 +1,5 @@
-import { BatchJobBizInfoA } from "@/api/batch_job";
-import { BizFormData } from "@/views/batch_job/utils/types";
+import { BatchJobBizInfoA, BatchJobJobInfoA } from "@/api/batch_job";
+import { BizFormData, JobFormData } from "@/views/batch_job/utils/types";
 import { reactive } from "vue";
 
 // 业务表单初始化数据
@@ -18,43 +18,9 @@ export const bizFormInitData: BizFormData = {
   cbProcessTimeout: 60,
   cbProcessStopTimeout: 60,
 
-  rateType: 0,
-  rateSec: 1000,
-
   status: 0,
   opRemark: ""
 };
-
-const initBizListQueryArgs = {
-  page: 1,
-  pageSize: 20,
-  dataTotal: 1,
-  opUser: "",
-  showHidden: false
-};
-// 业务列表查询参数
-export const bizListQueryArgs = reactive(
-  Object.assign({}, initBizListQueryArgs)
-);
-export const resetBizListQueryArgs = () =>
-  Object.assign(bizListQueryArgs, initBizListQueryArgs);
-
-const initJobListQueryArgs = {
-  page: 1,
-  pageSize: 20,
-  dataTotal: 1,
-  opUser: "",
-  bizType: 0,
-  status: "0",
-  rangeTime: []
-};
-// 任务列表查询参数
-export const jobListQueryArgs = reactive(
-  Object.assign({}, initJobListQueryArgs)
-);
-// 重置查询参数
-export const resetJobListQueryArgs = () =>
-  Object.assign(jobListQueryArgs, initJobListQueryArgs);
 
 // 将服务端返回的业务信息转为表单数据
 export const BatchJobBizInfoA2BizFormData = (
@@ -76,10 +42,75 @@ export const BatchJobBizInfoA2BizFormData = (
     cbProcessTimeout: line.cbProcessTimeout ?? 0,
     cbProcessStopTimeout: line.cbProcessStopTimeout ?? 0,
 
-    rateType: Number(line.rateType ?? 0),
-    rateSec: line.rateSec ?? 0,
-
     status: Number(line.status ?? 0),
     opRemark: line?.op?.opRemark
   });
 };
+
+const initBizListQueryArgs = {
+  page: 1,
+  pageSize: 20,
+  dataTotal: 1,
+  opUser: "",
+  showHidden: false
+};
+// 业务列表查询参数
+export const bizListQueryArgs = reactive(
+  Object.assign({}, initBizListQueryArgs)
+);
+export const resetBizListQueryArgs = () =>
+  Object.assign(bizListQueryArgs, initBizListQueryArgs);
+
+// 任务表单初始化数据
+export const jobFormInitData: JobFormData = {
+  jobId: 0,
+  bizType: 0,
+  jobName: "",
+  bizData: "",
+  processDataTotal: 0,
+  processedCount: 0,
+  rateType: 0,
+  rateSec: 0,
+
+  status: 0,
+  opRemark: "",
+  statusInfo: ""
+};
+
+// 将服务端返回的任务信息转为表单数据
+export const BatchJobJobInfoA2JobFormData = (
+  formData: JobFormData,
+  line: BatchJobJobInfoA
+) => {
+  Object.assign(formData, <JobFormData>{
+    jobId: Number(formData.jobId),
+    bizType: Number(line.bizType),
+    jobName: line.jobName,
+    bizData: line.bizData,
+    processDataTotal: Number(line.processDataTotal),
+    processedCount: Number(line.processedCount),
+    rateType: Number(line.rateType ?? 0),
+    rateSec: line.rateSec ?? 0,
+
+    status: Number(line.status ?? 0),
+    opRemark: line?.op?.opRemark,
+    statusInfo: line.statusInfo
+  });
+};
+
+const initJobListQueryArgs = {
+  page: 1,
+  pageSize: 20,
+  dataTotal: 1,
+  opUser: "",
+  bizType: 0,
+  status: "0",
+  rangeTime: []
+};
+// 任务列表查询参数
+export const jobListQueryArgs = reactive(
+  Object.assign({}, initJobListQueryArgs)
+);
+// 重置查询参数
+export const resetJobListQueryArgs = () =>
+  Object.assign(jobListQueryArgs, initJobListQueryArgs);

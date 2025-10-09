@@ -47,6 +47,8 @@ import { BatchJobBizStopJobReq } from "../models";
 import { BatchJobBizStopJobRsp } from "../models";
 import { BatchJobBizUpdateBizDataReq } from "../models";
 import { BatchJobBizUpdateBizDataRsp } from "../models";
+import { BatchJobQueryAllBizNameReq } from "../models";
+import { BatchJobQueryAllBizNameRsp } from "../models";
 import { BatchJobQueryBizInfoReq } from "../models";
 import { BatchJobQueryBizInfoRsp } from "../models";
 import { BatchJobQueryBizListReq } from "../models";
@@ -761,6 +763,69 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
+     * @summary 查询所有业务名
+     * @param {BatchJobQueryAllBizNameReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    batchJobServiceQueryAllBizName: async (
+      body: BatchJobQueryAllBizNameReq,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'body' is not null or undefined
+      if (body === null || body === undefined) {
+        throw new RequiredError(
+          "body",
+          "Required parameter body was null or undefined when calling batchJobServiceQueryAllBizName."
+        );
+      }
+      const localVarPath = `/BatchJob/QueryAllBizName`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, "https://example.com");
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+      const localVarRequestOptions: AxiosRequestConfig = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      const query = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        query.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.params) {
+        query.set(key, options.params[key]);
+      }
+      localVarUrlObj.search = new URLSearchParams(query).toString();
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      const needsSerialization =
+        typeof body !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(body !== undefined ? body : {})
+        : body || "";
+
+      return {
+        url:
+          localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     *
      * @summary 查询业务信息
      * @param {BatchJobQueryBizInfoReq} body
      * @param {*} [options] Override http request option.
@@ -1415,6 +1480,36 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @summary 查询所有业务名
+     * @param {BatchJobQueryAllBizNameReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceQueryAllBizName(
+      body: BatchJobQueryAllBizNameReq,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => Promise<AxiosResponse<BatchJobQueryAllBizNameRsp>>
+    > {
+      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
+        configuration
+      ).batchJobServiceQueryAllBizName(body, options);
+      return (
+        axios: AxiosInstance = globalAxios,
+        basePath: string = BASE_PATH
+      ) => {
+        const axiosRequestArgs: AxiosRequestConfig = {
+          ...localVarAxiosArgs.options,
+          url: basePath + localVarAxiosArgs.url
+        };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     *
      * @summary 查询业务信息
      * @param {BatchJobQueryBizInfoReq} body
      * @param {*} [options] Override http request option.
@@ -1743,6 +1838,21 @@ export const BatchJobServiceApiFactory = function (
     },
     /**
      *
+     * @summary 查询所有业务名
+     * @param {BatchJobQueryAllBizNameReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceQueryAllBizName(
+      body: BatchJobQueryAllBizNameReq,
+      options?: AxiosRequestConfig
+    ): Promise<AxiosResponse<BatchJobQueryAllBizNameRsp>> {
+      return BatchJobServiceApiFp(configuration)
+        .batchJobServiceQueryAllBizName(body, options)
+        .then(request => request(axios, basePath));
+    },
+    /**
+     *
      * @summary 查询业务信息
      * @param {BatchJobQueryBizInfoReq} body
      * @param {*} [options] Override http request option.
@@ -2000,6 +2110,22 @@ export class BatchJobServiceApi extends BaseAPI {
   ): Promise<AxiosResponse<BatchJobBizUpdateBizDataRsp>> {
     return BatchJobServiceApiFp(this.configuration)
       .batchJobServiceBizUpdateBizData(body, options)
+      .then(request => request(this.axios, this.basePath));
+  }
+  /**
+   *
+   * @summary 查询所有业务名
+   * @param {BatchJobQueryAllBizNameReq} body
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BatchJobServiceApi
+   */
+  public async batchJobServiceQueryAllBizName(
+    body: BatchJobQueryAllBizNameReq,
+    options?: AxiosRequestConfig
+  ): Promise<AxiosResponse<BatchJobQueryAllBizNameRsp>> {
+    return BatchJobServiceApiFp(this.configuration)
+      .batchJobServiceQueryAllBizName(body, options)
       .then(request => request(this.axios, this.basePath));
   }
   /**

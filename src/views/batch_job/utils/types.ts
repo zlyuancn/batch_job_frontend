@@ -41,9 +41,6 @@ export interface BizFormData {
   cbProcessTimeout: number;
   cbProcessStopTimeout: number;
 
-  rateType: number;
-  rateSec: number;
-
   status: number;
   opRemark?: string;
 }
@@ -67,7 +64,22 @@ export const rateTypeOptions = [
   }
 ];
 
-export const statusOptions = [
+export interface JobFormData {
+  jobId: number;
+  bizType: number;
+  jobName: string;
+  bizData: string;
+  processDataTotal: number;
+  processedCount: number;
+  rateType: number;
+  rateSec: number;
+
+  status?: number;
+  opRemark?: string;
+  statusInfo?: string;
+}
+
+export const bizStatusOptions = [
   {
     value: 0,
     label: "正常"
@@ -76,5 +88,17 @@ export const statusOptions = [
     value: 1,
     label: "隐藏",
     desc: "业务一旦创建后就不应该被删除. 长期不用的业务可以将其隐藏"
+  }
+];
+
+export const jobStatusOptions = [
+  {
+    value: 0,
+    label: "0"
+  },
+  {
+    value: 1,
+    label: "1",
+    desc: "111111"
   }
 ];

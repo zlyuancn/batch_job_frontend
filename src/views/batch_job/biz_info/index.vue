@@ -12,10 +12,10 @@ import {
   execTypeOptions,
   BizFormData,
   rateTypeOptions,
-  statusOptions
+  bizStatusOptions
 } from "../utils/types";
 
-// 注册业务/修改业务
+// 业务信息
 defineOptions({
   name: "BizInfo"
 });
@@ -233,7 +233,7 @@ initData();
           style="width: 240px"
         >
           <el-option
-            v-for="item in statusOptions"
+            v-for="item in bizStatusOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -256,7 +256,7 @@ initData();
           v-if="formData.status == 1"
           style="color: var(--el-text-color-secondary)"
         >
-          {{ statusOptions[1]?.desc }}</el-text
+          {{ bizStatusOptions[1]?.desc }}</el-text
         >
       </el-form-item>
 
