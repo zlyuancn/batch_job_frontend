@@ -68,7 +68,7 @@ export interface JobFormData {
   jobId: number;
   bizType: number;
   jobName: string;
-  bizData: string;
+  jobData: string;
   processDataTotal: number;
   processedCount: number;
   rateType: number;

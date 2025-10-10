@@ -44,7 +44,7 @@ export interface BatchJobJobInfoA {
    * @type {string}
    * @memberof BatchJobJobInfoA
    */
-  bizData?: string;
+  jobData?: string;
 
   /**
    * @type {string}

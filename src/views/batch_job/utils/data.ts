@@ -66,7 +66,7 @@ export const jobFormInitData: JobFormData = {
   jobId: 0,
   bizType: 0,
   jobName: "",
-  bizData: "",
+  jobData: "",
   processDataTotal: 0,
   processedCount: 0,
   rateType: 0,
@@ -86,7 +86,7 @@ export const BatchJobJobInfoA2JobFormData = (
     jobId: Number(formData.jobId),
     bizType: Number(line.bizType),
     jobName: line.jobName,
-    bizData: line.bizData,
+    jobData: line.jobData,
     processDataTotal: Number(line.processDataTotal),
     processedCount: Number(line.processedCount),
     rateType: Number(line.rateType ?? 0),
@@ -114,3 +114,6 @@ export const jobListQueryArgs = reactive(
 // 重置查询参数
 export const resetJobListQueryArgs = () =>
   Object.assign(jobListQueryArgs, initJobListQueryArgs);
+
+// 业务名映射
+export const bizNameMap = {};

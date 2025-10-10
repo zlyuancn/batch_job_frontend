@@ -37,7 +37,7 @@ export interface BatchJobAdminCreateJobReq {
    * @type {string}
    * @memberof BatchJobAdminCreateJobReq
    */
-  bizData?: string;
+  jobData?: string;
 
   /**
    * @type {string}

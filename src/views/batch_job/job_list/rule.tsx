@@ -3,10 +3,30 @@ import { JobStatus2CnName, raceType2CnName } from "../utils/types";
 import { useRouter } from "vue-router";
 import { formatTimestamp } from "@/views/batch_job/utils/time";
 
-import { ElProgress } from "element-plus";
+import { bizNameMap } from "@/views/batch_job/utils/data";
+
+import iconView from "~icons/ep/view";
+import iconEdit from "~icons/ep/edit";
+import iconVideoPlay from "~icons/ep/video-play";
+import iconVideoPause from "~icons/ep/video-pause";
 
 export const columnsRule: Columns<any> = [
   { key: "jobId", dataKey: "jobId", title: "任务id", width: 100 },
+  {
+    key: "bizType",
+    title: "业务",
+    width: 200,
+    cellRenderer: v => {
+      return (
+        <span>
+          {"(" +
+            String(v?.rowData?.bizType) +
+            ") " +
+            bizNameMap[v?.rowData?.bizType]}
+        </span>
+      );
+    }
+  },
   {
     key: "processDataTotal",
     dataKey: "processDataTotal",
@@ -17,11 +37,18 @@ export const columnsRule: Columns<any> = [
     key: "progress",
     title: "已处理数据量",
     width: 300,
-    // v?.rowData?.processedNum
     cellRenderer: v => {
+      let p = 0;
+      if (v?.rowData?.processDataTotal > 0) {
+        p = Math.floor(
+          ((v?.rowData?.processedCount ?? 0) * 100) /
+            v?.rowData?.processDataTotal
+        );
+      }
+      if (p > 100) p = 100;
       return (
         <div class="flex items-center gap-2">
-          <el-Progress percentage={100} style={"width: 300px"} />
+          <el-Progress percentage={p} style={"width: 300px"} />
         </div>
       );
     }
@@ -32,7 +59,7 @@ export const columnsRule: Columns<any> = [
     dataKey: "rateType",
     title: "限速类型",
     width: 100,
-    cellRenderer: ({ cellData: v }) => <span> {raceType2CnName[v]} </span>
+    cellRenderer: ({ cellData: v }) => <span> {raceType2CnName[v ?? 0]} </span>
   },
   {
     key: "rateSec",
@@ -47,7 +74,8 @@ export const columnsRule: Columns<any> = [
     width: 150,
     cellRenderer: v => (
       <span>
-        {JobStatus2CnName[v?.rowData?.status]} ({v?.rowData?.statusInfo}){" "}
+        {JobStatus2CnName[v?.rowData?.status ?? 0]} <br /> (
+        {v?.rowData?.statusInfo}){" "}
       </span>
     )
   },
@@ -74,7 +102,7 @@ export const columnsRule: Columns<any> = [
       </span>
     )
   },
-  { key: "opRemark", dataKey: "op.opRemark", title: "操作描述", width: 300 },
+  { key: "opRemark", dataKey: "op.opRemark", title: "操作描述", width: 200 },
   {
     key: "operations",
     title: "",
@@ -88,21 +116,55 @@ export const columnsRule: Columns<any> = [
       };
 
       const handleEdit = () => {
-        // router.push({
-        //   name: "ChangeBiz",
-        //   query: { bizType: v.rowData.bizType }
-        // });
+        router.push({
+          name: "ChangeJob",
+          query: { jobId: v.rowData.jobId }
+        });
       };
+
+      const handleStart = () => {};
+      const handleStop = () => {};
+
+      const status = v.rowData.status ?? 0;
+      const allowEdit = status == 0 || status == 5;
+      const allowStop = status == 1 || status == 2;
+      const allowRun = status == 0 || status == 5;
 
       return (
         <>
-          <el-button size="small" onClick={handleView} type="primary">
+          <el-button
+            size="small"
+            onClick={handleView}
+            type="primary"
+            icon={iconView}
+          >
             查看
           </el-button>
-          <el-button size="small" onClick={handleEdit}>
-            编辑
-          </el-button>
-          {/*<el-button size="small" onClick={handleDelete} type="danger">删除</el-button>*/}
+          {allowRun && (
+            <el-button
+              size="small"
+              onClick={handleStart}
+              type="success"
+              icon={iconVideoPlay}
+            >
+              运行
+            </el-button>
+          )}
+          {allowStop && (
+            <el-button
+              size="small"
+              onClick={handleStop}
+              type="danger"
+              icon={iconVideoPause}
+            >
+              停止
+            </el-button>
+          )}
+          {allowEdit && (
+            <el-button size="small" onClick={handleEdit} icon={iconEdit}>
+              编辑
+            </el-button>
+          )}
         </>
       );
     },

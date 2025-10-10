@@ -19,6 +19,9 @@ import { execTypeOptions, BizFormData, bizStatusOptions } from "../utils/types";
 import { OpSource } from "../utils/types";
 import { getToken } from "@/utils/auth";
 
+import iconCheck from "~icons/ep/check";
+import iconClose from "~icons/ep/close";
+
 // 注册业务/修改业务
 defineOptions({
   name: "RegistryBiz"
@@ -325,9 +328,10 @@ if (isChange) changePageInit();
           :loading="isLoading"
           :disabled="isLoading"
           @click="onSubmit"
+          :icon="iconCheck"
           >{{ isChange ? "修改" : "注册" }}</el-button
         >
-        <el-button @click="router.back()">取消</el-button>
+        <el-button @click="router.back()" :icon="iconClose">取消</el-button>
       </el-form-item>
     </el-form>
   </div>

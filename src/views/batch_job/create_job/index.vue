@@ -17,6 +17,11 @@ import { rateTypeOptions, JobFormData, jobStatusOptions } from "../utils/types";
 import { OpSource } from "../utils/types";
 import { getToken } from "@/utils/auth";
 
+import iconCheck from "~icons/ep/check";
+import iconEdit from "~icons/ep/edit";
+import iconVideoPlay from "~icons/ep/video-play";
+import iconClose from "~icons/ep/close";
+
 // 注册任务/修改任务
 defineOptions({
   name: "CreateJob"
@@ -64,7 +69,7 @@ const submitCreate = async (createAndRun: boolean = false) => {
   const req: BatchJobAdminCreateJobReq = {
     bizType: formData.bizType,
     jobName: formData.jobName,
-    bizData: formData.bizData,
+    jobData: formData.jobData,
     processDataTotal: String(formData.processDataTotal),
     processedCount: String(formData.processedCount),
 
@@ -120,7 +125,7 @@ const submitChange = async () => {
 
     bizType: formData.bizType,
     jobName: formData.jobName,
-    bizData: formData.bizData,
+    jobData: formData.jobData,
     processDataTotal: String(formData.processDataTotal),
     processedCount: String(formData.processedCount),
 
@@ -188,10 +193,12 @@ function changePageInit() {
 
 // 对于修改数据, 使用服务端的数据填充
 const isChange: boolean = route.name == "ChangeJob";
-if (isChange) changePageInit();
-
-// 如果路由传入了 bizType 则填充
-formData.bizType = Number(route.query["bizType"] ?? "");
+if (isChange) {
+  changePageInit();
+} else {
+  // 如果路由传入了 bizType 则填充
+  formData.bizType = Number(route.query["bizType"] ?? "");
+}
 </script>
 
 <template>
@@ -213,6 +220,7 @@ formData.bizType = Number(route.query["bizType"] ?? "");
           placeholder="业务类型"
           style="width: 240px"
           prop="bizType"
+          :disabled="isChange"
         >
           <div v-for="item in bizNameList">
             <el-option
@@ -236,7 +244,7 @@ formData.bizType = Number(route.query["bizType"] ?? "");
           :autosize="{ minRows: 2 }"
           :maxlength="8192"
           show-word-limit
-          v-model="formData.bizData"
+          v-model="formData.jobData"
         />
       </el-form-item>
 
@@ -317,6 +325,7 @@ formData.bizType = Number(route.query["bizType"] ?? "");
           :disabled="isLoading"
           @click="submitCreate(false)"
           v-if="!isChange"
+          :icon="iconCheck"
           >创建</el-button
         >
         <el-button
@@ -325,17 +334,19 @@ formData.bizType = Number(route.query["bizType"] ?? "");
           :disabled="isLoading"
           @click="submitCreate(true)"
           v-if="!isChange"
+          :icon="iconVideoPlay"
           >创建并运行</el-button
         >
         <el-button
-          type="success"
+          type="primary"
           :loading="isLoading"
           :disabled="isLoading"
           @click="submitChange"
           v-if="isChange"
+          :icon="iconEdit"
           >修改</el-button
         >
-        <el-button @click="router.back()">取消</el-button>
+        <el-button @click="router.back()" :icon="iconClose">取消</el-button>
       </el-form-item>
     </el-form>
   </div>

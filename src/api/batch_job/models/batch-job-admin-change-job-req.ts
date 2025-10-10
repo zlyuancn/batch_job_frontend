@@ -37,7 +37,7 @@ export interface BatchJobAdminChangeJobReq {
    * @type {string}
    * @memberof BatchJobAdminChangeJobReq
    */
-  bizData?: string;
+  jobData?: string;
 
   /**
    * @type {string}

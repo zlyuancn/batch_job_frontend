@@ -13,7 +13,11 @@ import { Loading } from "@element-plus/icons-vue";
 import { useRoute, useRouter } from "vue-router";
 import { batchJobClient } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
-import { jobListQueryArgs, resetJobListQueryArgs } from "../utils/data";
+import {
+  bizNameMap,
+  jobListQueryArgs,
+  resetJobListQueryArgs
+} from "../utils/data";
 import { date2Timestamp } from "@/views/batch_job/utils/time";
 
 // 任务列表
@@ -113,6 +117,9 @@ function getBizNameList() {
     .batchJobServiceQueryAllBizName({})
     .then(res => {
       bizNameList.value = res?.data?.line;
+      res?.data?.line.map(v => {
+        bizNameMap[v.bizType] = v.bizName;
+      });
     })
     .catch(err => {
       const errMsg = err?.response?.data?.message ?? err;
@@ -165,7 +172,7 @@ function createJob() {
           <el-space direction="horizontal" size="large">
             <el-radio-group
               v-model="jobListQueryArgs.status"
-              @click="statusChange"
+              @change="statusChange"
               size="large"
             >
               <el-radio-button label="待启动" value="0" />
