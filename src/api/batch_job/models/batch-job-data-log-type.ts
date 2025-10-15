@@ -13,7 +13,7 @@
  */
 
 /**
- * - DataLogType_Debug: 调试  - DataLogType_Info: 信息  - DataLogType_Warn: 警告  - DataLogType_Err: 错误
+ * - DataLogType_Debug: 调试  - DataLogType_Info: 信息  - DataLogType_Warn: 警告  - DataLogType_Err: 错误  - DataLogType_ErrData: 错误数据, 表示放弃处理这个数据了. 这个日志会被认为是错误计数
  * @export
  * @enum {string}
  */
@@ -21,5 +21,6 @@ export enum BatchJobDataLogType {
   Debug = "DataLogType_Debug",
   Info = "DataLogType_Info",
   Warn = "DataLogType_Warn",
-  Err = "DataLogType_Err"
+  Err = "DataLogType_Err",
+  ErrData = "DataLogType_ErrData"
 }

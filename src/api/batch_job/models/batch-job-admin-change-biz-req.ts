@@ -14,101 +14,95 @@
 
 import { BatchJobBizStatus } from "./batch-job-biz-status";
 import { BatchJobExecType } from "./batch-job-exec-type";
-import { BatchJobOpInfoA } from "./batch-job-op-info-a";
+import { BatchJobOpInfoQ } from "./batch-job-op-info-q";
 /**
  *
  *
  * @export
- * @interface BatchJobBizInfoA
+ * @interface BatchJobAdminChangeBizReq
  */
-export interface BatchJobBizInfoA {
+export interface BatchJobAdminChangeBizReq {
   /**
    * @type {number}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   bizId?: number;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   bizName?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   remark?: string;
 
   /**
    * @type {BatchJobExecType}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   execType?: BatchJobExecType;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbBeforeCreate?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbBeforeRun?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbProcess?: string;
 
   /**
    * @type {string}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbProcessStop?: string;
 
   /**
    * @type {number}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbBeforeCreateTimeout?: number;
 
   /**
    * @type {number}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbBeforeRunTimeout?: number;
 
   /**
    * @type {number}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbProcessTimeout?: number;
 
   /**
    * @type {number}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   cbProcessStopTimeout?: number;
 
   /**
-   * @type {BatchJobOpInfoA}
-   * @memberof BatchJobBizInfoA
+   * @type {BatchJobOpInfoQ}
+   * @memberof BatchJobAdminChangeBizReq
    */
-  op?: BatchJobOpInfoA;
+  op?: BatchJobOpInfoQ;
 
   /**
    * @type {BatchJobBizStatus}
-   * @memberof BatchJobBizInfoA
+   * @memberof BatchJobAdminChangeBizReq
    */
   status?: BatchJobBizStatus;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizInfoA
-   */
-  createTime?: string;
 }

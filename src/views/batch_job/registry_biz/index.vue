@@ -10,7 +10,9 @@ import {
   type BatchJobAdminRegistryBizReq,
   batchJobClient,
   BatchJobQueryBizInfoReq,
-  BatchJobBizStatus
+  BatchJobBizStatus,
+  BatchJobAdminChangeBizReq,
+  BatchJobExecType
 } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
 import router from "@/router";
@@ -47,38 +49,41 @@ const onSubmit = async () => {
     return;
   }
 
-  const req: BatchJobAdminRegistryBizReq = {
-    bizType: formData.bizType,
-    bizName: formData.bizName,
-    remark: formData.remark,
-
-    cbBeforeCreate: formData.cbBeforeCreate,
-    cbBeforeRun: formData.cbBeforeRun,
-    cbProcess: formData.cbProcess,
-    cbProcessStop: formData.cbProcessStop,
-    cbBeforeCreateTimeout: formData.cbBeforeCreateTimeout,
-    cbBeforeRunTimeout: formData.cbBeforeRunTimeout,
-    cbProcessTimeout: formData.cbProcessTimeout,
-    cbProcessStopTimeout: formData.cbProcessStopTimeout,
-
-    op: {
-      opSource: OpSource.Web,
-      opUserid: user.username,
-      opUserName: user.nickname,
-      opRemark: formData.opRemark
-    }
-  };
-  switch (formData.status) {
-    case 0:
-      req.status = BatchJobBizStatus.None;
-      break;
-    case 1:
-      req.status = BatchJobBizStatus.Hidden;
-      break;
-  }
-  if (!isChange) req.status = BatchJobBizStatus.None;
-
   if (isChange) {
+    const req: BatchJobAdminChangeBizReq = {
+      bizName: formData.bizName,
+      remark: formData.remark,
+
+      cbBeforeCreate: formData.cbBeforeCreate,
+      cbBeforeRun: formData.cbBeforeRun,
+      cbProcess: formData.cbProcess,
+      cbProcessStop: formData.cbProcessStop,
+      cbBeforeCreateTimeout: formData.cbBeforeCreateTimeout,
+      cbBeforeRunTimeout: formData.cbBeforeRunTimeout,
+      cbProcessTimeout: formData.cbProcessTimeout,
+      cbProcessStopTimeout: formData.cbProcessStopTimeout,
+
+      op: {
+        opSource: OpSource.Web,
+        opUserid: user.username,
+        opUserName: user.nickname,
+        opRemark: formData.opRemark
+      }
+    };
+    switch (formData.status) {
+      case 0:
+        req.status = BatchJobBizStatus.None;
+        break;
+      case 1:
+        req.status = BatchJobBizStatus.Hidden;
+        break;
+    }
+    switch (formData.execType) {
+      case 1:
+        req.execType = BatchJobExecType.HttpCallback;
+        break;
+    }
+
     await batchJobClient
       .batchJobServiceAdminChangeBiz(req)
       .then(result => {
@@ -92,6 +97,34 @@ const onSubmit = async () => {
         message("修改失败\n" + errMsg, { type: "error" });
       });
   } else {
+    const req: BatchJobAdminRegistryBizReq = {
+      bizName: formData.bizName,
+      remark: formData.remark,
+
+      cbBeforeCreate: formData.cbBeforeCreate,
+      cbBeforeRun: formData.cbBeforeRun,
+      cbProcess: formData.cbProcess,
+      cbProcessStop: formData.cbProcessStop,
+      cbBeforeCreateTimeout: formData.cbBeforeCreateTimeout,
+      cbBeforeRunTimeout: formData.cbBeforeRunTimeout,
+      cbProcessTimeout: formData.cbProcessTimeout,
+      cbProcessStopTimeout: formData.cbProcessStopTimeout,
+
+      op: {
+        opSource: OpSource.Web,
+        opUserid: user.username,
+        opUserName: user.nickname,
+        opRemark: formData.opRemark
+      },
+
+      status: BatchJobBizStatus.None
+    };
+    switch (formData.execType) {
+      case 1:
+        req.execType = BatchJobExecType.HttpCallback;
+        break;
+    }
+
     await batchJobClient
       .batchJobServiceAdminRegistryBiz(req)
       .then(result => {
@@ -110,10 +143,10 @@ const onSubmit = async () => {
 
 // 对于修改页面, 从服务端加载相关数据
 function changePageInit() {
-  formData.bizType = Number(route.query["bizType"]);
+  formData.bizId = Number(route.query["bizId"]);
   // 查询业务信息
   const req: BatchJobQueryBizInfoReq = {
-    bizType: Number(route.query["bizType"])
+    bizId: Number(route.query["bizId"])
   };
   isLoading.value = true;
   batchJobClient
@@ -150,11 +183,11 @@ if (isChange) changePageInit();
       label-width="auto"
       style="max-width: 800px"
     >
-      <el-form-item label="业务类型" prop="bizType">
+      <el-form-item label="业务类型" prop="bizId">
         <el-space direction="horizontal">
           <el-input-number
             :min="1"
-            v-model="formData.bizType"
+            v-model="formData.bizId"
             :disabled="isChange"
           />
           <el-text style="color: var(--el-text-color-secondary)"

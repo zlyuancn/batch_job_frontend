@@ -4,7 +4,7 @@ import { reactive } from "vue";
 
 // 业务表单初始化数据
 export const bizFormInitData: BizFormData = {
-  bizType: 0,
+  bizId: 0,
   bizName: "",
   remark: "",
 
@@ -28,7 +28,7 @@ export const BatchJobBizInfoA2BizFormData = (
   line: BatchJobBizInfoA
 ) => {
   Object.assign(formData, <BizFormData>{
-    bizType: line.bizType,
+    bizId: line.bizId,
     bizName: line.bizName,
     remark: line.remark,
 
@@ -64,7 +64,7 @@ export const resetBizListQueryArgs = () =>
 // 任务表单初始化数据
 export const jobFormInitData: JobFormData = {
   jobId: 0,
-  bizType: 0,
+  bizId: 0,
   jobName: "",
   jobData: "",
   processDataTotal: 0,
@@ -84,7 +84,7 @@ export const BatchJobJobInfoA2JobFormData = (
 ) => {
   Object.assign(formData, <JobFormData>{
     jobId: Number(formData.jobId),
-    bizType: Number(line.bizType),
+    bizId: Number(line.bizId),
     jobName: line.jobName,
     jobData: line.jobData,
     processDataTotal: Number(line.processDataTotal),
@@ -103,7 +103,7 @@ const initJobListQueryArgs = {
   pageSize: 20,
   dataTotal: 1,
   opUser: "",
-  bizType: 0,
+  bizId: 0,
   status: "0",
   rangeTime: []
 };

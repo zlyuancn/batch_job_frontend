@@ -63,7 +63,7 @@ const submitQuery = () => {
   const req: BatchJobQueryJobListReq = {
     page: jobListQueryArgs.page,
     pageSize: jobListQueryArgs.pageSize,
-    bizType: jobListQueryArgs.bizType,
+    bizId: jobListQueryArgs.bizId,
     opUser: jobListQueryArgs.opUser
   };
   switch (jobListQueryArgs.status) {
@@ -118,7 +118,7 @@ function getBizNameList() {
     .then(res => {
       bizNameList.value = res?.data?.line;
       res?.data?.line.map(v => {
-        bizNameMap[v.bizType] = v.bizName;
+        bizNameMap[v.bizId] = v.bizName;
       });
     })
     .catch(err => {
@@ -142,7 +142,7 @@ submitQuery();
 function createJob() {
   router.push({
     name: "CreateJob",
-    query: { bizType: jobListQueryArgs.bizType }
+    query: { bizId: jobListQueryArgs.bizId }
   });
 }
 </script>
@@ -181,7 +181,7 @@ function createJob() {
             </el-radio-group>
 
             <el-select
-              v-model="jobListQueryArgs.bizType"
+              v-model="jobListQueryArgs.bizId"
               filterable
               clearable
               placeholder="业务类型"
@@ -191,9 +191,9 @@ function createJob() {
               <div v-for="item in bizNameList">
                 <el-option
                   v-if="Number(item.status ?? 0) == 0"
-                  :key="item.bizType"
-                  :label="'(' + String(item.bizType) + ') ' + item.bizName"
-                  :value="item.bizType"
+                  :key="item.bizId"
+                  :label="'(' + String(item.bizId) + ') ' + item.bizName"
+                  :value="item.bizId"
                 />
               </div>
             </el-select>

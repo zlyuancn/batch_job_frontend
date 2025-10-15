@@ -67,7 +67,7 @@ const submitCreate = async (createAndRun: boolean = false) => {
   }
 
   const req: BatchJobAdminCreateJobReq = {
-    bizType: formData.bizType,
+    bizId: formData.bizId,
     jobName: formData.jobName,
     jobData: formData.jobData,
     processDataTotal: String(formData.processDataTotal),
@@ -123,7 +123,7 @@ const submitChange = async () => {
   const req: BatchJobAdminChangeJobReq = {
     jobId: String(formData.jobId),
 
-    bizType: formData.bizType,
+    bizId: formData.bizId,
     jobName: formData.jobName,
     jobData: formData.jobData,
     processDataTotal: String(formData.processDataTotal),
@@ -196,8 +196,8 @@ const isChange: boolean = route.name == "ChangeJob";
 if (isChange) {
   changePageInit();
 } else {
-  // 如果路由传入了 bizType 则填充
-  formData.bizType = Number(route.query["bizType"] ?? "");
+  // 如果路由传入了 bizId 则填充
+  formData.bizId = Number(route.query["bizId"] ?? "");
 }
 </script>
 
@@ -213,21 +213,21 @@ if (isChange) {
       <el-form-item label="任务id" v-if="isChange">
         <el-input-number v-model="formData.jobId" disabled></el-input-number>
       </el-form-item>
-      <el-form-item label="业务类型" prop="bizType">
+      <el-form-item label="业务类型" prop="bizId">
         <el-select
-          v-model="formData.bizType"
+          v-model="formData.bizId"
           filterable
           placeholder="业务类型"
           style="width: 240px"
-          prop="bizType"
+          prop="bizId"
           :disabled="isChange"
         >
           <div v-for="item in bizNameList">
             <el-option
               v-if="Number(item.status ?? 0) == 0"
-              :key="item.bizType"
-              :label="'(' + String(item.bizType) + ') ' + item.bizName"
-              :value="item.bizType"
+              :key="item.bizId"
+              :label="'(' + String(item.bizId) + ') ' + item.bizName"
+              :value="item.bizId"
             />
           </div>
         </el-select>

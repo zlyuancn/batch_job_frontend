@@ -10,7 +10,7 @@ export const mockData: BatchJobQueryBizListRsp = {
   pageSize: 20,
   line: [
     {
-      bizType: 23,
+      bizId: 23,
       bizName: "测试名",
       remark: "备注数据",
       execType: 1,

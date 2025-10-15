@@ -23,12 +23,6 @@ import { BatchJobOpInfoQ } from "./batch-job-op-info-q";
  */
 export interface BatchJobAdminRegistryBizReq {
   /**
-   * @type {number}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  bizType?: number;
-
-  /**
    * @type {string}
    * @memberof BatchJobAdminRegistryBizReq
    */

@@ -24,7 +24,7 @@ export interface QueryAllBizNameRspLineA {
    * @type {number}
    * @memberof QueryAllBizNameRspLineA
    */
-  bizType?: number;
+  bizId?: number;
 
   /**
    * @type {string}

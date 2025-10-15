@@ -13,16 +13,16 @@ import iconVideoPause from "~icons/ep/video-pause";
 export const columnsRule: Columns<any> = [
   { key: "jobId", dataKey: "jobId", title: "任务id", width: 100 },
   {
-    key: "bizType",
+    key: "bizId",
     title: "业务",
     width: 200,
     cellRenderer: v => {
       return (
         <span>
           {"(" +
-            String(v?.rowData?.bizType) +
+            String(v?.rowData?.bizId) +
             ") " +
-            bizNameMap[v?.rowData?.bizType]}
+            bizNameMap[v?.rowData?.bizId]}
         </span>
       );
     }
@@ -111,7 +111,7 @@ export const columnsRule: Columns<any> = [
       const handleView = () => {
         // router.push({
         //   name: "BizInfo",
-        //   query: { bizType: v.rowData.bizType }
+        //   query: { bizId: v.rowData.bizId }
         // });
       };
 

@@ -26,7 +26,7 @@ export interface BatchJobBizInfoByListA {
    * @type {number}
    * @memberof BatchJobBizInfoByListA
    */
-  bizType?: number;
+  bizId?: number;
 
   /**
    * @type {string}

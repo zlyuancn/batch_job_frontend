@@ -28,10 +28,10 @@ const formData = reactive<BizFormData>(Object.assign({}, bizFormInitData));
 
 // 使用服务端的数据填充
 function initData() {
-  formData.bizType = Number(route.query["bizType"]);
+  formData.bizId = Number(route.query["bizId"]);
   // 查询业务信息
   const req: BatchJobQueryBizInfoReq = {
-    bizType: Number(route.query["bizType"])
+    bizId: Number(route.query["bizId"])
   };
   isLoading.value = true;
   batchJobClient
@@ -67,7 +67,7 @@ initData();
     >
       <el-form-item label="业务类型">
         <el-space direction="horizontal">
-          <el-input-number :min="1" v-model="formData.bizType" />
+          <el-input-number :min="1" v-model="formData.bizId" />
           <el-text style="color: var(--el-text-color-secondary)"
             >全局唯一的值, 表示一个业务的id</el-text
           >
@@ -178,53 +178,6 @@ initData();
           />
         </el-form-item>
       </el-space>
-
-      <el-form-item label="限速类型">
-        <el-select
-          v-model="formData.rateType"
-          placeholder="Select"
-          style="width: 240px"
-        >
-          <el-option
-            v-for="item in rateTypeOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-            <el-space direction="horizontal" :size="50">
-              <span style="float: left">{{ item.label }}</span>
-              <span
-                style="
-                  float: right;
-                  font-size: 13px;
-                  color: var(--el-text-color-secondary);
-                "
-              >
-                {{ item.desc }}</span
-              >
-            </el-space>
-          </el-option>
-        </el-select>
-        <el-text
-          v-if="formData.rateType == 1"
-          style="color: var(--el-text-color-secondary)"
-        >
-          {{ rateTypeOptions[1]?.desc }}</el-text
-        >
-      </el-form-item>
-      <el-form-item label="每秒速率">
-        <el-space direction="horizontal" size="large">
-          <el-input-number
-            :min="0"
-            :max="10000"
-            :step="10"
-            v-model="formData.rateSec"
-          />
-          <el-text style="color: var(--el-text-color-secondary)"
-            >数据每秒处理速度, 0表示不限速</el-text
-          >
-        </el-space>
-      </el-form-item>
 
       <el-form-item label="状态">
         <el-select

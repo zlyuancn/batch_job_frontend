@@ -18,4 +18,10 @@
  * @export
  * @interface BatchJobAdminRegistryBizRsp
  */
-export interface BatchJobAdminRegistryBizRsp {}
+export interface BatchJobAdminRegistryBizRsp {
+  /**
+   * @type {number}
+   * @memberof BatchJobAdminRegistryBizRsp
+   */
+  bizId?: number;
+}

@@ -36,7 +36,7 @@ export interface BatchJobQueryJobListReq {
    * @type {number}
    * @memberof BatchJobQueryJobListReq
    */
-  bizType?: number;
+  bizId?: number;
 
   /**
    * @type {BatchJobJobStatusQ}

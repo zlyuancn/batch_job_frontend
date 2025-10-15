@@ -27,6 +27,8 @@ import {
   BaseAPI,
   RequiredError
 } from "../base";
+import { BatchJobAdminChangeBizReq } from "../models";
+import { BatchJobAdminChangeBizRsp } from "../models";
 import { BatchJobAdminChangeJobReq } from "../models";
 import { BatchJobAdminChangeJobRsp } from "../models";
 import { BatchJobAdminCreateJobReq } from "../models";
@@ -69,12 +71,12 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     /**
      *
      * @summary 修改业务
-     * @param {BatchJobAdminRegistryBizReq} body
+     * @param {BatchJobAdminChangeBizReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     batchJobServiceAdminChangeBiz: async (
-      body: BatchJobAdminRegistryBizReq,
+      body: BatchJobAdminChangeBizReq,
       options: AxiosRequestConfig = {}
     ): Promise<RequestArgs> => {
       // verify required parameter 'body' is not null or undefined
@@ -635,7 +637,7 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态或者串行化速率类型的任务可以使用
+     * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态可以使用
      * @param {BatchJobBizUpdateJobDataReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1086,18 +1088,18 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     /**
      *
      * @summary 修改业务
-     * @param {BatchJobAdminRegistryBizReq} body
+     * @param {BatchJobAdminChangeBizReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async batchJobServiceAdminChangeBiz(
-      body: BatchJobAdminRegistryBizReq,
+      body: BatchJobAdminChangeBizReq,
       options?: AxiosRequestConfig
     ): Promise<
       (
         axios?: AxiosInstance,
         basePath?: string
-      ) => Promise<AxiosResponse<BatchJobAdminRegistryBizRsp>>
+      ) => Promise<AxiosResponse<BatchJobAdminChangeBizRsp>>
     > {
       const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
         configuration
@@ -1355,7 +1357,7 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态或者串行化速率类型的任务可以使用
+     * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态可以使用
      * @param {BatchJobBizUpdateJobDataReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1579,14 +1581,14 @@ export const BatchJobServiceApiFactory = function (
     /**
      *
      * @summary 修改业务
-     * @param {BatchJobAdminRegistryBizReq} body
+     * @param {BatchJobAdminChangeBizReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async batchJobServiceAdminChangeBiz(
-      body: BatchJobAdminRegistryBizReq,
+      body: BatchJobAdminChangeBizReq,
       options?: AxiosRequestConfig
-    ): Promise<AxiosResponse<BatchJobAdminRegistryBizRsp>> {
+    ): Promise<AxiosResponse<BatchJobAdminChangeBizRsp>> {
       return BatchJobServiceApiFp(configuration)
         .batchJobServiceAdminChangeBiz(body, options)
         .then(request => request(axios, basePath));
@@ -1713,7 +1715,7 @@ export const BatchJobServiceApiFactory = function (
     },
     /**
      *
-     * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态或者串行化速率类型的任务可以使用
+     * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态可以使用
      * @param {BatchJobBizUpdateJobDataReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1829,15 +1831,15 @@ export class BatchJobServiceApi extends BaseAPI {
   /**
    *
    * @summary 修改业务
-   * @param {BatchJobAdminRegistryBizReq} body
+   * @param {BatchJobAdminChangeBizReq} body
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof BatchJobServiceApi
    */
   public async batchJobServiceAdminChangeBiz(
-    body: BatchJobAdminRegistryBizReq,
+    body: BatchJobAdminChangeBizReq,
     options?: AxiosRequestConfig
-  ): Promise<AxiosResponse<BatchJobAdminRegistryBizRsp>> {
+  ): Promise<AxiosResponse<BatchJobAdminChangeBizRsp>> {
     return BatchJobServiceApiFp(this.configuration)
       .batchJobServiceAdminChangeBiz(body, options)
       .then(request => request(this.axios, this.basePath));
@@ -1972,7 +1974,7 @@ export class BatchJobServiceApi extends BaseAPI {
   }
   /**
    *
-   * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态或者串行化速率类型的任务可以使用
+   * @summary 更新任务数据. 要求任务必须处于 JobStatus.WaitBizRun 状态可以使用
    * @param {BatchJobBizUpdateJobDataReq} body
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}

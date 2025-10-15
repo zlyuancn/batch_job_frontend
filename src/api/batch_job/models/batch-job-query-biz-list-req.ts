@@ -33,6 +33,12 @@ export interface BatchJobQueryBizListReq {
   pageSize?: number;
 
   /**
+   * @type {number}
+   * @memberof BatchJobQueryBizListReq
+   */
+  bizId?: number;
+
+  /**
    * @type {string}
    * @memberof BatchJobQueryBizListReq
    */

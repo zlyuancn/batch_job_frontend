@@ -27,7 +27,7 @@ export enum OpSource {
 
 // 业务表单类型
 export interface BizFormData {
-  bizType: number;
+  bizId: number;
   bizName: string;
   remark: string;
 
@@ -66,7 +66,7 @@ export const rateTypeOptions = [
 
 export interface JobFormData {
   jobId: number;
-  bizType: number;
+  bizId: number;
   jobName: string;
   jobData: string;
   processDataTotal: number;

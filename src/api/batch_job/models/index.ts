@@ -1,3 +1,5 @@
+export * from "./batch-job-admin-change-biz-req";
+export * from "./batch-job-admin-change-biz-rsp";
 export * from "./batch-job-admin-change-job-req";
 export * from "./batch-job-admin-change-job-rsp";
 export * from "./batch-job-admin-create-job-req";

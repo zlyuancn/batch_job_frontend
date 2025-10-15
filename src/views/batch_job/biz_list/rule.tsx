@@ -5,7 +5,7 @@ import { formatTimestamp } from "@/views/batch_job/utils/time";
 import { jobListQueryArgs } from "../utils/data";
 
 export const columnsRule: Columns<any> = [
-  { key: "bizType", dataKey: "bizType", title: "业务类型", width: 100 },
+  { key: "bizId", dataKey: "bizId", title: "业务类型", width: 100 },
   { key: "bizName", dataKey: "bizName", title: "业务名", width: 300 },
   {
     key: "execType",
@@ -37,7 +37,7 @@ export const columnsRule: Columns<any> = [
     cellRenderer: v => {
       const router = useRouter();
       const handleJobList = () => {
-        jobListQueryArgs.bizType = v.rowData.bizType;
+        jobListQueryArgs.bizId = v.rowData.bizId;
         router.push({
           name: "JobList"
         });
@@ -46,14 +46,14 @@ export const columnsRule: Columns<any> = [
       const handleView = () => {
         router.push({
           name: "BizInfo",
-          query: { bizType: v.rowData.bizType }
+          query: { bizId: v.rowData.bizId }
         });
       };
 
       const handleEdit = () => {
         router.push({
           name: "ChangeBiz",
-          query: { bizType: v.rowData.bizType }
+          query: { bizId: v.rowData.bizId }
         });
       };
 
