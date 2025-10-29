@@ -16,12 +16,12 @@
  *
  *
  * @export
- * @interface BatchJobQueryBizInfoReq
+ * @interface BatchJobQueryJobStateInfoReq
  */
-export interface BatchJobQueryBizInfoReq {
+export interface BatchJobQueryJobStateInfoReq {
   /**
-   * @type {number}
-   * @memberof BatchJobQueryBizInfoReq
+   * @type {Array<string>}
+   * @memberof BatchJobQueryJobStateInfoReq
    */
-  bizId?: number;
+  jobIds?: Array<string>;
 }

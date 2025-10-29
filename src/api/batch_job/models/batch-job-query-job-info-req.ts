@@ -24,10 +24,4 @@ export interface BatchJobQueryJobInfoReq {
    * @memberof BatchJobQueryJobInfoReq
    */
   jobId?: string;
-
-  /**
-   * @type {boolean}
-   * @memberof BatchJobQueryJobInfoReq
-   */
-  needOpHistory?: boolean;
 }

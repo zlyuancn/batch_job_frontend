@@ -16,12 +16,12 @@
  *
  *
  * @export
- * @interface BatchJobQueryBizInfoReq
+ * @interface BatchJobQueryRunningJobProgressRsp
  */
-export interface BatchJobQueryBizInfoReq {
+export interface BatchJobQueryRunningJobProgressRsp {
   /**
-   * @type {number}
-   * @memberof BatchJobQueryBizInfoReq
+   * @type {{ [key: string]: string; }}
+   * @memberof BatchJobQueryRunningJobProgressRsp
    */
-  bizId?: number;
+  processedCount?: { [key: string]: string };
 }

@@ -13,6 +13,7 @@
  */
 
 import { BatchJobBizStatus } from "./batch-job-biz-status";
+import { BatchJobExecExtendDataA } from "./batch-job-exec-extend-data-a";
 import { BatchJobExecType } from "./batch-job-exec-type";
 import { BatchJobOpInfoA } from "./batch-job-op-info-a";
 /**
@@ -47,52 +48,10 @@ export interface BatchJobBizInfoA {
   execType?: BatchJobExecType;
 
   /**
-   * @type {string}
+   * @type {BatchJobExecExtendDataA}
    * @memberof BatchJobBizInfoA
    */
-  cbBeforeCreate?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizInfoA
-   */
-  cbBeforeRun?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizInfoA
-   */
-  cbProcess?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizInfoA
-   */
-  cbProcessStop?: string;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobBizInfoA
-   */
-  cbBeforeCreateTimeout?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobBizInfoA
-   */
-  cbBeforeRunTimeout?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobBizInfoA
-   */
-  cbProcessTimeout?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobBizInfoA
-   */
-  cbProcessStopTimeout?: number;
+  execExtendData?: BatchJobExecExtendDataA;
 
   /**
    * @type {BatchJobOpInfoA}

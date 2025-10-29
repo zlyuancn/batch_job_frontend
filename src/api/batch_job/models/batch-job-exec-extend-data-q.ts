@@ -12,16 +12,17 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobExecExtendDataHttpCallbackQ } from "./batch-job-exec-extend-data-http-callback-q";
 /**
  *
  *
  * @export
- * @interface BatchJobQueryBizInfoReq
+ * @interface BatchJobExecExtendDataQ
  */
-export interface BatchJobQueryBizInfoReq {
+export interface BatchJobExecExtendDataQ {
   /**
-   * @type {number}
-   * @memberof BatchJobQueryBizInfoReq
+   * @type {BatchJobExecExtendDataHttpCallbackQ}
+   * @memberof BatchJobExecExtendDataQ
    */
-  bizId?: number;
+  httpCallback?: BatchJobExecExtendDataHttpCallbackQ;
 }

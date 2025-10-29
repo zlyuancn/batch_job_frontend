@@ -22,12 +22,6 @@ import { BatchJobRateType } from "./batch-job-rate-type";
  */
 export interface BatchJobAdminChangeJobReq {
   /**
-   * @type {number}
-   * @memberof BatchJobAdminChangeJobReq
-   */
-  bizId?: number;
-
-  /**
    * @type {string}
    * @memberof BatchJobAdminChangeJobReq
    */

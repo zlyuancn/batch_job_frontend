@@ -13,6 +13,7 @@
  */
 
 import { BatchJobBizStatus } from "./batch-job-biz-status";
+import { BatchJobExecExtendDataQ } from "./batch-job-exec-extend-data-q";
 import { BatchJobExecType } from "./batch-job-exec-type";
 import { BatchJobOpInfoQ } from "./batch-job-op-info-q";
 /**
@@ -41,52 +42,10 @@ export interface BatchJobAdminRegistryBizReq {
   execType?: BatchJobExecType;
 
   /**
-   * @type {string}
+   * @type {BatchJobExecExtendDataQ}
    * @memberof BatchJobAdminRegistryBizReq
    */
-  cbBeforeCreate?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbBeforeRun?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbProcess?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbProcessStop?: string;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbBeforeCreateTimeout?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbBeforeRunTimeout?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbProcessTimeout?: number;
-
-  /**
-   * @type {number}
-   * @memberof BatchJobAdminRegistryBizReq
-   */
-  cbProcessStopTimeout?: number;
+  execExtendData?: BatchJobExecExtendDataQ;
 
   /**
    * @type {BatchJobOpInfoQ}

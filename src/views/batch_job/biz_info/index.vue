@@ -104,80 +104,98 @@ initData();
         </el-select>
       </el-form-item>
 
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="创建任务回调url">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbBeforeCreate"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbBeforeCreate?.length > 0"
-          label="超时秒数"
-        >
-          <el-input-number
-            :min="0"
-            :max="60"
-            v-model="formData.cbBeforeCreateTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="启动前回调">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbBeforeRun"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item v-if="formData.cbBeforeRun?.length > 0" label="超时秒数">
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbBeforeRunTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="处理任务回调">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbProcess"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item v-if="formData.cbProcess?.length > 0" label="超时秒数">
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbProcessTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="任务停止回调">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbProcessStop"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbProcessStop?.length > 0"
-          label="超时秒数"
-        >
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbProcessStopTimeout"
-          />
-        </el-form-item>
-      </el-space>
+      <div v-if="formData?.execType == 1">
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="创建任务回调url">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbBeforeCreate"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="
+              formData.execExtendData?.httpCallback?.cbBeforeCreate?.length > 0
+            "
+            label="超时秒数"
+          >
+            <el-input-number
+              :min="0"
+              :max="60"
+              v-model="
+                formData.execExtendData.httpCallback.cbBeforeCreateTimeout
+              "
+            />
+          </el-form-item>
+        </el-space>
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="启动前回调">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbBeforeRun"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="
+              formData.execExtendData?.httpCallback?.cbBeforeRun?.length > 0
+            "
+            label="超时秒数"
+          >
+            <el-input-number
+              :min="0"
+              :max="3600"
+              v-model="formData.execExtendData.httpCallback.cbBeforeRunTimeout"
+            />
+          </el-form-item>
+        </el-space>
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="处理任务回调">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbProcess"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="formData.execExtendData?.httpCallback?.cbProcess?.length > 0"
+            label="超时秒数"
+          >
+            <el-input-number
+              :min="0"
+              :max="3600"
+              v-model="formData.execExtendData.httpCallback.cbProcessTimeout"
+            />
+          </el-form-item>
+        </el-space>
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="任务停止回调">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbProcessStop"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="
+              formData.execExtendData?.httpCallback?.cbProcessStop?.length > 0
+            "
+            label="超时秒数"
+          >
+            <el-input-number
+              :min="0"
+              :max="3600"
+              v-model="
+                formData.execExtendData.httpCallback.cbProcessStopTimeout
+              "
+            />
+          </el-form-item>
+        </el-space>
+      </div>
 
       <el-form-item label="状态">
         <el-select

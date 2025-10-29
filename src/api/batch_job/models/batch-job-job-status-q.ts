@@ -13,11 +13,12 @@
  */
 
 /**
- * - JobStatusQ_Created: 待启动: 已创建/已停止  - JobStatusQ_Running: 运行中: 运行中/等待业务主动启动/正在停止  - JobStatusQ_Finished: 已完成
+ * - JobStatusQ_All: 所有状态  - JobStatusQ_Created: 待启动: 已创建/已停止  - JobStatusQ_Running: 运行中: 运行中/等待业务主动启动/正在停止  - JobStatusQ_Finished: 已完成
  * @export
  * @enum {string}
  */
 export enum BatchJobJobStatusQ {
+  All = "JobStatusQ_All",
   Created = "JobStatusQ_Created",
   Running = "JobStatusQ_Running",
   Finished = "JobStatusQ_Finished"

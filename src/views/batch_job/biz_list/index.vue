@@ -134,8 +134,7 @@ submitQuery();
             <el-switch
               v-model="bizListQueryArgs.showHidden"
               size="large"
-              active-text="隐藏的业务"
-              inactive-text="正常的业务"
+              active-text="查看隐藏的业务"
               @change="hiddenChange"
             />
             <el-button type="primary" @click="forceQuery">搜索</el-button>

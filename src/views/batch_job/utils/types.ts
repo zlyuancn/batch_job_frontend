@@ -25,13 +25,7 @@ export enum OpSource {
   Web = "Web"
 }
 
-// 业务表单类型
-export interface BizFormData {
-  bizId: number;
-  bizName: string;
-  remark: string;
-
-  execType: number;
+export interface BizExecExtendDataHttpCallback {
   cbBeforeCreate: string;
   cbBeforeRun: string;
   cbProcess: string;
@@ -40,6 +34,20 @@ export interface BizFormData {
   cbBeforeRunTimeout: number;
   cbProcessTimeout: number;
   cbProcessStopTimeout: number;
+}
+
+export interface BizExecExtendData {
+  httpCallback: BizExecExtendDataHttpCallback;
+}
+
+// 业务表单类型
+export interface BizFormData {
+  bizId: number;
+  bizName: string;
+  remark: string;
+
+  execType: number;
+  execExtendData: BizExecExtendData;
 
   status: number;
   opRemark?: string;

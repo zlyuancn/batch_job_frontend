@@ -12,7 +12,9 @@ import {
   BatchJobQueryBizInfoReq,
   BatchJobBizStatus,
   BatchJobAdminChangeBizReq,
-  BatchJobExecType
+  BatchJobExecType,
+  BatchJobExecExtendDataQ,
+  BatchJobExecExtendDataHttpCallbackQ
 } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
 import router from "@/router";
@@ -51,17 +53,9 @@ const onSubmit = async () => {
 
   if (isChange) {
     const req: BatchJobAdminChangeBizReq = {
+      bizId: formData.bizId,
       bizName: formData.bizName,
       remark: formData.remark,
-
-      cbBeforeCreate: formData.cbBeforeCreate,
-      cbBeforeRun: formData.cbBeforeRun,
-      cbProcess: formData.cbProcess,
-      cbProcessStop: formData.cbProcessStop,
-      cbBeforeCreateTimeout: formData.cbBeforeCreateTimeout,
-      cbBeforeRunTimeout: formData.cbBeforeRunTimeout,
-      cbProcessTimeout: formData.cbProcessTimeout,
-      cbProcessStopTimeout: formData.cbProcessStopTimeout,
 
       op: {
         opSource: OpSource.Web,
@@ -81,6 +75,23 @@ const onSubmit = async () => {
     switch (formData.execType) {
       case 1:
         req.execType = BatchJobExecType.HttpCallback;
+        req.execExtendData = <BatchJobExecExtendDataQ>{
+          httpCallback: <BatchJobExecExtendDataHttpCallbackQ>{
+            cbBeforeCreate:
+              formData.execExtendData?.httpCallback?.cbBeforeCreate,
+            cbBeforeRun: formData.execExtendData?.httpCallback?.cbBeforeRun,
+            cbProcess: formData.execExtendData?.httpCallback?.cbProcess,
+            cbProcessStop: formData.execExtendData?.httpCallback?.cbProcessStop,
+            cbBeforeCreateTimeout:
+              formData.execExtendData?.httpCallback?.cbBeforeCreateTimeout,
+            cbBeforeRunTimeout:
+              formData.execExtendData?.httpCallback?.cbBeforeRunTimeout,
+            cbProcessTimeout:
+              formData.execExtendData?.httpCallback?.cbProcessTimeout,
+            cbProcessStopTimeout:
+              formData.execExtendData?.httpCallback?.cbProcessStopTimeout
+          }
+        };
         break;
     }
 
@@ -101,15 +112,6 @@ const onSubmit = async () => {
       bizName: formData.bizName,
       remark: formData.remark,
 
-      cbBeforeCreate: formData.cbBeforeCreate,
-      cbBeforeRun: formData.cbBeforeRun,
-      cbProcess: formData.cbProcess,
-      cbProcessStop: formData.cbProcessStop,
-      cbBeforeCreateTimeout: formData.cbBeforeCreateTimeout,
-      cbBeforeRunTimeout: formData.cbBeforeRunTimeout,
-      cbProcessTimeout: formData.cbProcessTimeout,
-      cbProcessStopTimeout: formData.cbProcessStopTimeout,
-
       op: {
         opSource: OpSource.Web,
         opUserid: user.username,
@@ -122,6 +124,23 @@ const onSubmit = async () => {
     switch (formData.execType) {
       case 1:
         req.execType = BatchJobExecType.HttpCallback;
+        req.execExtendData = <BatchJobExecExtendDataQ>{
+          httpCallback: <BatchJobExecExtendDataHttpCallbackQ>{
+            cbBeforeCreate:
+              formData.execExtendData?.httpCallback?.cbBeforeCreate,
+            cbBeforeRun: formData.execExtendData?.httpCallback?.cbBeforeRun,
+            cbProcess: formData.execExtendData?.httpCallback?.cbProcess,
+            cbProcessStop: formData.execExtendData?.httpCallback?.cbProcessStop,
+            cbBeforeCreateTimeout:
+              formData.execExtendData?.httpCallback?.cbBeforeCreateTimeout,
+            cbBeforeRunTimeout:
+              formData.execExtendData?.httpCallback?.cbBeforeRunTimeout,
+            cbProcessTimeout:
+              formData.execExtendData?.httpCallback?.cbProcessTimeout,
+            cbProcessStopTimeout:
+              formData.execExtendData?.httpCallback?.cbProcessStopTimeout
+          }
+        };
         break;
     }
 
@@ -183,7 +202,7 @@ if (isChange) changePageInit();
       label-width="auto"
       style="max-width: 800px"
     >
-      <el-form-item label="业务类型" prop="bizId">
+      <el-form-item label="业务类型" prop="bizId" v-if="isChange">
         <el-space direction="horizontal">
           <el-input-number
             :min="1"
@@ -226,90 +245,105 @@ if (isChange) changePageInit();
         </el-select>
       </el-form-item>
 
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="创建任务回调url" prop="cbBeforeCreate">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbBeforeCreate"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbBeforeCreate?.length > 0"
-          label="超时秒数"
-          prop="cbBeforeCreateTimeout"
-        >
-          <el-input-number
-            :min="0"
-            :max="60"
-            v-model="formData.cbBeforeCreateTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="启动前回调" prop="cbBeforeRun">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbBeforeRun"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbBeforeRun?.length > 0"
-          label="超时秒数"
-          prop="cbBeforeRunTimeout"
-        >
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbBeforeRunTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="处理任务回调" prop="cbProcess">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbProcess"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbProcess?.length > 0"
-          label="超时秒数"
-          prop="cbProcessTimeout"
-        >
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbProcessTimeout"
-          />
-        </el-form-item>
-      </el-space>
-      <el-space direction="horizontal" size="small">
-        <el-form-item label="任务停止回调" prop="cbProcessStop">
-          <el-input
-            maxlength="128"
-            show-word-limit
-            v-model="formData.cbProcessStop"
-            style="width: 400px"
-          />
-        </el-form-item>
-        <el-form-item
-          v-if="formData.cbProcessStop?.length > 0"
-          label="超时秒数"
-          prop="cbProcessStopTimeout"
-        >
-          <el-input-number
-            :min="0"
-            :max="3600"
-            v-model="formData.cbProcessStopTimeout"
-          />
-        </el-form-item>
-      </el-space>
+      <div v-if="formData?.execType == 1">
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="创建任务回调url" prop="cbBeforeCreate">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbBeforeCreate"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="
+              formData.execExtendData?.httpCallback?.cbBeforeCreate?.length > 0
+            "
+            label="超时秒数"
+            prop="cbBeforeCreateTimeout"
+          >
+            <el-input-number
+              :min="0"
+              :max="60"
+              v-model="
+                formData.execExtendData.httpCallback.cbBeforeCreateTimeout
+              "
+            />
+          </el-form-item>
+        </el-space>
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="启动前回调" prop="cbBeforeRun">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbBeforeRun"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="
+              formData.execExtendData?.httpCallback?.cbBeforeRun?.length > 0
+            "
+            label="超时秒数"
+            prop="cbBeforeRunTimeout"
+          >
+            <el-input-number
+              :min="0"
+              :max="3600"
+              v-model="formData.execExtendData.httpCallback.cbBeforeRunTimeout"
+            />
+          </el-form-item>
+        </el-space>
+        <el-space direction="horizontal" size="small">
+          <el-form-item
+            label="处理任务回调"
+            prop="execExtendData.httpCallback.cbProcess"
+          >
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbProcess"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="formData.execExtendData?.httpCallback?.cbProcess?.length > 0"
+            label="超时秒数"
+            prop="cbProcessTimeout"
+          >
+            <el-input-number
+              :min="0"
+              :max="3600"
+              v-model="formData.execExtendData.httpCallback.cbProcessTimeout"
+            />
+          </el-form-item>
+        </el-space>
+        <el-space direction="horizontal" size="small">
+          <el-form-item label="任务停止回调" prop="cbProcessStop">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.cbProcessStop"
+              style="width: 400px"
+            />
+          </el-form-item>
+          <el-form-item
+            v-if="
+              formData.execExtendData?.httpCallback?.cbProcessStop?.length > 0
+            "
+            label="超时秒数"
+            prop="cbProcessStopTimeout"
+          >
+            <el-input-number
+              :min="0"
+              :max="3600"
+              v-model="
+                formData.execExtendData.httpCallback.cbProcessStopTimeout
+              "
+            />
+          </el-form-item>
+        </el-space>
+      </div>
 
       <el-form-item label="状态" prop="status" v-if="isChange">
         <el-select

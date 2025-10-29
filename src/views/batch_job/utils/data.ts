@@ -1,5 +1,10 @@
 import { BatchJobBizInfoA, BatchJobJobInfoA } from "@/api/batch_job";
-import { BizFormData, JobFormData } from "@/views/batch_job/utils/types";
+import {
+  BizExecExtendData,
+  BizExecExtendDataHttpCallback,
+  BizFormData,
+  JobFormData
+} from "@/views/batch_job/utils/types";
 import { reactive } from "vue";
 
 // 业务表单初始化数据
@@ -9,14 +14,18 @@ export const bizFormInitData: BizFormData = {
   remark: "",
 
   execType: 1,
-  cbBeforeCreate: "",
-  cbBeforeRun: "",
-  cbProcess: "",
-  cbProcessStop: "",
-  cbBeforeCreateTimeout: 5,
-  cbBeforeRunTimeout: 60,
-  cbProcessTimeout: 60,
-  cbProcessStopTimeout: 60,
+  execExtendData: {
+    httpCallback: {
+      cbBeforeCreate: "",
+      cbBeforeRun: "",
+      cbProcess: "",
+      cbProcessStop: "",
+      cbBeforeCreateTimeout: 5,
+      cbBeforeRunTimeout: 60,
+      cbProcessTimeout: 60,
+      cbProcessStopTimeout: 60
+    }
+  },
 
   status: 0,
   opRemark: ""
@@ -33,14 +42,22 @@ export const BatchJobBizInfoA2BizFormData = (
     remark: line.remark,
 
     execType: Number(line.execType ?? 0),
-    cbBeforeCreate: line.cbBeforeCreate,
-    cbBeforeRun: line.cbBeforeRun,
-    cbProcess: line.cbProcess,
-    cbProcessStop: line.cbProcessStop,
-    cbBeforeCreateTimeout: line.cbBeforeCreateTimeout ?? 0,
-    cbBeforeRunTimeout: line.cbBeforeRunTimeout ?? 0,
-    cbProcessTimeout: line.cbProcessTimeout ?? 0,
-    cbProcessStopTimeout: line.cbProcessStopTimeout ?? 0,
+    execExtendData: <BizExecExtendData>{
+      httpCallback: <BizExecExtendDataHttpCallback>{
+        cbBeforeCreate: line.execExtendData?.httpCallback?.cbBeforeCreate,
+        cbBeforeRun: line.execExtendData?.httpCallback?.cbBeforeRun,
+        cbProcess: line.execExtendData?.httpCallback?.cbProcess,
+        cbProcessStop: line.execExtendData?.httpCallback?.cbProcessStop,
+        cbBeforeCreateTimeout:
+          line.execExtendData?.httpCallback?.cbBeforeCreateTimeout ?? 0,
+        cbBeforeRunTimeout:
+          line.execExtendData?.httpCallback?.cbBeforeRunTimeout ?? 0,
+        cbProcessTimeout:
+          line.execExtendData?.httpCallback?.cbProcessTimeout ?? 0,
+        cbProcessStopTimeout:
+          line.execExtendData?.httpCallback?.cbProcessStopTimeout ?? 0
+      }
+    },
 
     status: Number(line.status ?? 0),
     opRemark: line?.op?.opRemark

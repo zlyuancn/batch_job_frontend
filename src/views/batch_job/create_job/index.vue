@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { BatchJobJobInfoA2JobFormData, jobFormInitData } from "../utils/data";
+import {
+  BatchJobJobInfoA2JobFormData,
+  jobFormInitData,
+  jobListQueryArgs
+} from "../utils/data";
 import { rules, ruleFormRef } from "./rule";
 import { reactive, ref } from "vue";
 import {
@@ -98,6 +102,11 @@ const submitCreate = async (createAndRun: boolean = false) => {
     .then(result => {
       console.log(result);
       message("创建成功", { type: "success" });
+      Object.assign(jobListQueryArgs, {
+        page: 1,
+        bizId: formData.bizId,
+        status: "0"
+      });
       router.back();
     })
     .catch(err => {
@@ -152,6 +161,11 @@ const submitChange = async () => {
     .then(result => {
       console.log(result);
       message("修改成功", { type: "success" });
+      Object.assign(jobListQueryArgs, {
+        page: 1,
+        bizId: formData.bizId,
+        status: "0"
+      });
       router.back();
     })
     .catch(err => {

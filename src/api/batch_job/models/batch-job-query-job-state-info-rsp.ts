@@ -12,16 +12,17 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobJobStateInfo } from "./batch-job-job-state-info";
 /**
  *
  *
  * @export
- * @interface BatchJobQueryBizInfoReq
+ * @interface BatchJobQueryJobStateInfoRsp
  */
-export interface BatchJobQueryBizInfoReq {
+export interface BatchJobQueryJobStateInfoRsp {
   /**
-   * @type {number}
-   * @memberof BatchJobQueryBizInfoReq
+   * @type {Array<BatchJobJobStateInfo>}
+   * @memberof BatchJobQueryJobStateInfoRsp
    */
-  bizId?: number;
+  jobStateInfos?: Array<BatchJobJobStateInfo>;
 }

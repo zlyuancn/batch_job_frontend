@@ -1,10 +1,12 @@
 <script setup lang="ts">
 // 业务列表
-import { reactive, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 import {
+  BatchJobJobStateInfo,
   BatchJobJobStatusQ,
   BatchJobQueryJobListReq,
   BatchJobQueryJobListRsp,
+  BatchJobQueryJobStateInfoReq,
   QueryAllBizNameRspLineA
 } from "@/api/batch_job_client";
 import { columnsRule } from "./rule";
@@ -19,6 +21,7 @@ import {
   resetJobListQueryArgs
 } from "../utils/data";
 import { date2Timestamp } from "@/views/batch_job/utils/time";
+import NProgress from "@/utils/progress";
 
 // 任务列表
 defineOptions({
@@ -68,6 +71,9 @@ const submitQuery = () => {
   };
   switch (jobListQueryArgs.status) {
     case "0":
+      req.status = BatchJobJobStatusQ.All;
+      break;
+    case "1":
       req.status = BatchJobJobStatusQ.Created;
       break;
     case "2":
@@ -145,6 +151,51 @@ function createJob() {
     query: { bizId: jobListQueryArgs.bizId }
   });
 }
+
+let timer = null;
+// 定时任务
+onMounted(() => {
+  // 创建定时任务（每1秒执行一次）
+  timer = setInterval(() => {
+    reloadRunningJob();
+  }, 1000);
+});
+
+onBeforeUnmount(() => {
+  // 清除定时器
+  clearInterval(timer);
+});
+
+// 重新加载运行中的任务
+const reloadRunningJob = () => {
+  const d2 = data.value.filter(v => {
+    return v.status == 1 || v.status == 2 || v.status == 4;
+  });
+  const ids = d2.map(v => v.jobId);
+  if (ids.length == 0) {
+    return;
+  }
+
+  const req = <BatchJobQueryJobStateInfoReq>{
+    jobIds: ids
+  };
+  batchJobClient
+    .batchJobServiceQueryJobStateInfo(req, { closeNProgress: true })
+    .then(res => {
+      // 创造map
+      let mm = <Array<BatchJobJobStateInfo>>{};
+      res.data?.jobStateInfos?.map(v => {
+        mm[v.jobId] = v;
+      });
+
+      // 更新数据
+      const nd = data.value.map(v => {
+        let nv = mm[v.jobId];
+        return nv ? Object.assign(v, nv) : v;
+      });
+      data.value = nd;
+    });
+};
 </script>
 
 <template>
@@ -175,7 +226,8 @@ function createJob() {
               @change="statusChange"
               size="large"
             >
-              <el-radio-button label="待启动" value="0" />
+              <el-radio-button label="全部" value="0" />
+              <el-radio-button label="待启动" value="1" />
               <el-radio-button label="运行中" value="2" />
               <el-radio-button label="已完成" value="3" />
             </el-radio-group>
