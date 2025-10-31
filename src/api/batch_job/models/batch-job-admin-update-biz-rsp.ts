@@ -16,18 +16,6 @@
  *
  *
  * @export
- * @interface BatchJobBizStopJobReq
+ * @interface BatchJobAdminUpdateBizRsp
  */
-export interface BatchJobBizStopJobReq {
-  /**
-   * @type {string}
-   * @memberof BatchJobBizStopJobReq
-   */
-  jobId?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizStopJobReq
-   */
-  remark?: string;
-}
+export interface BatchJobAdminUpdateBizRsp {}

@@ -11,7 +11,7 @@ import {
   batchJobClient,
   BatchJobQueryBizInfoReq,
   BatchJobBizStatus,
-  BatchJobAdminChangeBizReq,
+  BatchJobAdminUpdateBizReq,
   BatchJobExecType,
   BatchJobExecExtendDataQ,
   BatchJobExecExtendDataHttpCallbackQ
@@ -52,7 +52,7 @@ const onSubmit = async () => {
   }
 
   if (isChange) {
-    const req: BatchJobAdminChangeBizReq = {
+    const req: BatchJobAdminUpdateBizReq = {
       bizId: formData.bizId,
       bizName: formData.bizName,
       remark: formData.remark,
@@ -96,7 +96,7 @@ const onSubmit = async () => {
     }
 
     await batchJobClient
-      .batchJobServiceAdminChangeBiz(req)
+      .batchJobServiceAdminUpdateBiz(req)
       .then(result => {
         console.log(result);
         message("修改成功", { type: "success" });

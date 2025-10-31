@@ -23,5 +23,17 @@ export interface BatchJobBizStartJobReq {
    * @type {string}
    * @memberof BatchJobBizStartJobReq
    */
+  authCode?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobBizStartJobReq
+   */
   jobId?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobBizStartJobReq
+   */
+  remark?: string;
 }

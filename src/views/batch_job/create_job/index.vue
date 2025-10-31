@@ -10,9 +10,9 @@ import {
   batchJobClient,
   BatchJobRateType,
   BatchJobAdminCreateJobReq,
-  BatchJobAdminChangeJobReq,
   BatchJobQueryJobInfoReq,
-  QueryAllBizNameRspLineA
+  QueryAllBizNameRspLineA,
+  BatchJobAdminUpdateJobReq
 } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
 import router from "@/router";
@@ -129,10 +129,9 @@ const submitChange = async () => {
     return;
   }
 
-  const req: BatchJobAdminChangeJobReq = {
+  const req: BatchJobAdminUpdateJobReq = {
     jobId: String(formData.jobId),
 
-    bizId: formData.bizId,
     jobName: formData.jobName,
     jobData: formData.jobData,
     processDataTotal: String(formData.processDataTotal),
@@ -157,7 +156,7 @@ const submitChange = async () => {
   }
 
   await batchJobClient
-    .batchJobServiceAdminChangeJob(req)
+    .batchJobServiceAdminUpdateJob(req)
     .then(result => {
       console.log(result);
       message("修改成功", { type: "success" });

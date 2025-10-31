@@ -1,14 +1,11 @@
 import { Columns } from "element-plus";
 import { JobStatus2CnName, raceType2CnName } from "../utils/types";
-import { useRouter } from "vue-router";
 import { formatTimestamp } from "@/views/batch_job/utils/time";
 
 import { bizNameMap } from "@/views/batch_job/utils/data";
 
-import iconView from "~icons/ep/view";
-import iconEdit from "~icons/ep/edit";
-import iconVideoPlay from "~icons/ep/video-play";
-import iconVideoPause from "~icons/ep/video-pause";
+import { h, ref } from "vue";
+import OptionButton from "./OptionButton.vue";
 
 export const columnsRule: Columns<any> = [
   { key: "jobId", dataKey: "jobId", title: "任务id", width: 100 },
@@ -107,68 +104,17 @@ export const columnsRule: Columns<any> = [
     key: "operations",
     title: "",
     cellRenderer: v => {
-      const router = useRouter();
-      const handleView = () => {
-        // router.push({
-        //   name: "BizInfo",
-        //   query: { bizId: v.rowData.bizId }
-        // });
+      // return h(OptionButton, v.rowData)
+      const updateStatus = status => {
+        v.rowData.status = status;
       };
-
-      const handleEdit = () => {
-        router.push({
-          name: "ChangeJob",
-          query: { jobId: v.rowData.jobId }
-        });
-      };
-
-      const handleStart = () => {};
-      const handleStop = () => {};
-
-      const status = v.rowData.status ?? 0;
-      const allowEdit = status == 0 || status == 5;
-      const allowStop = status == 1 || status == 2;
-      const allowRun = status == 0 || status == 5;
-
-      return (
-        <>
-          <el-button
-            size="small"
-            onClick={handleView}
-            type="primary"
-            icon={iconView}
-          >
-            查看
-          </el-button>
-          {allowRun && (
-            <el-button
-              size="small"
-              onClick={handleStart}
-              type="success"
-              icon={iconVideoPlay}
-            >
-              运行
-            </el-button>
-          )}
-          {allowStop && (
-            <el-button
-              size="small"
-              onClick={handleStop}
-              type="danger"
-              icon={iconVideoPause}
-            >
-              停止
-            </el-button>
-          )}
-          {allowEdit && (
-            <el-button size="small" onClick={handleEdit} icon={iconEdit}>
-              编辑
-            </el-button>
-          )}
-        </>
-      );
+      return h(OptionButton, {
+        jobId: String(v.rowData.jobId),
+        status: v.rowData.status ?? 0,
+        updateStatus: updateStatus
+      });
     },
-    width: 200,
-    align: "center"
+    width: 300,
+    align: "left"
   }
 ];

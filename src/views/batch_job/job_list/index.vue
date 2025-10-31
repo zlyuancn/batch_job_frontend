@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // 业务列表
-import { onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import {
+  batchJobClient,
   BatchJobJobStateInfo,
   BatchJobJobStatusQ,
   BatchJobQueryJobListReq,
@@ -10,10 +11,8 @@ import {
   QueryAllBizNameRspLineA
 } from "@/api/batch_job_client";
 import { columnsRule } from "./rule";
-import { mockData } from "./data";
 import { Loading } from "@element-plus/icons-vue";
-import { useRoute, useRouter } from "vue-router";
-import { batchJobClient } from "@/api/batch_job_client";
+import { useRouter } from "vue-router";
 import { message } from "@/utils/message";
 import {
   bizNameMap,
@@ -21,7 +20,6 @@ import {
   resetJobListQueryArgs
 } from "../utils/data";
 import { date2Timestamp } from "@/views/batch_job/utils/time";
-import NProgress from "@/utils/progress";
 
 // 任务列表
 defineOptions({
@@ -158,7 +156,7 @@ onMounted(() => {
   // 创建定时任务（每1秒执行一次）
   timer = setInterval(() => {
     reloadRunningJob();
-  }, 1000);
+  }, 2000);
 });
 
 onBeforeUnmount(() => {
@@ -189,11 +187,10 @@ const reloadRunningJob = () => {
       });
 
       // 更新数据
-      const nd = data.value.map(v => {
+      data.value = data.value.map(v => {
         let nv = mm[v.jobId];
         return nv ? Object.assign(v, nv) : v;
       });
-      data.value = nd;
     });
 };
 </script>

@@ -23,6 +23,12 @@ export interface BatchJobBizUpdateJobDataReq {
    * @type {string}
    * @memberof BatchJobBizUpdateJobDataReq
    */
+  authCode?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobBizUpdateJobDataReq
+   */
   jobId?: string;
 
   /**
@@ -35,12 +41,6 @@ export interface BatchJobBizUpdateJobDataReq {
    * @type {string}
    * @memberof BatchJobBizUpdateJobDataReq
    */
-  bizCustomData?: string;
-
-  /**
-   * @type {string}
-   * @memberof BatchJobBizUpdateJobDataReq
-   */
   processDataTotal?: string;
 
   /**
@@ -48,4 +48,10 @@ export interface BatchJobBizUpdateJobDataReq {
    * @memberof BatchJobBizUpdateJobDataReq
    */
   processedCount?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobBizUpdateJobDataReq
+   */
+  remark?: string;
 }

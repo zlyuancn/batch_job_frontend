@@ -27,10 +27,6 @@ import {
   BaseAPI,
   RequiredError
 } from "../base";
-import { BatchJobAdminChangeBizReq } from "../models";
-import { BatchJobAdminChangeBizRsp } from "../models";
-import { BatchJobAdminChangeJobReq } from "../models";
-import { BatchJobAdminChangeJobRsp } from "../models";
 import { BatchJobAdminCreateJobReq } from "../models";
 import { BatchJobAdminCreateJobRsp } from "../models";
 import { BatchJobAdminRegistryBizReq } from "../models";
@@ -39,6 +35,10 @@ import { BatchJobAdminStartJobReq } from "../models";
 import { BatchJobAdminStartJobRsp } from "../models";
 import { BatchJobAdminStopJobReq } from "../models";
 import { BatchJobAdminStopJobRsp } from "../models";
+import { BatchJobAdminUpdateBizReq } from "../models";
+import { BatchJobAdminUpdateBizRsp } from "../models";
+import { BatchJobAdminUpdateJobReq } from "../models";
+import { BatchJobAdminUpdateJobRsp } from "../models";
 import { BatchJobBizAddDataLogReq } from "../models";
 import { BatchJobBizAddDataLogRsp } from "../models";
 import { BatchJobBizStartJobReq } from "../models";
@@ -70,132 +70,6 @@ export const BatchJobServiceApiAxiosParamCreator = function (
   configuration?: Configuration
 ) {
   return {
-    /**
-     *
-     * @summary 修改业务
-     * @param {BatchJobAdminChangeBizReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    batchJobServiceAdminChangeBiz: async (
-      body: BatchJobAdminChangeBizReq,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'body' is not null or undefined
-      if (body === null || body === undefined) {
-        throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling batchJobServiceAdminChangeBiz."
-        );
-      }
-      const localVarPath = `/BatchJob/AdminChangeBiz`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, "https://example.com");
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-      const localVarRequestOptions: AxiosRequestConfig = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      const query = new URLSearchParams(localVarUrlObj.search);
-      for (const key in localVarQueryParameter) {
-        query.set(key, localVarQueryParameter[key]);
-      }
-      for (const key in options.params) {
-        query.set(key, options.params[key]);
-      }
-      localVarUrlObj.search = new URLSearchParams(query).toString();
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      const needsSerialization =
-        typeof body !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-      localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(body !== undefined ? body : {})
-        : body || "";
-
-      return {
-        url:
-          localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-        options: localVarRequestOptions
-      };
-    },
-    /**
-     *
-     * @summary 修改任务
-     * @param {BatchJobAdminChangeJobReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    batchJobServiceAdminChangeJob: async (
-      body: BatchJobAdminChangeJobReq,
-      options: AxiosRequestConfig = {}
-    ): Promise<RequestArgs> => {
-      // verify required parameter 'body' is not null or undefined
-      if (body === null || body === undefined) {
-        throw new RequiredError(
-          "body",
-          "Required parameter body was null or undefined when calling batchJobServiceAdminChangeJob."
-        );
-      }
-      const localVarPath = `/BatchJob/AdminChangeJob`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, "https://example.com");
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-      const localVarRequestOptions: AxiosRequestConfig = {
-        method: "POST",
-        ...baseOptions,
-        ...options
-      };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      const query = new URLSearchParams(localVarUrlObj.search);
-      for (const key in localVarQueryParameter) {
-        query.set(key, localVarQueryParameter[key]);
-      }
-      for (const key in options.params) {
-        query.set(key, options.params[key]);
-      }
-      localVarUrlObj.search = new URLSearchParams(query).toString();
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers
-      };
-      const needsSerialization =
-        typeof body !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-      localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(body !== undefined ? body : {})
-        : body || "";
-
-      return {
-        url:
-          localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-        options: localVarRequestOptions
-      };
-    },
     /**
      *
      * @summary 创建任务
@@ -450,6 +324,132 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
+     * @summary 修改业务
+     * @param {BatchJobAdminUpdateBizReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    batchJobServiceAdminUpdateBiz: async (
+      body: BatchJobAdminUpdateBizReq,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'body' is not null or undefined
+      if (body === null || body === undefined) {
+        throw new RequiredError(
+          "body",
+          "Required parameter body was null or undefined when calling batchJobServiceAdminUpdateBiz."
+        );
+      }
+      const localVarPath = `/BatchJob/AdminUpdateBiz`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, "https://example.com");
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+      const localVarRequestOptions: AxiosRequestConfig = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      const query = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        query.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.params) {
+        query.set(key, options.params[key]);
+      }
+      localVarUrlObj.search = new URLSearchParams(query).toString();
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      const needsSerialization =
+        typeof body !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(body !== undefined ? body : {})
+        : body || "";
+
+      return {
+        url:
+          localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     *
+     * @summary 修改任务
+     * @param {BatchJobAdminUpdateJobReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    batchJobServiceAdminUpdateJob: async (
+      body: BatchJobAdminUpdateJobReq,
+      options: AxiosRequestConfig = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'body' is not null or undefined
+      if (body === null || body === undefined) {
+        throw new RequiredError(
+          "body",
+          "Required parameter body was null or undefined when calling batchJobServiceAdminUpdateJob."
+        );
+      }
+      const localVarPath = `/BatchJob/AdminUpdateJob`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, "https://example.com");
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+      const localVarRequestOptions: AxiosRequestConfig = {
+        method: "POST",
+        ...baseOptions,
+        ...options
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      const query = new URLSearchParams(localVarUrlObj.search);
+      for (const key in localVarQueryParameter) {
+        query.set(key, localVarQueryParameter[key]);
+      }
+      for (const key in options.params) {
+        query.set(key, options.params[key]);
+      }
+      localVarUrlObj.search = new URLSearchParams(query).toString();
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers
+      };
+      const needsSerialization =
+        typeof body !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+      localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(body !== undefined ? body : {})
+        : body || "";
+
+      return {
+        url:
+          localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+        options: localVarRequestOptions
+      };
+    },
+    /**
+     *
      * @summary 增加数据日志
      * @param {BatchJobBizAddDataLogReq} body
      * @param {*} [options] Override http request option.
@@ -513,7 +513,7 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary 业务启动. 要求任务必须处于 JobStatus.WaitBizRun 状态
+     * @summary 发送业务启动信号. 要求任务必须处于 JobStatus.WaitBizRun 状态
      * @param {BatchJobBizStartJobReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -576,7 +576,7 @@ export const BatchJobServiceApiAxiosParamCreator = function (
     },
     /**
      *
-     * @summary 要求业务停止运行. 一般为业务判断任务无法继续的时候
+     * @summary 发送停止任务信号. 一般为业务判断任务无法继续的时候
      * @param {BatchJobBizStopJobReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1152,66 +1152,6 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
-     * @summary 修改业务
-     * @param {BatchJobAdminChangeBizReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async batchJobServiceAdminChangeBiz(
-      body: BatchJobAdminChangeBizReq,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => Promise<AxiosResponse<BatchJobAdminChangeBizRsp>>
-    > {
-      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
-        configuration
-      ).batchJobServiceAdminChangeBiz(body, options);
-      return (
-        axios: AxiosInstance = globalAxios,
-        basePath: string = BASE_PATH
-      ) => {
-        const axiosRequestArgs: AxiosRequestConfig = {
-          ...localVarAxiosArgs.options,
-          url: basePath + localVarAxiosArgs.url
-        };
-        return axios.request(axiosRequestArgs);
-      };
-    },
-    /**
-     *
-     * @summary 修改任务
-     * @param {BatchJobAdminChangeJobReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async batchJobServiceAdminChangeJob(
-      body: BatchJobAdminChangeJobReq,
-      options?: AxiosRequestConfig
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string
-      ) => Promise<AxiosResponse<BatchJobAdminChangeJobRsp>>
-    > {
-      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
-        configuration
-      ).batchJobServiceAdminChangeJob(body, options);
-      return (
-        axios: AxiosInstance = globalAxios,
-        basePath: string = BASE_PATH
-      ) => {
-        const axiosRequestArgs: AxiosRequestConfig = {
-          ...localVarAxiosArgs.options,
-          url: basePath + localVarAxiosArgs.url
-        };
-        return axios.request(axiosRequestArgs);
-      };
-    },
-    /**
-     *
      * @summary 创建任务
      * @param {BatchJobAdminCreateJobReq} body
      * @param {*} [options] Override http request option.
@@ -1332,6 +1272,66 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @summary 修改业务
+     * @param {BatchJobAdminUpdateBizReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceAdminUpdateBiz(
+      body: BatchJobAdminUpdateBizReq,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => Promise<AxiosResponse<BatchJobAdminUpdateBizRsp>>
+    > {
+      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
+        configuration
+      ).batchJobServiceAdminUpdateBiz(body, options);
+      return (
+        axios: AxiosInstance = globalAxios,
+        basePath: string = BASE_PATH
+      ) => {
+        const axiosRequestArgs: AxiosRequestConfig = {
+          ...localVarAxiosArgs.options,
+          url: basePath + localVarAxiosArgs.url
+        };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     *
+     * @summary 修改任务
+     * @param {BatchJobAdminUpdateJobReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceAdminUpdateJob(
+      body: BatchJobAdminUpdateJobReq,
+      options?: AxiosRequestConfig
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => Promise<AxiosResponse<BatchJobAdminUpdateJobRsp>>
+    > {
+      const localVarAxiosArgs = await BatchJobServiceApiAxiosParamCreator(
+        configuration
+      ).batchJobServiceAdminUpdateJob(body, options);
+      return (
+        axios: AxiosInstance = globalAxios,
+        basePath: string = BASE_PATH
+      ) => {
+        const axiosRequestArgs: AxiosRequestConfig = {
+          ...localVarAxiosArgs.options,
+          url: basePath + localVarAxiosArgs.url
+        };
+        return axios.request(axiosRequestArgs);
+      };
+    },
+    /**
+     *
      * @summary 增加数据日志
      * @param {BatchJobBizAddDataLogReq} body
      * @param {*} [options] Override http request option.
@@ -1362,7 +1362,7 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary 业务启动. 要求任务必须处于 JobStatus.WaitBizRun 状态
+     * @summary 发送业务启动信号. 要求任务必须处于 JobStatus.WaitBizRun 状态
      * @param {BatchJobBizStartJobReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1392,7 +1392,7 @@ export const BatchJobServiceApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @summary 要求业务停止运行. 一般为业务判断任务无法继续的时候
+     * @summary 发送停止任务信号. 一般为业务判断任务无法继续的时候
      * @param {BatchJobBizStopJobReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1675,36 +1675,6 @@ export const BatchJobServiceApiFactory = function (
   return {
     /**
      *
-     * @summary 修改业务
-     * @param {BatchJobAdminChangeBizReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async batchJobServiceAdminChangeBiz(
-      body: BatchJobAdminChangeBizReq,
-      options?: AxiosRequestConfig
-    ): Promise<AxiosResponse<BatchJobAdminChangeBizRsp>> {
-      return BatchJobServiceApiFp(configuration)
-        .batchJobServiceAdminChangeBiz(body, options)
-        .then(request => request(axios, basePath));
-    },
-    /**
-     *
-     * @summary 修改任务
-     * @param {BatchJobAdminChangeJobReq} body
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async batchJobServiceAdminChangeJob(
-      body: BatchJobAdminChangeJobReq,
-      options?: AxiosRequestConfig
-    ): Promise<AxiosResponse<BatchJobAdminChangeJobRsp>> {
-      return BatchJobServiceApiFp(configuration)
-        .batchJobServiceAdminChangeJob(body, options)
-        .then(request => request(axios, basePath));
-    },
-    /**
-     *
      * @summary 创建任务
      * @param {BatchJobAdminCreateJobReq} body
      * @param {*} [options] Override http request option.
@@ -1765,6 +1735,36 @@ export const BatchJobServiceApiFactory = function (
     },
     /**
      *
+     * @summary 修改业务
+     * @param {BatchJobAdminUpdateBizReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceAdminUpdateBiz(
+      body: BatchJobAdminUpdateBizReq,
+      options?: AxiosRequestConfig
+    ): Promise<AxiosResponse<BatchJobAdminUpdateBizRsp>> {
+      return BatchJobServiceApiFp(configuration)
+        .batchJobServiceAdminUpdateBiz(body, options)
+        .then(request => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary 修改任务
+     * @param {BatchJobAdminUpdateJobReq} body
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async batchJobServiceAdminUpdateJob(
+      body: BatchJobAdminUpdateJobReq,
+      options?: AxiosRequestConfig
+    ): Promise<AxiosResponse<BatchJobAdminUpdateJobRsp>> {
+      return BatchJobServiceApiFp(configuration)
+        .batchJobServiceAdminUpdateJob(body, options)
+        .then(request => request(axios, basePath));
+    },
+    /**
+     *
      * @summary 增加数据日志
      * @param {BatchJobBizAddDataLogReq} body
      * @param {*} [options] Override http request option.
@@ -1780,7 +1780,7 @@ export const BatchJobServiceApiFactory = function (
     },
     /**
      *
-     * @summary 业务启动. 要求任务必须处于 JobStatus.WaitBizRun 状态
+     * @summary 发送业务启动信号. 要求任务必须处于 JobStatus.WaitBizRun 状态
      * @param {BatchJobBizStartJobReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1795,7 +1795,7 @@ export const BatchJobServiceApiFactory = function (
     },
     /**
      *
-     * @summary 要求业务停止运行. 一般为业务判断任务无法继续的时候
+     * @summary 发送停止任务信号. 一般为业务判断任务无法继续的时候
      * @param {BatchJobBizStopJobReq} body
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1940,38 +1940,6 @@ export const BatchJobServiceApiFactory = function (
 export class BatchJobServiceApi extends BaseAPI {
   /**
    *
-   * @summary 修改业务
-   * @param {BatchJobAdminChangeBizReq} body
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof BatchJobServiceApi
-   */
-  public async batchJobServiceAdminChangeBiz(
-    body: BatchJobAdminChangeBizReq,
-    options?: AxiosRequestConfig
-  ): Promise<AxiosResponse<BatchJobAdminChangeBizRsp>> {
-    return BatchJobServiceApiFp(this.configuration)
-      .batchJobServiceAdminChangeBiz(body, options)
-      .then(request => request(this.axios, this.basePath));
-  }
-  /**
-   *
-   * @summary 修改任务
-   * @param {BatchJobAdminChangeJobReq} body
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof BatchJobServiceApi
-   */
-  public async batchJobServiceAdminChangeJob(
-    body: BatchJobAdminChangeJobReq,
-    options?: AxiosRequestConfig
-  ): Promise<AxiosResponse<BatchJobAdminChangeJobRsp>> {
-    return BatchJobServiceApiFp(this.configuration)
-      .batchJobServiceAdminChangeJob(body, options)
-      .then(request => request(this.axios, this.basePath));
-  }
-  /**
-   *
    * @summary 创建任务
    * @param {BatchJobAdminCreateJobReq} body
    * @param {*} [options] Override http request option.
@@ -2036,6 +2004,38 @@ export class BatchJobServiceApi extends BaseAPI {
   }
   /**
    *
+   * @summary 修改业务
+   * @param {BatchJobAdminUpdateBizReq} body
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BatchJobServiceApi
+   */
+  public async batchJobServiceAdminUpdateBiz(
+    body: BatchJobAdminUpdateBizReq,
+    options?: AxiosRequestConfig
+  ): Promise<AxiosResponse<BatchJobAdminUpdateBizRsp>> {
+    return BatchJobServiceApiFp(this.configuration)
+      .batchJobServiceAdminUpdateBiz(body, options)
+      .then(request => request(this.axios, this.basePath));
+  }
+  /**
+   *
+   * @summary 修改任务
+   * @param {BatchJobAdminUpdateJobReq} body
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof BatchJobServiceApi
+   */
+  public async batchJobServiceAdminUpdateJob(
+    body: BatchJobAdminUpdateJobReq,
+    options?: AxiosRequestConfig
+  ): Promise<AxiosResponse<BatchJobAdminUpdateJobRsp>> {
+    return BatchJobServiceApiFp(this.configuration)
+      .batchJobServiceAdminUpdateJob(body, options)
+      .then(request => request(this.axios, this.basePath));
+  }
+  /**
+   *
    * @summary 增加数据日志
    * @param {BatchJobBizAddDataLogReq} body
    * @param {*} [options] Override http request option.
@@ -2052,7 +2052,7 @@ export class BatchJobServiceApi extends BaseAPI {
   }
   /**
    *
-   * @summary 业务启动. 要求任务必须处于 JobStatus.WaitBizRun 状态
+   * @summary 发送业务启动信号. 要求任务必须处于 JobStatus.WaitBizRun 状态
    * @param {BatchJobBizStartJobReq} body
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -2068,7 +2068,7 @@ export class BatchJobServiceApi extends BaseAPI {
   }
   /**
    *
-   * @summary 要求业务停止运行. 一般为业务判断任务无法继续的时候
+   * @summary 发送停止任务信号. 一般为业务判断任务无法继续的时候
    * @param {BatchJobBizStopJobReq} body
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
