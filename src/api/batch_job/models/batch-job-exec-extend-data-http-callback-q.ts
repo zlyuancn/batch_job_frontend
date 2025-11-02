@@ -79,4 +79,10 @@ export interface BatchJobExecExtendDataHttpCallbackQ {
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
   headers?: Array<BatchJobKV>;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobExecExtendDataHttpCallbackQ
+   */
+  proxy?: string;
 }

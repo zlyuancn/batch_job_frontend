@@ -220,6 +220,19 @@ initData();
               ></Headers>
             </el-form-item>
           </el-space>
+          <el-form-item label="代理">
+            <el-input
+              maxlength="128"
+              show-word-limit
+              v-model="formData.execExtendData.httpCallback.proxy"
+              style="width: 600px"
+              clearable
+            />
+            <el-text style="color: var(--el-text-color-secondary)"
+              >支持 http, https, socks5, socks5h. 示例: https://127.0.0.1:1080
+              https://user:pwd@127.0.0.1:1080</el-text
+            >
+          </el-form-item>
         </el-space>
       </div>
 

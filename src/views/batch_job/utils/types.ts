@@ -38,6 +38,7 @@ export interface BizExecExtendDataHttpCallback {
   processStopTimeout: number;
   insecureSkipVerify: boolean;
   headers: Array<BatchJobKV>;
+  proxy: string;
 }
 
 export interface BizExecExtendData {
