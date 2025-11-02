@@ -33,6 +33,7 @@ export * from "./batch-job-job-info-by-list-a";
 export * from "./batch-job-job-state-info";
 export * from "./batch-job-job-status";
 export * from "./batch-job-job-status-q";
+export * from "./batch-job-kv";
 export * from "./batch-job-log-info-by-list-a";
 export * from "./batch-job-op-info-a";
 export * from "./batch-job-op-info-q";

@@ -16,14 +16,14 @@ export const bizFormInitData: BizFormData = {
   execType: 1,
   execExtendData: {
     httpCallback: {
-      cbBeforeCreate: "",
-      cbBeforeRun: "",
-      cbProcess: "",
-      cbProcessStop: "",
-      cbBeforeCreateTimeout: 5,
-      cbBeforeRunTimeout: 60,
-      cbProcessTimeout: 60,
-      cbProcessStopTimeout: 60
+      beforeCreate: "",
+      beforeRun: "",
+      process: "",
+      processStop: "",
+      beforeCreateTimeout: 5,
+      beforeRunTimeout: 60,
+      processTimeout: 60,
+      processStopTimeout: 60
     }
   },
 
@@ -44,18 +44,17 @@ export const BatchJobBizInfoA2BizFormData = (
     execType: Number(line.execType ?? 0),
     execExtendData: <BizExecExtendData>{
       httpCallback: <BizExecExtendDataHttpCallback>{
-        cbBeforeCreate: line.execExtendData?.httpCallback?.cbBeforeCreate,
-        cbBeforeRun: line.execExtendData?.httpCallback?.cbBeforeRun,
-        cbProcess: line.execExtendData?.httpCallback?.cbProcess,
-        cbProcessStop: line.execExtendData?.httpCallback?.cbProcessStop,
-        cbBeforeCreateTimeout:
-          line.execExtendData?.httpCallback?.cbBeforeCreateTimeout ?? 0,
-        cbBeforeRunTimeout:
-          line.execExtendData?.httpCallback?.cbBeforeRunTimeout ?? 0,
-        cbProcessTimeout:
-          line.execExtendData?.httpCallback?.cbProcessTimeout ?? 0,
-        cbProcessStopTimeout:
-          line.execExtendData?.httpCallback?.cbProcessStopTimeout ?? 0
+        beforeCreate: line.execExtendData?.httpCallback?.beforeCreate,
+        beforeRun: line.execExtendData?.httpCallback?.beforeRun,
+        process: line.execExtendData?.httpCallback?.process,
+        processStop: line.execExtendData?.httpCallback?.processStop,
+        beforeCreateTimeout:
+          line.execExtendData?.httpCallback?.beforeCreateTimeout ?? 0,
+        beforeRunTimeout:
+          line.execExtendData?.httpCallback?.beforeRunTimeout ?? 0,
+        processTimeout: line.execExtendData?.httpCallback?.processTimeout ?? 0,
+        processStopTimeout:
+          line.execExtendData?.httpCallback?.processStopTimeout ?? 0
       }
     },
 

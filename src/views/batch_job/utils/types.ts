@@ -26,14 +26,14 @@ export enum OpSource {
 }
 
 export interface BizExecExtendDataHttpCallback {
-  cbBeforeCreate: string;
-  cbBeforeRun: string;
-  cbProcess: string;
-  cbProcessStop: string;
-  cbBeforeCreateTimeout: number;
-  cbBeforeRunTimeout: number;
-  cbProcessTimeout: number;
-  cbProcessStopTimeout: number;
+  beforeCreate: string;
+  beforeRun: string;
+  process: string;
+  processStop: string;
+  beforeCreateTimeout: number;
+  beforeRunTimeout: number;
+  processTimeout: number;
+  processStopTimeout: number;
 }
 
 export interface BizExecExtendData {

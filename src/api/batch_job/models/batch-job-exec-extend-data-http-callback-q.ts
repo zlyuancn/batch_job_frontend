@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { BatchJobKV } from "./batch-job-kv";
 /**
  *
  *
@@ -23,47 +24,59 @@ export interface BatchJobExecExtendDataHttpCallbackQ {
    * @type {string}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbBeforeCreate?: string;
+  beforeCreate?: string;
 
   /**
    * @type {string}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbBeforeRun?: string;
+  beforeRun?: string;
 
   /**
    * @type {string}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbProcess?: string;
+  process?: string;
 
   /**
    * @type {string}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbProcessStop?: string;
+  processStop?: string;
 
   /**
    * @type {number}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbBeforeCreateTimeout?: number;
+  beforeCreateTimeout?: number;
 
   /**
    * @type {number}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbBeforeRunTimeout?: number;
+  beforeRunTimeout?: number;
 
   /**
    * @type {number}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbProcessTimeout?: number;
+  processTimeout?: number;
 
   /**
    * @type {number}
    * @memberof BatchJobExecExtendDataHttpCallbackQ
    */
-  cbProcessStopTimeout?: number;
+  processStopTimeout?: number;
+
+  /**
+   * @type {boolean}
+   * @memberof BatchJobExecExtendDataHttpCallbackQ
+   */
+  insecureSkipVerify?: boolean;
+
+  /**
+   * @type {Array<BatchJobKV>}
+   * @memberof BatchJobExecExtendDataHttpCallbackQ
+   */
+  headers?: Array<BatchJobKV>;
 }

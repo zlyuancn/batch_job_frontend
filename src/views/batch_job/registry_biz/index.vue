@@ -77,19 +77,18 @@ const onSubmit = async () => {
         req.execType = BatchJobExecType.HttpCallback;
         req.execExtendData = <BatchJobExecExtendDataQ>{
           httpCallback: <BatchJobExecExtendDataHttpCallbackQ>{
-            cbBeforeCreate:
-              formData.execExtendData?.httpCallback?.cbBeforeCreate,
-            cbBeforeRun: formData.execExtendData?.httpCallback?.cbBeforeRun,
-            cbProcess: formData.execExtendData?.httpCallback?.cbProcess,
-            cbProcessStop: formData.execExtendData?.httpCallback?.cbProcessStop,
-            cbBeforeCreateTimeout:
-              formData.execExtendData?.httpCallback?.cbBeforeCreateTimeout,
-            cbBeforeRunTimeout:
-              formData.execExtendData?.httpCallback?.cbBeforeRunTimeout,
-            cbProcessTimeout:
-              formData.execExtendData?.httpCallback?.cbProcessTimeout,
-            cbProcessStopTimeout:
-              formData.execExtendData?.httpCallback?.cbProcessStopTimeout
+            beforeCreate: formData.execExtendData?.httpCallback?.beforeCreate,
+            beforeRun: formData.execExtendData?.httpCallback?.beforeRun,
+            process: formData.execExtendData?.httpCallback?.process,
+            processStop: formData.execExtendData?.httpCallback?.processStop,
+            beforeCreateTimeout:
+              formData.execExtendData?.httpCallback?.beforeCreateTimeout,
+            beforeRunTimeout:
+              formData.execExtendData?.httpCallback?.beforeRunTimeout,
+            processTimeout:
+              formData.execExtendData?.httpCallback?.processTimeout,
+            processStopTimeout:
+              formData.execExtendData?.httpCallback?.processStopTimeout
           }
         };
         break;
@@ -126,19 +125,18 @@ const onSubmit = async () => {
         req.execType = BatchJobExecType.HttpCallback;
         req.execExtendData = <BatchJobExecExtendDataQ>{
           httpCallback: <BatchJobExecExtendDataHttpCallbackQ>{
-            cbBeforeCreate:
-              formData.execExtendData?.httpCallback?.cbBeforeCreate,
-            cbBeforeRun: formData.execExtendData?.httpCallback?.cbBeforeRun,
-            cbProcess: formData.execExtendData?.httpCallback?.cbProcess,
-            cbProcessStop: formData.execExtendData?.httpCallback?.cbProcessStop,
-            cbBeforeCreateTimeout:
-              formData.execExtendData?.httpCallback?.cbBeforeCreateTimeout,
-            cbBeforeRunTimeout:
-              formData.execExtendData?.httpCallback?.cbBeforeRunTimeout,
-            cbProcessTimeout:
-              formData.execExtendData?.httpCallback?.cbProcessTimeout,
-            cbProcessStopTimeout:
-              formData.execExtendData?.httpCallback?.cbProcessStopTimeout
+            beforeCreate: formData.execExtendData?.httpCallback?.beforeCreate,
+            beforeRun: formData.execExtendData?.httpCallback?.beforeRun,
+            process: formData.execExtendData?.httpCallback?.process,
+            processStop: formData.execExtendData?.httpCallback?.processStop,
+            beforeCreateTimeout:
+              formData.execExtendData?.httpCallback?.beforeCreateTimeout,
+            beforeRunTimeout:
+              formData.execExtendData?.httpCallback?.beforeRunTimeout,
+            processTimeout:
+              formData.execExtendData?.httpCallback?.processTimeout,
+            processStopTimeout:
+              formData.execExtendData?.httpCallback?.processStopTimeout
           }
         };
         break;
@@ -247,99 +245,93 @@ if (isChange) changePageInit();
 
       <div v-if="formData?.execType == 1">
         <el-space direction="horizontal" size="small">
-          <el-form-item label="创建任务回调url" prop="cbBeforeCreate">
+          <el-form-item label="创建任务回调url" prop="beforeCreate">
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbBeforeCreate"
+              v-model="formData.execExtendData.httpCallback.beforeCreate"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
             v-if="
-              formData.execExtendData?.httpCallback?.cbBeforeCreate?.length > 0
+              formData.execExtendData?.httpCallback?.beforeCreate?.length > 0
             "
             label="超时秒数"
-            prop="cbBeforeCreateTimeout"
+            prop="beforeCreateTimeout"
           >
             <el-input-number
               :min="0"
               :max="60"
-              v-model="
-                formData.execExtendData.httpCallback.cbBeforeCreateTimeout
-              "
+              v-model="formData.execExtendData.httpCallback.beforeCreateTimeout"
             />
           </el-form-item>
         </el-space>
         <el-space direction="horizontal" size="small">
-          <el-form-item label="启动前回调" prop="cbBeforeRun">
+          <el-form-item label="启动前回调" prop="beforeRun">
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbBeforeRun"
+              v-model="formData.execExtendData.httpCallback.beforeRun"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
-            v-if="
-              formData.execExtendData?.httpCallback?.cbBeforeRun?.length > 0
-            "
+            v-if="formData.execExtendData?.httpCallback?.beforeRun?.length > 0"
             label="超时秒数"
-            prop="cbBeforeRunTimeout"
+            prop="beforeRunTimeout"
           >
             <el-input-number
               :min="0"
               :max="3600"
-              v-model="formData.execExtendData.httpCallback.cbBeforeRunTimeout"
+              v-model="formData.execExtendData.httpCallback.beforeRunTimeout"
             />
           </el-form-item>
         </el-space>
         <el-space direction="horizontal" size="small">
           <el-form-item
             label="处理任务回调"
-            prop="execExtendData.httpCallback.cbProcess"
+            prop="execExtendData.httpCallback.process"
           >
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbProcess"
+              v-model="formData.execExtendData.httpCallback.process"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
-            v-if="formData.execExtendData?.httpCallback?.cbProcess?.length > 0"
+            v-if="formData.execExtendData?.httpCallback?.process?.length > 0"
             label="超时秒数"
-            prop="cbProcessTimeout"
+            prop="processTimeout"
           >
             <el-input-number
               :min="0"
               :max="3600"
-              v-model="formData.execExtendData.httpCallback.cbProcessTimeout"
+              v-model="formData.execExtendData.httpCallback.processTimeout"
             />
           </el-form-item>
         </el-space>
         <el-space direction="horizontal" size="small">
-          <el-form-item label="任务停止回调" prop="cbProcessStop">
+          <el-form-item label="任务停止回调" prop="processStop">
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbProcessStop"
+              v-model="formData.execExtendData.httpCallback.processStop"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
             v-if="
-              formData.execExtendData?.httpCallback?.cbProcessStop?.length > 0
+              formData.execExtendData?.httpCallback?.processStop?.length > 0
             "
             label="超时秒数"
-            prop="cbProcessStopTimeout"
+            prop="processStopTimeout"
           >
             <el-input-number
               :min="0"
               :max="3600"
-              v-model="
-                formData.execExtendData.httpCallback.cbProcessStopTimeout
-              "
+              v-model="formData.execExtendData.httpCallback.processStopTimeout"
             />
           </el-form-item>
         </el-space>

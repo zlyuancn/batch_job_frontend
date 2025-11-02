@@ -110,22 +110,20 @@ initData();
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbBeforeCreate"
+              v-model="formData.execExtendData.httpCallback.beforeCreate"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
             v-if="
-              formData.execExtendData?.httpCallback?.cbBeforeCreate?.length > 0
+              formData.execExtendData?.httpCallback?.beforeCreate?.length > 0
             "
             label="超时秒数"
           >
             <el-input-number
               :min="0"
               :max="60"
-              v-model="
-                formData.execExtendData.httpCallback.cbBeforeCreateTimeout
-              "
+              v-model="formData.execExtendData.httpCallback.beforeCreateTimeout"
             />
           </el-form-item>
         </el-space>
@@ -134,20 +132,18 @@ initData();
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbBeforeRun"
+              v-model="formData.execExtendData.httpCallback.beforeRun"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
-            v-if="
-              formData.execExtendData?.httpCallback?.cbBeforeRun?.length > 0
-            "
+            v-if="formData.execExtendData?.httpCallback?.beforeRun?.length > 0"
             label="超时秒数"
           >
             <el-input-number
               :min="0"
               :max="3600"
-              v-model="formData.execExtendData.httpCallback.cbBeforeRunTimeout"
+              v-model="formData.execExtendData.httpCallback.beforeRunTimeout"
             />
           </el-form-item>
         </el-space>
@@ -156,18 +152,18 @@ initData();
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbProcess"
+              v-model="formData.execExtendData.httpCallback.process"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
-            v-if="formData.execExtendData?.httpCallback?.cbProcess?.length > 0"
+            v-if="formData.execExtendData?.httpCallback?.process?.length > 0"
             label="超时秒数"
           >
             <el-input-number
               :min="0"
               :max="3600"
-              v-model="formData.execExtendData.httpCallback.cbProcessTimeout"
+              v-model="formData.execExtendData.httpCallback.processTimeout"
             />
           </el-form-item>
         </el-space>
@@ -176,22 +172,20 @@ initData();
             <el-input
               maxlength="128"
               show-word-limit
-              v-model="formData.execExtendData.httpCallback.cbProcessStop"
+              v-model="formData.execExtendData.httpCallback.processStop"
               style="width: 400px"
             />
           </el-form-item>
           <el-form-item
             v-if="
-              formData.execExtendData?.httpCallback?.cbProcessStop?.length > 0
+              formData.execExtendData?.httpCallback?.processStop?.length > 0
             "
             label="超时秒数"
           >
             <el-input-number
               :min="0"
               :max="3600"
-              v-model="
-                formData.execExtendData.httpCallback.cbProcessStopTimeout
-              "
+              v-model="formData.execExtendData.httpCallback.processStopTimeout"
             />
           </el-form-item>
         </el-space>
