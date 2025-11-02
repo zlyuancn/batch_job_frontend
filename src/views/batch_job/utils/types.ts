@@ -1,4 +1,6 @@
 // 执行类型转中文名
+import { BatchJobKV } from "@/api/batch_job";
+
 export const execType2CnName = {
   0: "None",
   1: "http回调"
@@ -34,6 +36,8 @@ export interface BizExecExtendDataHttpCallback {
   beforeRunTimeout: number;
   processTimeout: number;
   processStopTimeout: number;
+  insecureSkipVerify: boolean;
+  headers: Array<BatchJobKV>;
 }
 
 export interface BizExecExtendData {

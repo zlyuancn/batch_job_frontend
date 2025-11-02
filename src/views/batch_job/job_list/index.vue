@@ -20,6 +20,8 @@ import {
   resetJobListQueryArgs
 } from "../utils/data";
 import { date2Timestamp } from "@/views/batch_job/utils/time";
+import iconSearch from "~icons/ep/search";
+import iconAdd from "~icons/ep/document-add";
 
 // 任务列表
 defineOptions({
@@ -211,7 +213,9 @@ const reloadRunningJob = () => {
         </el-icon>
       </div>
       <div>
-        <el-button type="primary" @click="createJob">新增任务</el-button>
+        <el-button type="primary" @click="createJob" :icon="iconAdd"
+          >新增任务</el-button
+        >
       </div>
       <el-divider />
       <!-- 让布局容器充满可用空间 -->
@@ -263,7 +267,9 @@ const reloadRunningJob = () => {
               :default-time="defaultTime"
             />
           </el-space>
-          <el-button type="primary" @click="forceQuery">搜索</el-button>
+          <el-button type="primary" @click="forceQuery" :icon="iconSearch"
+            >搜索</el-button
+          >
           <el-button type="default" @click="resetQuery">重置</el-button>
         </el-header>
         <!-- 容器使用flex布局 -->

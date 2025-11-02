@@ -246,7 +246,12 @@ if (isChange) {
         </el-select>
       </el-form-item>
       <el-form-item label="任务名">
-        <el-input maxlength="32" show-word-limit v-model="formData.jobName" />
+        <el-input
+          clearable
+          maxlength="32"
+          show-word-limit
+          v-model="formData.jobName"
+        />
         <el-text style="color: var(--el-text-color-secondary)"
           >用于展示, 让使用者大概知道这个任务是什么</el-text
         >

@@ -14,6 +14,7 @@ import {
   rateTypeOptions,
   bizStatusOptions
 } from "../utils/types";
+import Headers from "@/views/batch_job/components/Headers/index.vue";
 
 // 业务信息
 defineOptions({
@@ -74,7 +75,12 @@ initData();
         </el-space>
       </el-form-item>
       <el-form-item label="业务名">
-        <el-input maxlength="32" show-word-limit v-model="formData.bizName" />
+        <el-input
+          clearable
+          maxlength="32"
+          show-word-limit
+          v-model="formData.bizName"
+        />
         <el-text style="color: var(--el-text-color-secondary)"
           >用于展示, 让使用者大概知道这个业务是什么</el-text
         >
@@ -104,90 +110,116 @@ initData();
         </el-select>
       </el-form-item>
 
-      <div v-if="formData?.execType == 1">
-        <el-space direction="horizontal" size="small">
-          <el-form-item label="创建任务回调url">
-            <el-input
-              maxlength="128"
-              show-word-limit
-              v-model="formData.execExtendData.httpCallback.beforeCreate"
-              style="width: 400px"
-            />
-          </el-form-item>
-          <el-form-item
-            v-if="
-              formData.execExtendData?.httpCallback?.beforeCreate?.length > 0
-            "
-            label="超时秒数"
-          >
-            <el-input-number
-              :min="0"
-              :max="60"
-              v-model="formData.execExtendData.httpCallback.beforeCreateTimeout"
-            />
-          </el-form-item>
-        </el-space>
-        <el-space direction="horizontal" size="small">
-          <el-form-item label="启动前回调">
-            <el-input
-              maxlength="128"
-              show-word-limit
-              v-model="formData.execExtendData.httpCallback.beforeRun"
-              style="width: 400px"
-            />
-          </el-form-item>
-          <el-form-item
-            v-if="formData.execExtendData?.httpCallback?.beforeRun?.length > 0"
-            label="超时秒数"
-          >
-            <el-input-number
-              :min="0"
-              :max="3600"
-              v-model="formData.execExtendData.httpCallback.beforeRunTimeout"
-            />
-          </el-form-item>
-        </el-space>
-        <el-space direction="horizontal" size="small">
-          <el-form-item label="处理任务回调">
-            <el-input
-              maxlength="128"
-              show-word-limit
-              v-model="formData.execExtendData.httpCallback.process"
-              style="width: 400px"
-            />
-          </el-form-item>
-          <el-form-item
-            v-if="formData.execExtendData?.httpCallback?.process?.length > 0"
-            label="超时秒数"
-          >
-            <el-input-number
-              :min="0"
-              :max="3600"
-              v-model="formData.execExtendData.httpCallback.processTimeout"
-            />
-          </el-form-item>
-        </el-space>
-        <el-space direction="horizontal" size="small">
-          <el-form-item label="任务停止回调">
-            <el-input
-              maxlength="128"
-              show-word-limit
-              v-model="formData.execExtendData.httpCallback.processStop"
-              style="width: 400px"
-            />
-          </el-form-item>
-          <el-form-item
-            v-if="
-              formData.execExtendData?.httpCallback?.processStop?.length > 0
-            "
-            label="超时秒数"
-          >
-            <el-input-number
-              :min="0"
-              :max="3600"
-              v-model="formData.execExtendData.httpCallback.processStopTimeout"
-            />
-          </el-form-item>
+      <div v-if="formData?.execType == 1" class="box-frame">
+        <el-space direction="vertical" alignment="normal" size="small">
+          <el-space direction="horizontal" size="small">
+            <el-form-item label="创建任务回调url">
+              <el-input
+                maxlength="128"
+                show-word-limit
+                v-model="formData.execExtendData.httpCallback.beforeCreate"
+                style="width: 400px"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="
+                formData.execExtendData?.httpCallback?.beforeCreate?.length > 0
+              "
+              label="超时秒数"
+            >
+              <el-input-number
+                :min="0"
+                :max="60"
+                v-model="
+                  formData.execExtendData.httpCallback.beforeCreateTimeout
+                "
+              />
+            </el-form-item>
+          </el-space>
+          <el-space direction="horizontal" size="small">
+            <el-form-item label="启动前回调">
+              <el-input
+                maxlength="128"
+                show-word-limit
+                v-model="formData.execExtendData.httpCallback.beforeRun"
+                style="width: 400px"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="
+                formData.execExtendData?.httpCallback?.beforeRun?.length > 0
+              "
+              label="超时秒数"
+            >
+              <el-input-number
+                :min="0"
+                :max="3600"
+                v-model="formData.execExtendData.httpCallback.beforeRunTimeout"
+              />
+            </el-form-item>
+          </el-space>
+          <el-space direction="horizontal" size="small">
+            <el-form-item label="处理任务回调">
+              <el-input
+                maxlength="128"
+                show-word-limit
+                v-model="formData.execExtendData.httpCallback.process"
+                style="width: 400px"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="formData.execExtendData?.httpCallback?.process?.length > 0"
+              label="超时秒数"
+            >
+              <el-input-number
+                :min="0"
+                :max="3600"
+                v-model="formData.execExtendData.httpCallback.processTimeout"
+              />
+            </el-form-item>
+          </el-space>
+          <el-space direction="horizontal" size="small">
+            <el-form-item label="任务停止回调">
+              <el-input
+                maxlength="128"
+                show-word-limit
+                v-model="formData.execExtendData.httpCallback.processStop"
+                style="width: 400px"
+              />
+            </el-form-item>
+            <el-form-item
+              v-if="
+                formData.execExtendData?.httpCallback?.processStop?.length > 0
+              "
+              label="超时秒数"
+            >
+              <el-input-number
+                :min="0"
+                :max="3600"
+                v-model="
+                  formData.execExtendData.httpCallback.processStopTimeout
+                "
+              />
+            </el-form-item>
+          </el-space>
+          <el-space direction="horizontal" size="small">
+            <el-form-item label="不安全的连接" prop="processStop">
+              <el-switch
+                v-model="
+                  formData.execExtendData.httpCallback.insecureSkipVerify
+                "
+                size="large"
+              />
+            </el-form-item>
+          </el-space>
+          <el-space direction="horizontal" size="small">
+            <el-form-item label="Headers">
+              <Headers
+                readonly
+                v-model="formData.execExtendData.httpCallback.headers"
+              ></Headers>
+            </el-form-item>
+          </el-space>
         </el-space>
       </div>
 
@@ -238,3 +270,7 @@ initData();
     <el-button @click="router.back()">返回</el-button>
   </div>
 </template>
+
+<style scoped>
+@import url("@/style/box-frame.css");
+</style>

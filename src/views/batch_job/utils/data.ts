@@ -23,7 +23,9 @@ export const bizFormInitData: BizFormData = {
       beforeCreateTimeout: 5,
       beforeRunTimeout: 60,
       processTimeout: 60,
-      processStopTimeout: 60
+      processStopTimeout: 60,
+      insecureSkipVerify: false,
+      headers: []
     }
   },
 
@@ -54,7 +56,10 @@ export const BatchJobBizInfoA2BizFormData = (
           line.execExtendData?.httpCallback?.beforeRunTimeout ?? 0,
         processTimeout: line.execExtendData?.httpCallback?.processTimeout ?? 0,
         processStopTimeout:
-          line.execExtendData?.httpCallback?.processStopTimeout ?? 0
+          line.execExtendData?.httpCallback?.processStopTimeout ?? 0,
+        insecureSkipVerify:
+          line.execExtendData?.httpCallback?.insecureSkipVerify,
+        headers: line.execExtendData?.httpCallback?.headers ?? []
       }
     },
 

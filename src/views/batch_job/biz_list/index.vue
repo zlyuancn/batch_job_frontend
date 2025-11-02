@@ -12,6 +12,8 @@ import { Loading } from "@element-plus/icons-vue";
 import { useRouter } from "vue-router";
 import { batchJobClient } from "@/api/batch_job_client";
 import { message } from "@/utils/message";
+import iconSearch from "~icons/ep/search";
+import iconAdd from "~icons/ep/document-add";
 import {
   bizListQueryArgs,
   resetBizListQueryArgs
@@ -115,7 +117,10 @@ submitQuery();
         </el-icon>
       </div>
       <div>
-        <el-button type="primary" @click="router.push({ name: 'RegistryBiz' })"
+        <el-button
+          type="primary"
+          @click="router.push({ name: 'RegistryBiz' })"
+          :icon="iconAdd"
           >新增业务</el-button
         >
       </div>
@@ -137,7 +142,9 @@ submitQuery();
               active-text="查看隐藏的业务"
               @change="hiddenChange"
             />
-            <el-button type="primary" @click="forceQuery">搜索</el-button>
+            <el-button type="primary" @click="forceQuery" :icon="iconSearch"
+              >搜索</el-button
+            >
             <el-button type="default" @click="resetQuery">重置</el-button>
           </el-space>
         </el-header>
