@@ -56,7 +56,7 @@ export interface BatchJobJobBaseInfoA {
    * @type {string}
    * @memberof BatchJobJobBaseInfoA
    */
-  errLogNum?: string;
+  errLogCount?: string;
 
   /**
    * @type {BatchJobJobStatus}

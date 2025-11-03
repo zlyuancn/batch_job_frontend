@@ -24,7 +24,7 @@ export interface BatchJobLogInfoByListA {
    * @type {string}
    * @memberof BatchJobLogInfoByListA
    */
-  dataId?: string;
+  dataIndex?: string;
 
   /**
    * @type {string}

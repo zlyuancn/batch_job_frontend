@@ -107,16 +107,6 @@ const handleView = () => {
 <template>
   <div>
     <el-button
-      size="small"
-      type="primary"
-      @click="handleView"
-      :icon="iconView"
-      :loading="isLoading"
-      :disabled="isLoading"
-    >
-      查看
-    </el-button>
-    <el-button
       v-if="allowStatus.allowRun"
       size="small"
       @click="startBtn"
@@ -147,6 +137,15 @@ const handleView = () => {
       :disabled="isLoading"
     >
       编辑
+    </el-button>
+    <el-button
+      size="small"
+      @click="handleView"
+      :icon="iconView"
+      :loading="isLoading"
+      :disabled="isLoading"
+    >
+      查看
     </el-button>
   </div>
 </template>

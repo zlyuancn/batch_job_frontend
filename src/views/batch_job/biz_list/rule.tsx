@@ -62,16 +62,16 @@ export const columnsRule: Columns<any> = [
           <el-button size="small" onClick={handleJobList} type="success">
             任务列表
           </el-button>
-          <el-button size="small" onClick={handleView}>
-            查看
-          </el-button>
           <el-button size="small" onClick={handleEdit}>
             编辑
+          </el-button>
+          <el-button size="small" onClick={handleView}>
+            查看
           </el-button>
         </>
       );
     },
-    width: 200,
+    width: 300,
     align: "center"
   }
 ];

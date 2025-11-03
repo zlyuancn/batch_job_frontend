@@ -50,7 +50,12 @@ export const columnsRule: Columns<any> = [
       );
     }
   },
-  { key: "errLogNum", dataKey: "errLogNum", title: "错误日志数", width: 100 },
+  {
+    key: "errLogCount",
+    dataKey: "errLogCount",
+    title: "错误日志数",
+    width: 100
+  },
   {
     key: "rateType",
     dataKey: "rateType",
@@ -104,7 +109,6 @@ export const columnsRule: Columns<any> = [
     key: "operations",
     title: "",
     cellRenderer: v => {
-      // return h(OptionButton, v.rowData)
       const updateStatus = status => {
         v.rowData.status = status;
       };

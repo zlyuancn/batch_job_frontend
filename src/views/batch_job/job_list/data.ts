@@ -9,7 +9,7 @@ export const mockData: BatchJobQueryJobListRsp = {
       jobId: "12",
       processDataTotal: "1000",
       processedNum: "300",
-      errLogNum: "12",
+      errLogCount: "12",
 
       status: 2,
       createTime: "1759724919",

@@ -24,7 +24,7 @@ export interface BatchJobDataLogQ {
    * @type {string}
    * @memberof BatchJobDataLogQ
    */
-  dataId?: string;
+  dataIndex?: string;
 
   /**
    * @type {string}
