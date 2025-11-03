@@ -167,6 +167,7 @@ onBeforeUnmount(() => {
 });
 
 // 重新加载运行中的任务
+let isReloadRunningJob = false;
 const reloadRunningJob = () => {
   const d2 = data.value.filter(v => {
     return v.status == 1 || v.status == 2 || v.status == 4;
@@ -176,6 +177,10 @@ const reloadRunningJob = () => {
     return;
   }
 
+  if (isReloadRunningJob) {
+    return;
+  }
+  isReloadRunningJob = true;
   const req = <BatchJobQueryJobStateInfoReq>{
     jobIds: ids
   };
@@ -193,6 +198,9 @@ const reloadRunningJob = () => {
         let nv = mm[v.jobId];
         return nv ? Object.assign(v, nv) : v;
       });
+    })
+    .finally(() => {
+      isReloadRunningJob = false;
     });
 };
 </script>
