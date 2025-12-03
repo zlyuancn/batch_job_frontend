@@ -14,7 +14,7 @@
 
 import { BatchJobJobStatus } from "./batch-job-job-status";
 import { BatchJobOpInfoA } from "./batch-job-op-info-a";
-import { BatchJobRateType } from "./batch-job-rate-type";
+import { BatchJobConcType } from "./batch-job-rate-type";
 /**
  *
  *
@@ -71,10 +71,10 @@ export interface BatchJobJobBaseInfoA {
   createTime?: string;
 
   /**
-   * @type {BatchJobRateType}
+   * @type {BatchJobConcType}
    * @memberof BatchJobJobBaseInfoA
    */
-  rateType?: BatchJobRateType;
+  concType?: BatchJobConcType;
 
   /**
    * @type {number}

@@ -6,10 +6,10 @@ export const execType2CnName = {
   1: "http回调"
 };
 
-// 限速类型转中文名
+// 并发类型转中文名
 export const raceType2CnName = {
-  0: "标准限速",
-  1: "串行化限速"
+  0: "并发",
+  1: "串行化"
 };
 
 // 任务状态类型转中文名
@@ -65,15 +65,15 @@ export const execTypeOptions = [
   }
 ];
 
-export const rateTypeOptions = [
+export const concTypeOptions = [
   {
     value: 0,
-    label: "标准限速"
+    label: "并发"
   },
   {
     value: 1,
-    label: "串行化限速",
-    desc: "使用串行化限速时, 只有1个线程处理数据, 数据按顺序有序处理"
+    label: "串行化",
+    desc: "使用串行化时, 只有1个线程处理数据, 数据按顺序有序处理"
   }
 ];
 
@@ -84,7 +84,7 @@ export interface JobFormData {
   jobData: string;
   processDataTotal: number;
   processedCount: number;
-  rateType: number;
+  concType: number;
   rateSec: number;
 
   status?: number;

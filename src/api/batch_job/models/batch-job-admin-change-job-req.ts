@@ -13,7 +13,7 @@
  */
 
 import { BatchJobOpInfoQ } from "./batch-job-op-info-q";
-import { BatchJobRateType } from "./batch-job-rate-type";
+import { BatchJobConcType } from "./batch-job-rate-type";
 /**
  *
  *
@@ -46,10 +46,10 @@ export interface BatchJobAdminChangeJobReq {
   processedCount?: string;
 
   /**
-   * @type {BatchJobRateType}
+   * @type {BatchJobConcType}
    * @memberof BatchJobAdminChangeJobReq
    */
-  rateType?: BatchJobRateType;
+  concType?: BatchJobConcType;
 
   /**
    * @type {number}

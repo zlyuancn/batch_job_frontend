@@ -92,7 +92,7 @@ export const jobFormInitData: JobFormData = {
   jobData: "",
   processDataTotal: 0,
   processedCount: 0,
-  rateType: 0,
+  concType: 0,
   rateSec: 0,
 
   status: 0,
@@ -112,7 +112,7 @@ export const BatchJobJobInfoA2JobFormData = (
     jobData: line.jobData,
     processDataTotal: Number(line.processDataTotal),
     processedCount: Number(line.processedCount),
-    rateType: Number(line.rateType ?? 0),
+    concType: Number(line.concType ?? 0),
     rateSec: line.rateSec ?? 0,
 
     status: Number(line.status ?? 0),

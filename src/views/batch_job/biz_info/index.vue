@@ -11,7 +11,7 @@ import { useRoute } from "vue-router";
 import {
   execTypeOptions,
   BizFormData,
-  rateTypeOptions,
+  concTypeOptions,
   bizStatusOptions
 } from "../utils/types";
 import Headers from "@/views/batch_job/components/Headers/index.vue";

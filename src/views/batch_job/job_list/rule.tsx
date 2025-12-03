@@ -57,9 +57,9 @@ export const columnsRule: Columns<any> = [
     width: 100
   },
   {
-    key: "rateType",
-    dataKey: "rateType",
-    title: "限速类型",
+    key: "concType",
+    dataKey: "concType",
+    title: "并发类型",
     width: 100,
     cellRenderer: ({ cellData: v }) => <span> {raceType2CnName[v ?? 0]} </span>
   },

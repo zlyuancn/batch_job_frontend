@@ -14,7 +14,7 @@ export const mockData: BatchJobQueryJobListRsp = {
       status: 2,
       createTime: "1759724919",
 
-      rateType: 1,
+      concType: 1,
       rateSec: 300,
 
       statusInfo: "user op",

@@ -1,7 +1,7 @@
 import {
   BatchJobExecType,
   BatchJobQueryBizListRsp,
-  BatchJobRateType
+  BatchJobConcType
 } from "@/api/batch_job_client";
 
 // 样例数据

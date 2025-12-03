@@ -13,7 +13,7 @@
  */
 
 /**
- * - ConcType_RateSec: 并发  - ConcType_Serialization: 串行化
+ * - ConcType_RateSec: 并行  - ConcType_Serialization: 串行化
  * @export
  * @enum {string}
  */

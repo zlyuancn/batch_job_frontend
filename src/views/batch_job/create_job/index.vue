@@ -8,7 +8,7 @@ import { rules, ruleFormRef } from "./rule";
 import { reactive, ref } from "vue";
 import {
   batchJobClient,
-  BatchJobRateType,
+  BatchJobConcType,
   BatchJobAdminCreateJobReq,
   BatchJobQueryJobInfoReq,
   QueryAllBizNameRspLineA,
@@ -17,7 +17,7 @@ import {
 import { message } from "@/utils/message";
 import router from "@/router";
 import { useRoute } from "vue-router";
-import { rateTypeOptions, JobFormData, jobStatusOptions } from "../utils/types";
+import { concTypeOptions, JobFormData, jobStatusOptions } from "../utils/types";
 import { OpSource } from "../utils/types";
 import { getToken } from "@/utils/auth";
 
@@ -88,12 +88,12 @@ const submitCreate = async (createAndRun: boolean = false) => {
 
     startNow: createAndRun
   };
-  switch (formData.rateType) {
+  switch (formData.concType) {
     case 0:
-      req.rateType = BatchJobRateType.RateSec;
+      req.concType = BatchJobConcType.RateSec;
       break;
     case 1:
-      req.rateType = BatchJobRateType.Serialization;
+      req.concType = BatchJobConcType.Serialization;
       break;
   }
 
@@ -146,12 +146,12 @@ const submitChange = async () => {
       opRemark: formData.opRemark
     }
   };
-  switch (formData.rateType) {
+  switch (formData.concType) {
     case 0:
-      req.rateType = BatchJobRateType.RateSec;
+      req.concType = BatchJobConcType.RateSec;
       break;
     case 1:
-      req.rateType = BatchJobRateType.Serialization;
+      req.concType = BatchJobConcType.Serialization;
       break;
   }
 
@@ -279,14 +279,14 @@ if (isChange) {
         >
       </el-form-item>
 
-      <el-form-item label="限速类型" prop="rateType">
+      <el-form-item label="并发类型" prop="concType">
         <el-select
-          v-model="formData.rateType"
+          v-model="formData.concType"
           placeholder="Select"
           style="width: 240px"
         >
           <el-option
-            v-for="item in rateTypeOptions"
+            v-for="item in concTypeOptions"
             :key="item.value"
             :label="item.label"
             :value="item.value"
@@ -306,10 +306,10 @@ if (isChange) {
           </el-option>
         </el-select>
         <el-text
-          v-if="formData.rateType == 1"
+          v-if="formData.concType == 1"
           style="color: var(--el-text-color-secondary)"
         >
-          {{ rateTypeOptions[1]?.desc }}</el-text
+          {{ concTypeOptions[1]?.desc }}</el-text
         >
       </el-form-item>
       <el-form-item label="每秒速率" prop="rate_sec">
