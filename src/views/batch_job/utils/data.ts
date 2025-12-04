@@ -26,7 +26,8 @@ export const bizFormInitData: BizFormData = {
       processStopTimeout: 60,
       insecureSkipVerify: false,
       headers: [],
-      proxy: ""
+      proxy: "",
+      rspParseField: ""
     }
   },
 
@@ -61,7 +62,8 @@ export const BatchJobBizInfoA2BizFormData = (
         insecureSkipVerify:
           line.execExtendData?.httpCallback?.insecureSkipVerify,
         headers: line.execExtendData?.httpCallback?.headers ?? [],
-        proxy: line.execExtendData?.httpCallback?.proxy
+        proxy: line.execExtendData?.httpCallback?.proxy,
+        rspParseField: line.execExtendData?.httpCallback?.rspParseField
       }
     },
 

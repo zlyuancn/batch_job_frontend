@@ -94,7 +94,8 @@ const onSubmit = async () => {
             insecureSkipVerify:
               formData.execExtendData?.httpCallback?.insecureSkipVerify,
             headers: formData.execExtendData?.httpCallback?.headers,
-            proxy: formData.execExtendData?.httpCallback?.proxy
+            proxy: formData.execExtendData?.httpCallback?.proxy,
+            rspParseField: formData.execExtendData?.httpCallback?.rspParseField
           }
         };
         break;
@@ -146,7 +147,8 @@ const onSubmit = async () => {
             insecureSkipVerify:
               formData.execExtendData?.httpCallback?.insecureSkipVerify,
             headers: formData.execExtendData?.httpCallback?.headers,
-            proxy: formData.execExtendData?.httpCallback?.proxy
+            proxy: formData.execExtendData?.httpCallback?.proxy,
+            rspParseField: formData.execExtendData?.httpCallback?.rspParseField
           }
         };
         break;
@@ -266,7 +268,7 @@ if (isChange) changePageInit();
                 maxlength="128"
                 show-word-limit
                 v-model="formData.execExtendData.httpCallback.beforeCreate"
-                style="width: 400px"
+                style="width: 600px"
                 clearable
               />
             </el-form-item>
@@ -292,7 +294,7 @@ if (isChange) changePageInit();
                 maxlength="128"
                 show-word-limit
                 v-model="formData.execExtendData.httpCallback.beforeRun"
-                style="width: 400px"
+                style="width: 600px"
                 clearable
               />
             </el-form-item>
@@ -319,7 +321,7 @@ if (isChange) changePageInit();
                 maxlength="128"
                 show-word-limit
                 v-model="formData.execExtendData.httpCallback.process"
-                style="width: 400px"
+                style="width: 600px"
                 clearable
               />
             </el-form-item>
@@ -341,7 +343,7 @@ if (isChange) changePageInit();
                 maxlength="128"
                 show-word-limit
                 v-model="formData.execExtendData.httpCallback.processStop"
-                style="width: 400px"
+                style="width: 600px"
                 clearable
               />
             </el-form-item>
@@ -362,6 +364,21 @@ if (isChange) changePageInit();
             </el-form-item>
           </el-space>
           <el-space direction="horizontal" size="small">
+            <el-form-item label="回调响应解析字段">
+              <el-input
+                maxlength="64"
+                show-word-limit
+                v-model="formData.execExtendData.httpCallback.rspParseField"
+                style="width: 400px"
+                clearable
+              />
+              <el-text style="color: var(--el-text-color-secondary)"
+                >有些网关会对响应数据包装一层,
+                这里告诉批量工具实际响应数据是哪个字段. 只允许一层</el-text
+              >
+            </el-form-item>
+          </el-space>
+          <el-space direction="horizontal" size="small">
             <el-form-item label="不安全的连接">
               <el-switch
                 v-model="
@@ -370,6 +387,9 @@ if (isChange) changePageInit();
                 size="large"
               />
             </el-form-item>
+            <el-text style="color: var(--el-text-color-secondary)"
+              >启用不安全的连接时不会验证https证书</el-text
+            >
           </el-space>
           <el-space direction="horizontal" size="small">
             <el-form-item label="Headers">
@@ -383,7 +403,7 @@ if (isChange) changePageInit();
               maxlength="128"
               show-word-limit
               v-model="formData.execExtendData.httpCallback.proxy"
-              style="width: 600px"
+              style="width: 800px"
               clearable
             />
             <el-text style="color: var(--el-text-color-secondary)"

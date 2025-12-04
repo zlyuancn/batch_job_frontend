@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-for="(item, index) in headers" :key="index">
-      <el-row :gutter="10" align="middle">
+      <el-row :gutter="24" align="middle">
         <el-col :span="10">
           <el-input
             v-model="item.k"

@@ -39,6 +39,7 @@ export interface BizExecExtendDataHttpCallback {
   insecureSkipVerify: boolean;
   headers: Array<BatchJobKV>;
   proxy: string;
+  rspParseField: string;
 }
 
 export interface BizExecExtendData {

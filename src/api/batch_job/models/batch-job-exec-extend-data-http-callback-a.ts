@@ -85,4 +85,10 @@ export interface BatchJobExecExtendDataHttpCallbackA {
    * @memberof BatchJobExecExtendDataHttpCallbackA
    */
   proxy?: string;
+
+  /**
+   * @type {string}
+   * @memberof BatchJobExecExtendDataHttpCallbackA
+   */
+  rspParseField?: string;
 }
