@@ -378,26 +378,18 @@ if (isChange) changePageInit();
               >
             </el-form-item>
           </el-space>
-          <el-space direction="horizontal" size="small">
-            <el-form-item label="不安全的连接">
-              <el-switch
-                v-model="
-                  formData.execExtendData.httpCallback.insecureSkipVerify
-                "
-                size="large"
-              />
-            </el-form-item>
-            <el-text style="color: var(--el-text-color-secondary)"
-              >启用不安全的连接时不会验证https证书</el-text
-            >
-          </el-space>
-          <el-space direction="horizontal" size="small">
-            <el-form-item label="Headers">
-              <Headers
-                v-model="formData.execExtendData.httpCallback.headers"
-              ></Headers>
-            </el-form-item>
-          </el-space>
+          <el-form-item label="不安全的连接">
+            <el-switch
+              v-model="formData.execExtendData.httpCallback.insecureSkipVerify"
+              size="large"
+              active-text="启用不安全的连接时不会验证https证书"
+            />
+          </el-form-item>
+          <el-form-item label="Headers">
+            <Headers
+              v-model="formData.execExtendData.httpCallback.headers"
+            ></Headers>
+          </el-form-item>
           <el-form-item label="代理">
             <el-input
               maxlength="128"

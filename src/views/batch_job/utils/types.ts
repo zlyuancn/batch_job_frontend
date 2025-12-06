@@ -91,6 +91,7 @@ export interface JobFormData {
   status?: number;
   opRemark?: string;
   statusInfo?: string;
+  processorCarryJobData?: boolean;
 }
 
 export const bizStatusOptions = [

@@ -68,4 +68,10 @@ export interface BatchJobAdminUpdateJobReq {
    * @memberof BatchJobAdminUpdateJobReq
    */
   jobId?: string;
+
+  /**
+   * @type {boolean}
+   * @memberof BatchJobAdminUpdateJobReq
+   */
+  processorCarryJobData?: boolean;
 }

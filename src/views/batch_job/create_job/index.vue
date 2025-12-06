@@ -86,7 +86,8 @@ const submitCreate = async (createAndRun: boolean = false) => {
       opRemark: formData.opRemark
     },
 
-    startNow: createAndRun
+    startNow: createAndRun,
+    processorCarryJobData: formData?.processorCarryJobData
   };
   switch (formData.concType) {
     case 0:
@@ -144,7 +145,8 @@ const submitChange = async () => {
       opUserid: user.username,
       opUserName: user.nickname,
       opRemark: formData.opRemark
-    }
+    },
+    processorCarryJobData: formData?.processorCarryJobData
   };
   switch (formData.concType) {
     case 0:
@@ -265,8 +267,14 @@ if (isChange) {
           v-model="formData.jobData"
         />
       </el-form-item>
-
-      <el-form-item label="需要处理数据总数">
+      <el-form-item label="携带任务数据">
+        <el-switch
+          v-model="formData.processorCarryJobData"
+          size="large"
+          active-text="处理回调时会携带任务数据jobData作为业务回调参数"
+        />
+      </el-form-item>
+      <el-form-item label="需要处理数据总数" prop="processDataTotal">
         <el-input-number :min="0" v-model="formData.processDataTotal" />
         <el-text style="color: var(--el-text-color-secondary)"
           >表示这个任务要处理多少数据量</el-text

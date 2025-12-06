@@ -99,7 +99,8 @@ export const jobFormInitData: JobFormData = {
 
   status: 0,
   opRemark: "",
-  statusInfo: ""
+  statusInfo: "",
+  processorCarryJobData: false
 };
 
 // 将服务端返回的任务信息转为表单数据
@@ -119,7 +120,8 @@ export const BatchJobJobInfoA2JobFormData = (
 
     status: Number(line.status ?? 0),
     opRemark: line?.op?.opRemark,
-    statusInfo: line.statusInfo
+    statusInfo: line.statusInfo,
+    processorCarryJobData: line?.processorCarryJobData
   });
 };
 

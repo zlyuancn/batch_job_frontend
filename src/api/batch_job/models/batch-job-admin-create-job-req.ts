@@ -74,4 +74,10 @@ export interface BatchJobAdminCreateJobReq {
    * @memberof BatchJobAdminCreateJobReq
    */
   startNow?: boolean;
+
+  /**
+   * @type {boolean}
+   * @memberof BatchJobAdminCreateJobReq
+   */
+  processorCarryJobData?: boolean;
 }

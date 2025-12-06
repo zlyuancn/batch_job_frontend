@@ -6,6 +6,5 @@ export const rules = reactive<FormRules>({
   bizName: [{ required: true, message: "必填项", trigger: "blur" }],
   "execExtendData.httpCallback.process": [
     { required: true, message: "必填项", trigger: "blur" }
-  ],
-  rateSec: { required: true, message: "必填项", trigger: "blur" }
+  ]
 });

@@ -99,4 +99,10 @@ export interface BatchJobJobInfoA {
    * @memberof BatchJobJobInfoA
    */
   statusInfo?: string;
+
+  /**
+   * @type {boolean}
+   * @memberof BatchJobJobInfoA
+   */
+  processorCarryJobData?: boolean;
 }

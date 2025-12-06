@@ -25,12 +25,6 @@ export const columnsRule: Columns<any> = [
     }
   },
   {
-    key: "processDataTotal",
-    dataKey: "processDataTotal",
-    title: "数据总数",
-    width: 100
-  },
-  {
     key: "progress",
     title: "已处理数据量",
     width: 300,
@@ -43,10 +37,53 @@ export const columnsRule: Columns<any> = [
         );
       }
       if (p > 100) p = 100;
+      let status = undefined;
+      switch (v?.rowData?.status ?? 0) {
+        case 3:
+          status = "success";
+          break;
+        case 1:
+        case 4:
+        case 5:
+          status = "warning";
+          break;
+      }
       return (
         <div class="flex items-center gap-2">
-          <el-Progress percentage={p} style={"width: 300px"} />
+          <el-Progress
+            stroke-width={10}
+            status={status}
+            percentage={p}
+            style={"width: 300px"}
+          />
         </div>
+      );
+    }
+  },
+  {
+    key: "processDataTotal",
+    title: "数据量",
+    width: 150,
+    cellRenderer: v => {
+      if (v?.rowData?.status == 3) {
+        if (v?.rowData?.processedCount == v?.rowData?.processDataTotal) {
+          return (
+            <span style="color: darkgreen; font-weight: bold;">
+              {v?.rowData?.processDataTotal}
+            </span>
+          );
+        } else {
+          return (
+            <span style="color: #f17619; font-weight: bold;">
+              {v?.rowData?.processedCount ?? 0} / {v?.rowData?.processDataTotal}
+            </span>
+          );
+        }
+      }
+      return (
+        <span style="font-weight: bold;">
+          {v?.rowData?.processedCount ?? 0} / {v?.rowData?.processDataTotal}
+        </span>
       );
     }
   },
@@ -74,12 +111,26 @@ export const columnsRule: Columns<any> = [
     key: "status",
     title: "任务状态",
     width: 150,
-    cellRenderer: v => (
-      <span>
-        {JobStatus2CnName[v?.rowData?.status ?? 0]} <br /> (
-        {v?.rowData?.statusInfo}){" "}
-      </span>
-    )
+    cellRenderer: v => {
+      let style = "font-weight: bold;";
+      switch (v?.rowData?.status ?? 0) {
+        case 3:
+          style = "color: darkgreen; font-weight: bold;";
+          break;
+        case 1:
+        case 4:
+        case 5:
+          style = "color: #f17619; font-weight: bold;";
+          break;
+      }
+      return (
+        <div>
+          <span style={style}>{JobStatus2CnName[v?.rowData?.status ?? 0]}</span>
+          <br />
+          <span>{v?.rowData?.statusInfo}</span>
+        </div>
+      );
+    }
   },
   {
     key: "createTime",
